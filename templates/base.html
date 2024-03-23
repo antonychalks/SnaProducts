@@ -58,7 +58,7 @@
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
           <ul class="list-inline list-unstyled text-center text-lg-right my-0">
             <li class="list-inline-item dropdown">
-              <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="text-black nav-link" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="text-center">
                   <div><i class="fas fa-user fa-lg"></i></div>
                   <p class="my-0">My Account</p>
@@ -95,8 +95,12 @@
         </div>
       </div>
       <div class="row bg-white">
-        <nav>
-          nav
+        <nav class="navbar navbar-expand-lg navbar-light w-100">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#site-nav" aria-controls="site-nav" aria-expaned="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          {% include 'includes/mobile-site-nav.html' %}
+          {% include 'includes/site-nav.html' %}
         </nav>
       </div>
       <div id="banner" class="row text-center">
