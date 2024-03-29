@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 CATEGORY_TYPE = ((0, "Main"), (1, "Sub"))
 
@@ -29,29 +30,36 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-    image_url = models.URLField(max_length=1024, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
+    image = CloudinaryField('image', default='placeholder')
     
     def __str__(self):
         return self.name
     
-def generate_sku(product):
-    """Generate a unique SKU"""
-    category = product.category
-    sku_prefix = ""
-    sku_middle = ""
-    sku_suffix = ""
+    def save(self, *args, **kwargs):
+        self.sku = self.generate_sku()
+        super().save(*args, **kwargs)
+    
+    def generate_sku(self):
+        """Generate a unique SKU"""
+        category = self.category
+        sku_prefix = ""
+        sku_middle = ""
+        sku_suffix = ""
 
-    # Extracting first two letters of the main category name
-    if category.parent:
+        # Extracting first two letters of the main category name
         sku_prefix = category.parent.name[:2].upper()
-    else:
-        sku_prefix = category.name[:2].upper()
 
-    # Creating middle two digits from the category id
-    sku_middle = category.name[:2].upper()
+        # Creating middle two digits from the category id
+        sku_middle = category.name[:2].upper()
 
-    # Creating last four digits based on the count of products in the category
-    sku_suffix = str(Product.objects.filter(category=category).count() + 1).zfill(4)
+        # Creating last four digits based on the count of products in the category
+        product_count = Product.objects.filter(category=category).count() + 1
+        sku_suffix = str(product_count).zfill(4)
 
-    return sku_prefix + sku_middle + sku_suffix
+        # Check if the generated SKU already exists, if so, adjust the count
+        while Product.objects.filter(sku=sku_prefix + sku_middle + sku_suffix).exists():
+            product_count += 1
+            sku_suffix = str(product_count).zfill(4)
+
+        return sku_prefix + sku_middle + sku_suffix
+
