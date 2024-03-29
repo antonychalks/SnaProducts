@@ -5,6 +5,10 @@ CATEGORY_TYPE = ((0, "Main"), (1, "Sub"))
 
 # Create your models here.
 class Category(models.Model):
+    
+    class Meta:
+        verbose_name_plural = 'Categories'
+    
     parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
     name  = models.CharField(max_length=254)
     display_name  = models.CharField(max_length=254, null=True, blank=True)
