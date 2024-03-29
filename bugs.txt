@@ -1,0 +1,12 @@
+Problem:
+Cause:
+Solution:
+
+Problem: The Dropdowns in the nav on mobile screen were not dropping down.
+Cause: I got the dropdown template from an older version of bootstrap where the field was data-toggle.
+Solution: Changed the data field name to data-bs-toggle.
+
+Problem: The bootstrap collapse function was opening when clicked.
+Cause: The template I used was from an older version of bootstrap where the field was data-target.
+Solution: Changed the data field name to data-bs-target.
+
