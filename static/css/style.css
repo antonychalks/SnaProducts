@@ -53,6 +53,16 @@ body{
     border: 1px solid black !important;
 }
 
+.overlay-background{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: #eee;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */

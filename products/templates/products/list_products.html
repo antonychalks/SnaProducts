@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/side-nav.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/side-nav.js' %}"></script>
+{% endblock %}
+
+{% block nav-includes %}
+<button type="button" id="sidebarCollapse" class="btn btn-secondary">
+    <i class="fas fa-align-left"></i>
+    <span>Toggle Sidebar</span>
+</button>
+<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-align-justify"></i>
+</button>
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col">
+            </div>
+        </div>
+    </div>
+{% endblock page_header %}
+
+
+
+
+
+{% block content %}
+    <div class="overlay-background">
+    </div>
+
+    <div class="container-fluid">
+        {% include 'includes/side-nav.html' %}
+        <div class="row">
+            <div class="col">
+            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            
+            </div>
+        </div>
+    </div>
+{% endblock content %}
