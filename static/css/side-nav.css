@@ -55,10 +55,14 @@ a:focus {
     align-items: stretch;
 }
 
+#sidebarCollapse{
+    margin: 2px 20px;
+}
+
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    background: #fff;
     color: #fff;
     transition: all 0.3s;
 }
@@ -140,15 +144,14 @@ a.article:hover {
     color: #fff !important;
 }
 
+
 /* ---------------------------------------------------
-    CONTENT STYLE
+    Accordion
 ----------------------------------------------------- */
 
-#content {
-    width: 100%;
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
+.accordion-button:not(.collapsed){
+    color: black;
+    background-color: #fff;
 }
 
 /* ---------------------------------------------------

@@ -10,13 +10,7 @@
 {% endblock %}
 
 {% block nav-includes %}
-<button type="button" id="sidebarCollapse" class="btn btn-secondary">
-    <i class="fas fa-align-left"></i>
-    <span>Toggle Sidebar</span>
-</button>
-<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="fas fa-align-justify"></i>
-</button>
+
 {% endblock %}
 
 {% block page_header %}
@@ -28,19 +22,69 @@
     </div>
 {% endblock page_header %}
 
-
-
-
-
 {% block content %}
     <div class="overlay-background">
     </div>
 
     <div class="container-fluid">
-        {% include 'includes/side-nav.html' %}
-        <div class="row">
+        <div class="row" id="nav-sidebar">
             <div class="col">
-            
+                <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    Toggle Departments
+                  </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+                {% include 'includes/side-nav.html' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-group">
+                {% for product in products %}
+                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                    <div class="card m-3" style="max-width: 540px;">
+                        <div class="card-header">
+                            <h5 class="card-title">{{product.name}}</h5>
+                        </div>
+                        <div class="h-100">
+
+                        </div>
+                        <div class="card-body">
+                            {% if product.image %}
+                            <a href="">
+                                <img class="card-img" height="100%" width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
+                            </a>
+                            {% else %}
+                            <a href="">
+                                <imgclass="card-img" height="auto" width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                            </a>
+                            {% endif %}
+                            <h5 class="card-text">£{{product.price}}</h5>
+                            <p class="card-text"><small class="text-muted">{{product.rating}}</small></p>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-12 d-sm-none mb-1">
+                        <hr>
+                    </div>
+                    {% if forloop.counter|divisibleby:2 %}
+                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-1">
+                        <hr>
+                    </div>
+                    {% endif %}
+
+                    {% if forloop.counter|divisibleby:3 %}
+                    <div class="col-12 d-none d-lg-block d-xl-none mb-1">
+                        <hr>
+                    </div>
+                    {% endif %}
+
+                    {% if forloop.counter|divisibleby:4 %}
+                    <div class="col-12 d-none d-xl-block mb-1">
+                        <hr>
+                    </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <div class="row">

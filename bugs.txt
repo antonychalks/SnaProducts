@@ -10,3 +10,10 @@ Problem: The bootstrap collapse function was opening when clicked.
 Cause: The template I used was from an older version of bootstrap where the field was data-target.
 Solution: Changed the data field name to data-bs-target.
 
+Problem: The sale banner is below the toggle sidebar option on the list products page.
+Cause: The toggle sidebar button is written above the banner.
+Solution: 
+
+Problem: When the product page loads, the arrow on the accordion is pointing up when it should be pointing down.
+Cause: The correct class is not written to the element.
+Solution: Append the collapsed class to each accordion button.
