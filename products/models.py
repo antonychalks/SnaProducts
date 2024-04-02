@@ -28,7 +28,7 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
     
 class Product(models.Model):
-    category = models.ForeignKey('Category', limit_choices_to={'type': 1},  null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', limit_choices_to={'type': 1},  null=True, blank=True, on_delete=models.SET_DEFAULT, default=18)
     sku = models.CharField(max_length=254, unique=True, editable=False)
     name = models.CharField(max_length=254)
     description = models.TextField()
@@ -43,6 +43,14 @@ class Product(models.Model):
         self.sku = self.generate_sku()
         super().save(*args, **kwargs)
     
+    def parent(self):
+        if self.category:
+            return self.category.parent
+    
+    def get_category_name(self):
+        return self.category.display_name
+
+    
     def generate_sku(self):
         """Generate a unique SKU"""
         category = self.category
@@ -51,10 +59,19 @@ class Product(models.Model):
         sku_suffix = ""
 
         # Extracting first two letters of the main category name
-        sku_prefix = category.parent.name[:2].upper()
+        if self.category:
+            if category.parent:
+                sku_prefix = category.parent.name[:2].upper()
+            else:
+               sku_prefix = "NU" 
+        else:
+            sku_prefix = "NU"
 
         # Creating middle two digits from the category id
-        sku_middle = category.name[:2].upper()
+        if self.category:
+            sku_middle = category.name[:2].upper()
+        else:
+            sku_middle = "LL"
 
         # Creating last four digits based on the count of products in the category
         product_count = Product.objects.filter(category=category).count() + 1
