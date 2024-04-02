@@ -12,3 +12,15 @@ def list_products(request):
     }
 
     return render(request, 'products/list_products.html', context)
+
+
+def product_details(request):
+    """ A view to show all products, including sorting and search queries """
+
+    products = Product.objects.all()
+    
+    context = {
+        'products': products,
+    }
+
+    return render(request, 'products/list_products.html', context)

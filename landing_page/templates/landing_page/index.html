@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_js %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+
 {% block nav-includes %}
 {% include 'includes/site-nav.html' %}
 {% endblock %}
@@ -18,7 +22,7 @@
             <h1 class="display-4 logo-font text-white"> All new homeware available</h1>
             <div class="my-5">
                 <h4>
-                    <a href="" class="shop-now-button btn btn-lg rounded-0 text-uppercase py-3">Shop Now</a>
+                    <a href="{% url 'products' %}" class="shop-now-button btn btn-lg rounded-0 text-uppercase py-3">Shop Now</a>
                 </h4>
             </div>
         </div>

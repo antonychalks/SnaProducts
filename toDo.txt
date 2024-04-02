@@ -1,0 +1,10 @@
+Done:
+- Add URLs for products page on all nav includes and shop now button
+
+Pending:
+- Add new products details function in views.py, copy all_products view and change details. Test first if possible.
+- Update urls page with the product ID as the slug, view change and name to match view.
+- Create products detail html page.
+- Link the card anchors to the product detail page.
+- Link the image on products detail to a new tab with just the image - can even created a dedicated image view page.
+- Add in the media query "max-width: 991px" if the header needs moving down.

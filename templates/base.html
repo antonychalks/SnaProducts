@@ -94,13 +94,14 @@
           </ul>
         </div>
       </div>
-      <div class="row bg-white d-lg-none">
+      <div id="top-navbar" class="row bg-white d-lg-none">
         <nav class="navbar navbar-expand-lg navbar-light w-100">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#site-nav" aria-controls="site-nav" aria-expaned="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           {% block nav-includes %}
             {% include 'includes/mobile-site-nav.html' %}
+            {% include 'includes/site-nav.html' %}
           {% endblock nav-includes %}
         </nav>
       </div>

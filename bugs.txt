@@ -17,3 +17,7 @@ Solution:
 Problem: When the product page loads, the arrow on the accordion is pointing up when it should be pointing down.
 Cause: The correct class is not written to the element.
 Solution: Append the collapsed class to each accordion button.
+
+Problem: The nav bar has disappeared from the home page.
+Cause: I added the d-lg-none class to the row that contains the nav bar as it isn't necessary on the main page.
+Solution: Used JS to remove the class when the index page loads, and then to add the class again once the page unloads.
