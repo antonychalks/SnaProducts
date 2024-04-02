@@ -80,7 +80,13 @@ body{
 }
 
 .card-header{
-    height: 56px;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+small{
+    font-size: small;
 }
 /* -------------------------------- Media Queries */
 
@@ -103,5 +109,24 @@ body{
 
     .header-container {
         padding-top: 91px;
+    }
+    
+}
+
+/* fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .product-container{
+        margin: 50px;
+    }
+}
+
+/* pad the top a bit when navbar is collapsed on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
     }
 }

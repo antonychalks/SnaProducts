@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}
+
+{% block nav-includes %}
+{% include 'includes/site-nav.html' %}
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col">
+            </div>
+        </div>
+    </div>
+{% endblock page_header %}
+
+{% block content %}
+    <div class="overlay-background">
+    </div>
+
+    <div class="container-fluid">
+        <div class="row product-container">
+            <div class="col-12 col-lg-6">
+                {% if product.image %}
+                <a href="{{ product.image.url}}">
+                    <img  width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
+                </a>
+                {% else %}
+                <a href="{{ product.image.url}}">
+                    <img width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                </a>
+                {% endif %}
+
+            </div>
+            <div class="col-12 col-lg-6 text-center">
+                <h5>{{product.name}} <small class="text-muted">{{product.sku}}</small></h5>
+                <h5>£{{product.price}}</h5>
+                {% if product.rating %}
+                <p><small class="text-muted">{{product.rating}}</small></p>
+                {% else %}
+                <p><small class="text-muted">No rating yet.</small></p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>{{product.description}}</p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

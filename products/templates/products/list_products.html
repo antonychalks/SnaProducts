@@ -41,29 +41,33 @@
         <div class="row">
             <div class="card-group">
                 {% for product in products %}
-                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
-                    <div class="card m-3" style="max-width: 540px;">
-                        <div class="card-header">
-                            <h5 class="card-title">{{product.name}}</h5>
-                        </div>
-                        <div class="h-100">
-
-                        </div>
-                        <div class="card-body">
-                            {% if product.image %}
-                            <a href="">
-                                <img class="card-img" height="100%" width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
-                            </a>
-                            {% else %}
-                            <a href="">
-                                <imgclass="card-img" height="auto" width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                            </a>
-                            {% endif %}
-                            <h5 class="card-text">£{{product.price}}</h5>
-                            <p class="card-text"><small class="text-muted">{{product.rating}}</small></p>
+                <a href="{% url 'product_detail' product.id %}">
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                        <div class="card m-3" style="max-width: 540px;">
+                            <div class="card-header .d-inline">
+                                <h5 class="card-title">{{product.name}} <small class="text-muted">{{product.sku}}</small></h5>
+                            </div>
+                            <div class="card-body">
+                                {% if product.image %}
+                                <a href="">
+                                    <img class="card-img" height="100%" width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
+                                </a>
+                                {% else %}
+                                <a href="">
+                                    <img class="card-img" height="auto" width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                </a>
+                                {% endif %}
+                                <h5 class="card-text">£{{product.price}}</h5>
+                                {% if product.rating %}
+                                <p class="card-text"><small class="text-muted">{{product.rating}}</small></p>
+                                {% else %}
+                                <p class="card-text"><small class="text-muted">No rating yet.</small></p>
+                                {% endif %}
+                                
+                                <a href=""><p class="card-text"><small class="text-muted">{{product.get_category_name }} | {{product.parent}}</small></p></a>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div class="col-12 d-sm-none mb-1">
                         <hr>
                     </div>
@@ -84,6 +88,7 @@
                         <hr>
                     </div>
                     {% endif %}
+                </a>
                 {% endfor %}
             </div>
         </div>
