@@ -2,10 +2,28 @@ Done:
 - Add URLs for products page on all nav includes and shop now button
 - Add new products details function in views.py, copy all_products view and change details. Test first if possible.
 - Update urls page with the product ID as the slug, view change and name to match view.
-
-Pending:
 - Create products detail html page.
 - Link the card anchors to the product detail page.
-- Link the image on products detail to a new tab with just the image - can even created a dedicated image view page.
+- Link the image on products detail to a new tab with just the image
 - Add in the media query "max-width: 991px" if the header needs moving down.
-- Overlay product image when clicked onto the list_products.
+- "action" attribute for the search bar form to link to the products in mobile nav and base.html.
+- Change name attribute for search bar input.
+- Views.py function for a get request with the name attribute within the get request.
+- In the views.py add an if statement that checks for categories and filter the results based on those categories.
+- In the nav html documents, add the category searches into the link URLs.
+
+___Pending:___
+Misc
+- Create a dedicated image view page.
+- Overlay product image when clicked on the list_products.
+
+Search Funtion
+- Add a button that appears when a catergory is selected, to remove category filters.
+
+Special Offers
+- Add a field to product model called deal and is_new
+- Add an admin option to create a deal on a product based on percentage discount.
+- Add an admin option to create a deal based on price of shopping basket.
+- Function the change deal field automatically if a deal is applied.
+- Change the category function to search for active deal and is_new fields if that is what selected.
+

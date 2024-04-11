@@ -17,10 +17,10 @@
                 Kitchen
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
-                <a href="" class="dropdown-item">Large Appliances</a>
-                <a href="" class="dropdown-item">Counter-top Appliances</a>
-                <a href="" class="dropdown-item">Cutlery and dishes</a>
-                <a href="" class="dropdown-item"><strong>All Kitchen</strong></a>
+                <a href="{% url 'products' %}?category=large_appliances" class="dropdown-item">Large Appliances</a>
+                <a href="{% url 'products' %}?category=counter_top_applicances" class="dropdown-item">Counter-top Appliances</a>
+                <a href="{% url 'products' %}?category=cutlery_dishes" class="dropdown-item">Cutlery and dishes</a>
+                <a href="{% url 'products' %}?category=kitchen" class="dropdown-item"><strong>All Kitchen</strong></a>
             </div>
         </li>
 
@@ -29,10 +29,10 @@
                 Living room
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="homeware-link">
-                <a href="" class="dropdown-item">Furniture</a>
-                <a href="" class="dropdown-item">Pillows and throws</a>
-                <a href="" class="dropdown-item">Lighting</a>
-                <a href="" class="dropdown-item"><strong>All Living Room</strong></a>
+                <a href="{% url 'products' %}?category=living_room_furniture" class="dropdown-item">Furniture</a>
+                <a href="{% url 'products' %}?category=pillows_throws" class="dropdown-item">Pillows and throws</a>
+                <a href="{% url 'products' %}?category=living_room_lighting" class="dropdown-item">Lighting</a>
+                <a href="{% url 'products' %}?category=living_room" class="dropdown-item"><strong>All Living Room</strong></a> 
             </div>
         </li>
 
@@ -41,10 +41,10 @@
                 Bedroom
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="homeware-link">
-                <a href="" class="dropdown-item">Furniture</a>
-                <a href="" class="dropdown-item">Bedding</a>
-                <a href="" class="dropdown-item">Lighting</a>
-                <a href="" class="dropdown-item"><strong>All Bedroom</strong></a>
+                <a href="{% url 'products' %}?category=bedroom_furniture" class="dropdown-item">Furniture</a>
+                <a href="{% url 'products' %}?category=bedding" class="dropdown-item">Bedding</a>
+                <a href="{% url 'products' %}?category=bedroom_lighting" class="dropdown-item">Lighting</a>
+                <a href="{% url 'products' %}?category=bedroom" class="dropdown-item"><strong>All Bedroom</strong></a>
             </div>
         </li>
 
@@ -53,10 +53,10 @@
                 Bathroom
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="homeware-link">
-                <a href="" class="dropdown-item">Units</a>
-                <a href="" class="dropdown-item">Towels &amp; Robes </a>
-                <a href="" class="dropdown-item">Organisers </a>
-                <a href="" class="dropdown-item"><strong>All Bathroom</strong></a>
+                <a href="{% url 'products' %}?category=unit" class="dropdown-item">Units</a>
+                <a href="{% url 'products' %}?category=towels_robes" class="dropdown-item">Towels &amp; Robes </a>
+                <a href="{% url 'products' %}?category=organisers" class="dropdown-item">Organisers </a>
+                <a href="{% url 'products' %}?category=bathroom" class="dropdown-item"><strong>All Bathroom</strong></a>  
             </div>
         </li>
 
@@ -65,10 +65,10 @@
                 Special Offers
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="specials-link">
-                <a href="" class="dropdown-item">New Arrivals</a>
-                <a href="" class="dropdown-item">Deals</a>
-                <a href="" class="dropdown-item">Clearance</a>
-                <a href="" class="dropdown-item"><strong>All Specials</strong></a>
+                <a href="{% url 'products' %}?category=new_arrivals" class="dropdown-item">New Arrivals</a>
+                <a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a>
+                <a href="{% url 'products' %}?category=clearance" class="dropdown-item">Clearance</a>
+                <a href="{% url 'products' %}?category=specials" class="dropdown-item"><strong>All Specials</strong></a> 
             </div>
         </li>
     </ul>
