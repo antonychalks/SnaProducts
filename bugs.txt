@@ -26,3 +26,10 @@ Problem: There are two burger icons on the mobile version on the product list pa
 Cause: One burger icon was in place on the home screen for the departments, but isn't necessary on the products list page. The other burger icon was still in place from legacy code.
 Solution: Set JS to hide the burger icon when on the list products page.
 
+Problem: When you click on the parent catergory, nothing is displayed.
+Cause: The product is only shown when the child category is clicked, the parent catergory isn't associated with the product.
+Solution:
+
+Problem: When the sorting in descening, the current option isn't selected in the box.
+Cause: The if statements within the options doesn't include [option]_desc, only [option]_asc
+Solution: Added an or option to each if statement to include desc.

@@ -17,6 +17,7 @@ Done:
 - Add a category display on each product card on the list products page and product detail page
 - Add html for a selection box in the products.html file for selecting how to sort the products.
 - In views.py, add if sortkey == 'category': sortkey = 'category__name', so the categories are sorted by name rather than ID.
+- Add a catergory display next to the products title at the top of the content of the page, using the current categories varibale.
 
 ___Pending:___
 Misc
@@ -42,7 +43,6 @@ Special Offers
 Sorting products
 - Add different categories. -- Needs more categories to sort by
 
-- Add a catergory display next to the products title at the top of the content of the page, using the current categories varibale.
 - Add the a.category-badge > span.badge:hover code in the stylesheet to change the color and background of the category badge when it's being hovered over.
 -- Add a cross button to remove the chosen category from the filter.
 
