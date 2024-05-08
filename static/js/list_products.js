@@ -3,7 +3,6 @@ $(document).ready(function() {
 
     var currentUrl = new URL(window.location);
     var direction = currentUrl.searchParams.get("direction");
-    console.log("direction =", direction)
     if(direction == "asc"){
         $('#button-asc').addClass("direction-active");
         $('#button-desc').removeClass("direction-active");
@@ -13,6 +12,13 @@ $(document).ready(function() {
     } else {
         $('#button-asc').removeClass("direction-active");
         $('#button-desc').removeClass("direction-active");
+    }
+    var sort = currentUrl.searchParams.get('sort');
+    var category = currentUrl.searchParams.get('category');
+    var direction = currentUrl.searchParams.get('direction');
+    var search = currentUrl.searchParams.get('search');
+    if (sort || category || direction || search){
+        $('.btn-remove-all').removeClass('d-none');
     }
 });
 
@@ -35,9 +41,31 @@ $('#sort-selector').change(function(){
     }
 })
 
+$('.btn-remove-search').click(function(){
+    var currentUrl = new URL(window.location);
+    currentUrl.searchParams.delete("search");
+    window.location.replace(currentUrl);
+})
+
 $('.btn-remove-category').click(function(){
     var currentUrl = new URL(window.location);
     currentUrl.searchParams.delete("category");
+    window.location.replace(currentUrl);
+})
+
+$('.btn-remove-sort').click(function(){
+    var currentUrl = new URL(window.location);
+    currentUrl.searchParams.delete("sort");
+    currentUrl.searchParams.delete("direction");
+    window.location.replace(currentUrl);
+})
+
+$('.btn-remove-all').click(function(){
+    var currentUrl = new URL(window.location);
+    currentUrl.searchParams.delete("sort");
+    currentUrl.searchParams.delete("direction");
+    currentUrl.searchParams.delete("category");
+    currentUrl.searchParams.delete("search");
     window.location.replace(currentUrl);
 })
 

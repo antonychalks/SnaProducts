@@ -89,6 +89,16 @@ small{
     font-size: small;
 }
 
+.sort_filter{
+    height: 20px;
+    
+}
+
+.sort_filter span, .sort_filter button{
+    width: fit-content;
+    margin: 0 10px;
+}
+
 /* -------------------------------- General styling classes */
 .no-link-decoration{
     text-decoration: none;
@@ -101,6 +111,10 @@ small{
 
 .mobile-navbar{
     justify-content: space-around;
+}
+
+.category-badge:hover{
+
 }
 /* -------------------------------- Media Queries */
 

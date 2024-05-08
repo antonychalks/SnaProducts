@@ -13,6 +13,8 @@ def list_products(request):
     categories = None
     sort = None
     direction = None
+    display_sorting = {}
+    display_category = None
     
     if request.GET:
         if 'sort' in request.GET: #Checks for sort in the request.GET so that this code gets run
@@ -28,12 +30,15 @@ def list_products(request):
                 if direction == 'desc': #if the variable is desc for descending it will add a minus to the front of the sortkey varible
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
+            display_sorting = sort.capitalize()
         
         if 'category' in request.GET:
             # if category has parent then continue, else if category has no parent, display all categories with parent of category.
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
+            display_category = str(categories[0]).replace("_", " ").title()
+
             
         if 'search' in request.GET:
             query = request.GET['search']
@@ -49,9 +54,11 @@ def list_products(request):
     
     context = {
         'products': products,
-        'search term': query,
+        'search_term': query,
         'current_categories': categories,
         'current_sorting': sort_option,
+        'display_sorting': display_sorting,
+        'display_category': display_category,
     }
 
     return render(request, 'products/list_products.html', context)
