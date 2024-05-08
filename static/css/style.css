@@ -68,9 +68,36 @@ body{
     box-sizing: border-box;
     position: fixed;
     top: 62px;
-    left: calc(50% - 107px)!important;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
     margin: unset;
+}
+
+.overlay-button {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    margin: unset;
+    width: fit-content;
+    justify-content: space-around;
+    max-height: 80px;
+}
+
+.overlay-button button{
+    display: inline;
+}
+
+.edge-button{
+    width: 20%;
+}
+
+#to-top{
+    width: 150px;
+    margin: 0 10px;
 }
 
 .card-img {

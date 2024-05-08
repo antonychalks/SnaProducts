@@ -18,6 +18,10 @@ Done:
 - Add html for a selection box in the products.html file for selecting how to sort the products.
 - In views.py, add if sortkey == 'category': sortkey = 'category__name', so the categories are sorted by name rather than ID.
 - Add a catergory display next to the products title at the top of the content of the page, using the current categories varibale.
+-- Add a cross button to remove the chosen category from the filter.
+-- When selecting a different sort function, have a toggle for asc or desc
+- Create JS function that changes the sort selector. Done by getting the selector value and the url, splitting the selector value into type of sort and direction, and setting the URL to the new value, if the selector value - reset. Else the sort and direction will be deleted.
+--To add the toggle function, add a new function that targets the toggle, and changed the url of the toggle is clicked.
 
 ___Pending:___
 Misc
@@ -42,14 +46,6 @@ Special Offers
 
 Sorting products
 - Add different categories. -- Needs more categories to sort by
-
-- Add the a.category-badge > span.badge:hover code in the stylesheet to change the color and background of the category badge when it's being hovered over.
--- Add a cross button to remove the chosen category from the filter.
-
--- When selecting a different sort function, have a toggle for asc or desc
-
-- Create JS function that changes the sort selector. Done by getting the selector value and the url, splitting the selector value into type of sort and direction, and setting the URL to the new value, if the selector value - reset. Else the sort and direction will be deleted.
---To add the toggle function, add a new function that targets the toggle, and changed the url of the toggle is clicked.
 
 - Add a back to top button onto list products page.
 - Add script to scroll back to the top of the page.
