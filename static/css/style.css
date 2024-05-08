@@ -88,6 +88,17 @@ body{
 small{
     font-size: small;
 }
+
+/* -------------------------------- General styling classes */
+.no-link-decoration{
+    text-decoration: none;
+    color: unset;
+}
+
+.direction-active{
+    background: #0045ac;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */

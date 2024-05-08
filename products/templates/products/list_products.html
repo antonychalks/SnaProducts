@@ -38,10 +38,36 @@
                 {% include 'includes/side-nav.html' %}
             </div>
         </div>
+        <div class="row mt-1 mb-2">
+            <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-primary" id="button-asc">Ascending</button>
+                    <button type="button" class="btn btn-primary" id="button-desc">Descending</button>
+                  
+                    <div class="btn-group sort-select-wrapper" role="group">
+                        <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                            <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
+                            <option value="price" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price</option>
+                            <option value="rating" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating</option>
+                            <option value="name" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name</option>
+                            <option value="category" {% if current_sorting == 'category_asc' %}selected{% endif %}>Category</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 order-md-first">
+                <p class="text-muted mt-3 text-center text-md-left">
+                    {% if search_term or current_categories or current_sorting != 'None_None' %}
+                        <span class="small"><a href="{% url 'products' %}">All Products</a> | </span>
+                    {% endif %}
+                    {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                </p>
+            </div>
+        </div>
         <div class="row">
             <div class="card-group">
                 {% for product in products %}
-                <a href="{% url 'product_detail' product.id %}">
+                <a href="{% url 'product_detail' product.id %}" class="no-link-decoration">
                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
                         <div class="card m-3" style="max-width: 540px;">
                             <div class="card-header .d-inline">
@@ -63,8 +89,7 @@
                                 {% else %}
                                 <p class="card-text"><small class="text-muted">No rating yet.</small></p>
                                 {% endif %}
-                                
-                                <a href=""><p class="card-text"><small class="text-muted">{{product.get_category_name }} | {{product.parent}}</small></p></a>
+                                <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="text-muted">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
                             </div>
                         </div>
                     </div>
@@ -99,3 +124,9 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script src="{% static 'js/list_products.js' %}"></script>
+
+{% endblock postloadjs %}

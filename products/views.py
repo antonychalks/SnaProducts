@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
+from django.db.models.functions import Lower
 from .models import Product, Category
 
 # Create your views here.
@@ -10,8 +11,24 @@ def list_products(request):
     products = Product.objects.all()
     query = None
     categories = None
+    sort = None
+    direction = None
     
     if request.GET:
+        if 'sort' in request.GET: #Checks for sort in the request.GET so that this code gets run
+            sortkey = request.GET['sort'] #stores the request in a varibale
+            sort = sortkey #stores the sortkey variable in a varibale so that the original is kept
+            if sortkey == 'name':
+                sortkey = 'lower_name' #renames sortkey to lower_name
+                products = products.annotate(lower_name=Lower('name'))#creates a temporary field on the model for lower name
+            if sortkey == 'category':
+                sortkey = 'category__name'
+            if 'direction' in request.GET: #checks for a direction in the GET request
+                direction = request.GET['direction'] #stores the direction request in a variable
+                if direction == 'desc': #if the variable is desc for descending it will add a minus to the front of the sortkey varible
+                    sortkey = f'-{sortkey}'
+            products = products.order_by(sortkey)
+        
         if 'category' in request.GET:
             # if category has parent then continue, else if category has no parent, display all categories with parent of category.
             categories = request.GET['category'].split(',')
@@ -28,10 +45,13 @@ def list_products(request):
             # i before contains makes the query case insensitive. | creates or statement i.e: name = query or description = query
             products = products.filter(queries)
     
+    sort_option = f'{sort}_{direction}'
+    
     context = {
         'products': products,
         'search term': query,
         'current_categories': categories,
+        'current_sorting': sort_option,
     }
 
     return render(request, 'products/list_products.html', context)

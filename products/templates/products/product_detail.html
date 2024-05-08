@@ -39,6 +39,7 @@
             <div class="col-12 col-lg-6 text-center">
                 <h5>{{product.name}} <small class="text-muted">{{product.sku}}</small></h5>
                 <h5>£{{product.price}}</h5>
+                <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="text-muted">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
                 {% if product.rating %}
                 <p><small class="text-muted">{{product.rating}}</small></p>
                 {% else %}

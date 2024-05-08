@@ -1,0 +1,46 @@
+$('.btt-link').click(function(e) {
+    window.scrollTo(0,0)
+})
+
+$('#sort-selector').change(function(){
+    var selector = $(this)
+    var currentUrl = new URL(window.location);
+    var selectedVal = selector.val();
+
+    if(selectedVal != "reset"){
+        var sort = selectedVal;
+        currentUrl.searchParams.set("sort", sort);
+        window.location.replace(currentUrl);
+    } else {
+        currentUrl.searchParams.delete("sort");
+        window.location.replace(currentUrl);
+    }
+})
+
+$(document).ready(function() {
+    var currentUrl = new URL(window.location);
+    var direction = currentUrl.searchParams.get("direction");
+    console.log("direction =", direction)
+    if(direction == "asc"){
+        $('#button-asc').addClass("direction-active");
+        $('#button-desc').removeClass("direction-active");
+    } else if(direction == "desc"){
+        $('#button-desc').addClass("direction-active");
+        $('#button-asc').removeClass("direction-active");
+    } else {
+        $('#button-asc').removeClass("direction-active");
+        $('#button-desc').removeClass("direction-active");
+    }
+});
+
+$('#button-asc').click(function(){
+    var currentUrl = new URL(window.location);
+    currentUrl.searchParams.set("direction", "asc");
+    window.location.replace(currentUrl);
+})
+
+$('#button-desc').click(function(){
+    var currentUrl = new URL(window.location);
+    currentUrl.searchParams.set("direction", "desc");
+    window.location.replace(currentUrl);
+})
