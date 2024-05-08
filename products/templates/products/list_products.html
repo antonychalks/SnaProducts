@@ -32,14 +32,16 @@
                 <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     Toggle Departments
                   </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-align-justify"></i>
-                </button>
                 {% include 'includes/side-nav.html' %}
             </div>
         </div>
         <div class="row mt-1 mb-2">
-            <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+            {% for c in current_categories %}
+            <p class="col-12 col-md-6 mt-3 text-center">
+                <span class="badge text-bg-secondary "><a href="{% url 'products' %}?category={{c}}" class="no-link-decoration">{{ c }}</a> <i class="fa-regular fa-circle-xmark btn-remove-category"></i></span>
+            </p>
+            {% endfor %}
+            <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                     <button type="button" class="btn btn-primary" id="button-asc">Ascending</button>
                     <button type="button" class="btn btn-primary" id="button-desc">Descending</button>
@@ -57,9 +59,6 @@
             </div>
             <div class="col-12 col-md-6 order-md-first">
                 <p class="text-muted mt-3 text-center text-md-left">
-                    {% if search_term or current_categories or current_sorting != 'None_None' %}
-                        <span class="small"><a href="{% url 'products' %}">All Products</a> | </span>
-                    {% endif %}
                     {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                 </p>
             </div>

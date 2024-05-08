@@ -36,13 +36,13 @@
   </head>
   <body>
     <header class="container-fluid fixed-top">
-      <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
-        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
+      <div id="topnav" class="row bg-white pt-lg-2 d-lg-flex">
+        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center">
           <a href="{% url 'landing_page' %}" class="nav-link main-logo-link">
-            <h2 class="logo-font text-black my-0"><strong>SnA</strong><em> Products</em></h2>
+            <h2 class="logo-font text-black text-center my-0"><strong>SnA</strong><em> Products</em></h2>
           </a>
         </div>
-        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 d-none d-lg-block">
         <form method="GET" action="{% url 'products' %}">
           <div class="input-group w=100">
             <input class="form-control border border-black rounded-0" type="text" name="search" placeholder="Search our site">
@@ -56,7 +56,7 @@
           </div>
         </form>
         </div>
-        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 d-none d-lg-block">
           <ul class="list-inline list-unstyled text-center text-lg-right my-0">
             <li class="list-inline-item dropdown">
               <a class="text-black nav-link" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div id="top-navbar" class="row bg-white d-lg-none">
-        <nav class="navbar navbar-expand-lg navbar-light w-100 pl-2">
+        <nav class="mobile-navbar navbar navbar-expand-lg navbar-light w-100 pl-2">
           {% include 'includes/mobile-site-nav.html' %}
           {% block nav-includes %}
             {% include 'includes/site-nav.html' %}

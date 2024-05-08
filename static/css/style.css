@@ -99,6 +99,9 @@ small{
     background: #0045ac;
 }
 
+.mobile-navbar{
+    justify-content: space-around;
+}
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */

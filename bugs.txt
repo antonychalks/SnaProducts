@@ -21,3 +21,8 @@ Solution: Append the collapsed class to each accordion button.
 Problem: The nav bar has disappeared from the home page.
 Cause: I added the d-lg-none class to the row that contains the nav bar as it isn't necessary on the main page.
 Solution: Used JS to remove the class when the index page loads, and then to add the class again once the page unloads.
+
+Problem: There are two burger icons on the mobile version on the product list page which do nothing.
+Cause: One burger icon was in place on the home screen for the departments, but isn't necessary on the products list page. The other burger icon was still in place from legacy code.
+Solution: Set JS to hide the burger icon when on the list products page.
+
