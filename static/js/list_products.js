@@ -1,16 +1,6 @@
 $(document).ready(function() {
     $('#navbar-burger').addClass("d-none");
 
-    var current_categories = [];
-    var categories_displayed = $('.btn-remove-category');
-    console.log(categories_displayed);
-    for (let i = 0; i < categories_displayed.length; i++) {
-        let category = $(categories_displayed[i]).data("category"); // Corrected line
-        current_categories.push(category);
-        console.log(current_categories);
-    }
-    
-
     var currentUrl = new URL(window.location);
     var direction = currentUrl.searchParams.get("direction");
     if(direction == "asc"){
@@ -93,7 +83,7 @@ $('.btn-remove-category').click(function(){
 
                 }
             }
-            
+
             let newCategories = current_categories.filter(word => word != thisCategory)
             newCategories = current_categories.join(',');
     
