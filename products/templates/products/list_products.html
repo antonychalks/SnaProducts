@@ -58,11 +58,13 @@
         </div>
         {% if current_categories or current_sorting or search_term %}
         <div class="row sort_filter justify-content-start">
-            {% for c in current_categories %}
-                <span class="badge category-badge text-bg-secondary filter">
-                    {{ display_category }} <i class="fa-regular fa-circle-xmark btn-remove-category"></i>
-                </span>
+            {% for category in current_categories %}
+            <span class="badge category-badge text-bg-secondary filter">   
+                    {{ category.get_display_name }}
+                <i class="fa-regular fa-circle-xmark btn-remove-category" data-category="{{category.name}}" data-type="{{category.type}}"></i>
+            </span>
             {% endfor %}
+            
             {% if current_sorting != "None_None" %}
                 <span class="badge category-badge text-bg-secondary filter">
                     {{ display_sorting }} <i class="fa-regular fa-circle-xmark btn-remove-sort"></i>

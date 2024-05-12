@@ -50,23 +50,20 @@ def list_products(request):
         #                 products = products.filter(category__name__in=categories)
         #                 print(products)
         
-            if 'category' in request.GET:
-                # Split the categories selected by the user
-                selected_categories = request.GET['category'].split(',')
-                parent_categories = Category.objects.filter(type=0)
-                all_categories = []
-                
-                for category_name in selected_categories:
-                    category = Category.objects.get(name=category_name)
+        if 'category' in request.GET:
+            selected_categories = request.GET['category'].split(',')
+            categories = []
 
-                    if category.type == 0:
-                        all_categories.extend(category.children.all())
-                    
-                    all_categories.append(category)
-                
-                all_category_names = [cat.name for cat in all_categories]
-                
-                products = products.filter(category__name__in=all_category_names)
+            for category_name in selected_categories:
+                category = Category.objects.get(name=category_name)
+                categories.append(category)  # Add the selected category
+
+                if category.type == 0:
+                    categories.extend(category.children.all())  # Add children categories if it's a parent category
+
+            all_category_names = [cat.name for cat in categories]
+            products = products.filter(category__name__in=all_category_names)
+
 
             display_category = str(categories[0]).replace("_", " ").title()
 
@@ -80,6 +77,8 @@ def list_products(request):
             queries = Q(name__icontains = query) | Q(description__icontains = query)
             # i before contains makes the query case insensitive. | creates or statement i.e: name = query or description = query
             products = products.filter(queries)
+            
+        print(categories)
     
     sort_option = f'{sort}_{direction}'
     

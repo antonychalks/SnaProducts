@@ -1,6 +1,16 @@
 $(document).ready(function() {
     $('#navbar-burger').addClass("d-none");
 
+    var current_categories = [];
+    var categories_displayed = $('.btn-remove-category');
+    console.log(categories_displayed);
+    for (let i = 0; i < categories_displayed.length; i++) {
+        let category = $(categories_displayed[i]).data("category"); // Corrected line
+        current_categories.push(category);
+        console.log(current_categories);
+    }
+    
+
     var currentUrl = new URL(window.location);
     var direction = currentUrl.searchParams.get("direction");
     if(direction == "asc"){
@@ -59,9 +69,41 @@ $('.btn-remove-search').click(function(){
 
 $('.btn-remove-category').click(function(){
     var currentUrl = new URL(window.location);
-    currentUrl.searchParams.delete("category");
+
+    var current_categories = [];
+    var categories_displayed = $('.btn-remove-category');
+    let thisCategory = $(this).data("category");
+    console.log(thisCategory)
+
+    if (categories_displayed.length > 1){
+        if ($(this).data("type") == 0) {
+            currentUrl.searchParams.delete("category")
+            console.log("Deleting Category")
+        } else {
+            for (let i = 0; i < categories_displayed.length; i++) {
+
+                if ($(categories_displayed[i]).data("type") == 1){
+
+                    if ($(categories_displayed[i]).data("category") != thisCategory){
+                        let category = $(categories_displayed[i]).data("category");
+                        current_categories.push(category);
+                    } else {
+                        console.log("removing ", categories_displayed[i])
+                    }
+
+                }
+            }
+            
+            let newCategories = current_categories.filter(word => word != thisCategory)
+            newCategories = current_categories.join(',');
+    
+            currentUrl.searchParams.set("category", newCategories);    
+        }
+    } else {
+        currentUrl.searchParams.delete("category")
+    }
     window.location.replace(currentUrl);
-})
+});
 
 $('.btn-remove-sort').click(function(){
     var currentUrl = new URL(window.location);
