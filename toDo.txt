@@ -43,6 +43,9 @@ Shopping cart:
 - Implement the bag urls in the project urls file.
 - In base.html and other navigation files, implement the href url for the cart.
 - Create the content for the cart template. Has to have an empty cart if statement.
+- Create bag/contexts.py to help with the bag functionality
+- Add the context to the context processor in settings. "'cart.contexts.cart_contents',"
+- Add the "MIN_FREE_DELIVERY" & "MIN_HALF_DELIVERY" & "STANDARD_DELIVERY_PERCENTAGE"
 
 
 ___Pending:___
@@ -70,7 +73,4 @@ Sorting products:
 - Fix a bug where the parent category doesn't display all the children.
 
 Shopping cart:
-- Create bag/contexts.py to help with the bag functionality
-- Add the context to the context processor in settings. "'bag.contexts.bag_contents',"
-- Add the "FREE_DELIVERY_THRESHOLD" & "STANDARD_DELIVERY_PERCENTAGE = 10"
 -- On the cart page, add a row of 4 random products to the bottom of the page, with an add to cart button. When clicked: Message saying item added to cart, adds item to cart, that product will then be replaced by another product on the bottom of the screen"

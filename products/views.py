@@ -32,11 +32,42 @@ def list_products(request):
             products = products.order_by(sortkey)
             display_sorting = sort.capitalize()
         
-        if 'category' in request.GET:
-            # if category has parent then continue, else if category has no parent, display all categories with parent of category.
-            categories = request.GET['category'].split(',')
-            products = products.filter(category__name__in=categories)
-            categories = Category.objects.filter(name__in=categories)
+        # if 'category' in request.GET:
+        #     # if category has parent then continue, else if category has no parent, display all categories with parent of category.
+        #     categories = request.GET['category'].split(',')
+        #     parent_categories = Category.objects.filter(type=0)
+        #     categories = Category.objects.filter(name__in=categories)
+        #     for category in categories:
+        #         for c in parent_categories:
+        #             if category == c:
+        #                 parent = Category.objects.filter(name=c)
+        #                 children = parent[0].children.all()
+        #                 products = products.filter(category__name__in=children)
+        #                 print(categories)
+        #                 print(children)
+        #                 print(products)
+        #             else:
+        #                 products = products.filter(category__name__in=categories)
+        #                 print(products)
+        
+            if 'category' in request.GET:
+                # Split the categories selected by the user
+                selected_categories = request.GET['category'].split(',')
+                parent_categories = Category.objects.filter(type=0)
+                all_categories = []
+                
+                for category_name in selected_categories:
+                    category = Category.objects.get(name=category_name)
+
+                    if category.type == 0:
+                        all_categories.extend(category.children.all())
+                    
+                    all_categories.append(category)
+                
+                all_category_names = [cat.name for cat in all_categories]
+                
+                products = products.filter(category__name__in=all_category_names)
+
             display_category = str(categories[0]).replace("_", " ").title()
 
             

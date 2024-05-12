@@ -33,3 +33,7 @@ Solution:
 Problem: When the sorting in descening, the current option isn't selected in the box.
 Cause: The if statements within the options doesn't include [option]_desc, only [option]_asc
 Solution: Added an or option to each if statement to include desc.
+
+Problem: The sidebar was squashed into the middle of the screen, rather than displaying on the left.
+Cause: I added an ID of nav-sidebar to the parent div on the row level, which had CSS written for it telling the div to transformX: 50%.
+Solution: Moved the ID to be for the toggle button, apposed to the whole div.
