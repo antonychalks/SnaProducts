@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+
+{% block nav-includes %}
+{% include 'includes/site-nav.html' %}
+{% endblock %}
+
+{% block banner %}
+    <div class="col bg-black text-white">
+        <h4 class="logo-font my-1"> 10% Off your first order!</h4>
+    </div>
+{% endblock banner %}
+
+{% block content %}
+<div class="overlay-background"></div>
+<div class="container">
+    <div class="row">
+        <h2 class="logo-font"> Shopping Cart </h2>
+        <hr>
+    </div>
+    <div class="row">
+        {% if bag_items %}
+        <div class="table-responsive rounded"></div>
+        {% else %}
+        <div class="d-flex justify-content-between">
+            <h5> Shopping Cart empty </h5>
+            <p class="my-0">
+                {% if grand_total %}
+                    ${{ grand_total|floatformat:2 }}
+                {% else %}
+                    $0.00
+                {% endif %}
+            </p>
+        </div>
+        <a href={% url 'products' %} class="btn btn-primary w-25 mx-auto"> Click here to starting filling your cart </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

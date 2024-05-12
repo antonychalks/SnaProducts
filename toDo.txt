@@ -1,4 +1,5 @@
-Done:
+___Done:___
+Styling and Structure:
 - Add URLs for products page on all nav includes and shop now button
 - Add new products details function in views.py, copy all_products view and change details. Test first if possible.
 - Update urls page with the product ID as the slug, view change and name to match view.
@@ -6,9 +7,13 @@ Done:
 - Link the card anchors to the product detail page.
 - Link the image on products detail to a new tab with just the image
 - Add in the media query "max-width: 991px" if the header needs moving down.
+
+Search:
 - "action" attribute for the search bar form to link to the products in mobile nav and base.html.
 - Change name attribute for search bar input.
 - Views.py function for a get request with the name attribute within the get request.
+
+Sorting and Filtering:
 - In the views.py add an if statement that checks for categories and filter the results based on those categories.
 - In the nav html documents, add the category searches into the link URLs.
 - Add URLs to all products selections with ?price&direction=asc afterwards. main nav and side nav.
@@ -23,6 +28,23 @@ Done:
 - Create JS function that changes the sort selector. Done by getting the selector value and the url, splitting the selector value into type of sort and direction, and setting the URL to the new value, if the selector value - reset. Else the sort and direction will be deleted.
 --To add the toggle function, add a new function that targets the toggle, and changed the url of the toggle is clicked.
 
+Scroll to top:
+- Add a back to top button onto list products page.
+- Add script to scroll back to the top of the page.
+-- Add a button the scroll up 1 line or down 1 line, so that every time the button is clicked it will display all new products.
+-- Add a button that appears when a catergory is selected, to remove category filters.
+
+Shopping cart:
+- Add new app called cart and add app to settings.
+- Create a new views function within the cart app.
+- Create new directory: bag/templates/bag/bag.html.
+- Copy index.html into cart.html and remove the content block.
+- Copy the landing_page urls.py file to the cart app.
+- Implement the bag urls in the project urls file.
+- In base.html and other navigation files, implement the href url for the cart.
+- Create the content for the cart template. Has to have an empty cart if statement.
+
+
 ___Pending:___
 Misc
 - Add testing for new views.py functionality
@@ -33,10 +55,6 @@ Featured products
 -- Add a featured products box on the home page
 -- Add admin functionality to add products to featured product either, on the product page, on the featured products admin page and on the products list admin page.
 
-
-Search Funtion
--- Add a button that appears when a catergory is selected, to remove category filters.
-
 Special Offers
 -- Add a field to product model called deal and is_new
 -- Add an admin option to create a deal on a product based on percentage discount.
@@ -44,10 +62,15 @@ Special Offers
 -- Function the change deal field automatically if a deal is applied.
 -- Change the category function to search for active deal and is_new fields if that is what selected.
 
-Sorting products
-- Add different categories. -- Needs more categories to sort by
+Scroll to top:
+-- Adjust the up one row function so the first click will go up a level and center the row.
 
-- Add a back to top button onto list products page.
-- Add script to scroll back to the top of the page.
--- Add a button the scroll up 2 lines or down 2 lines, so that every time the button is clicked it will display all new products.
-- Add css for btt-button and btt-link
+Sorting products:
+- Add different categories. -- Needs more categories to sort by
+- Fix a bug where the parent category doesn't display all the children.
+
+Shopping cart:
+- Create bag/contexts.py to help with the bag functionality
+- Add the context to the context processor in settings. "'bag.contexts.bag_contents',"
+- Add the "FREE_DELIVERY_THRESHOLD" & "STANDARD_DELIVERY_PERCENTAGE = 10"
+-- On the cart page, add a row of 4 random products to the bottom of the page, with an add to cart button. When clicked: Message saying item added to cart, adds item to cart, that product will then be replaced by another product on the bottom of the screen"

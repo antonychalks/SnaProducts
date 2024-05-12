@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'landing_page',
     'products',
+    'cart',
 ]
 
 MIDDLEWARE = [
