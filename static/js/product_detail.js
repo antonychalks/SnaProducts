@@ -1,9 +1,22 @@
 $(document).ready(function () {
-    console.log("Showing top-nav")
     $('#top-navbar').removeClass('d-lg-none');
+
+    let imgEnlarged = false
+
+    $('.zoom-overlay').on("click", function() {
+        $('.enlarge-img').toggleClass("d-none");
+        imgEnlarged = true;
+    });
+
+    $('.enlarge-img').on("click", function(event) {
+        if (event.target.nodeName != "img") {
+            $('.enlarge-img').toggleClass("d-none");
+        }
+    });
+
 });
 
 $( window ).on( "unload", function () {
-    console.log("Hiding top-nav")
     $('#top-navbar').addClass('d-lg-none');
 });
+

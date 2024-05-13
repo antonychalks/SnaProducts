@@ -9,32 +9,24 @@
 {% include 'includes/site-nav.html' %}
 {% endblock %}
 
-{% block page_header %}
-    <div class="container header-container">
-        <div class="row">
-            <div class="col">
-            </div>
-        </div>
-    </div>
-{% endblock page_header %}
 
 {% block content %}
     <div class="overlay-background">
     </div>
 
-    <div class="container-fluid">
+    <div class="container-md" id="product_detail_container">
         <div class="row product-container">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
                 {% if product.image %}
-                <a href="{{ product.image.url}}">
-                    <img  width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
+                <a href="{{ product.image.url}}" target="_blank">
+                    <img class="product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
                 </a>
                 {% else %}
-                <a href="{{ product.image.url}}">
-                    <img width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                <a href="{{ product.image.url}}" target="_blank">
+                    <img class="product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                 </a>
                 {% endif %}
-
+                <i class="fa-solid fa-magnifying-glass zoom-overlay"></i>
             </div>
             <div class="col-12 col-lg-6 text-center">
                 <h5>{{product.name}} <small class="text-muted">{{product.sku}}</small></h5>
@@ -52,5 +44,16 @@
                 <p>{{product.description}}</p>
             </div>
         </div>
+    </div>
+    <div class="d-none enlarge-img">
+        {% if product.image %}
+        <a href="{{ product.image.url}}" target="_blank">
+            <img class="product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
+        </a>
+        {% else %}
+        <a href="{{ product.image.url}}" target="_blank">
+            <img class="product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+        </a>
+        {% endif %}
     </div>
 {% endblock content %}

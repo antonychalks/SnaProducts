@@ -27,6 +27,7 @@ Sorting and Filtering:
 -- When selecting a different sort function, have a toggle for asc or desc
 - Create JS function that changes the sort selector. Done by getting the selector value and the url, splitting the selector value into type of sort and direction, and setting the URL to the new value, if the selector value - reset. Else the sort and direction will be deleted.
 --To add the toggle function, add a new function that targets the toggle, and changed the url of the toggle is clicked.
+- Fix a bug where the parent category doesn't display all the children.
 
 Scroll to top:
 - Add a back to top button onto list products page.
@@ -70,7 +71,29 @@ Scroll to top:
 
 Sorting products:
 - Add different categories. -- Needs more categories to sort by
-- Fix a bug where the parent category doesn't display all the children.
+
 
 Shopping cart:
 -- On the cart page, add a row of 4 random products to the bottom of the page, with an add to cart button. When clicked: Message saying item added to cart, adds item to cart, that product will then be replaced by another product on the bottom of the screen"
+
+Product page:
+    Left top:
+    !-- Image
+    -- Zoom button overlayed on the picture.
+
+    Right of image:
+    -- White container background, leaving the off white background as a large border.
+    -- Title to the right with tags underneath.
+    -- Rating.
+    -- Quantity selector.
+    -- Free delivery over [MIN_FREE_DELIVERY] -- Half price delivery over [MIN_HALF_DELIVERY].
+    -- Price with different colour text to stand out. -- Product delivery cost [STANDARD_DELIVERY_PERCENTAGE].
+    -- Add to cart and buy now button at the bottom.
+
+    Underneath both:
+    -- Description on the left
+    -- Related Products on the right.
+
+
+Nav:
+-- Hovering over the main categories should drop the menu down.

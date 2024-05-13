@@ -1,6 +1,7 @@
-Header: format from the course material
+Header: Format from the course material
 Index background image: https://pixabay.com/photos/dining-entertaining-lifestyle-1809847/
-All product images were obtained from https://www.istockphoto.com/ by searching for what the product is.
+All Kitchen product images were obtained from https://www.istockphoto.com/ by searching for what the product and finding a good fit.
+All the other product images were obtained from https://www.pexels.com/.
 
 The sidebar HTML in the include side-nav.html, the side-nav.js and the side-nav.css were all obtained from https://codepen.io/truongtx-ccvn/pen/qLXGKV
 The accordions used within this sidebar are from the bootstrap V5.3 documentation as an example. https://getbootstrap.com/docs/5.3/components/accordion/

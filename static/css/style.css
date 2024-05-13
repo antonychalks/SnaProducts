@@ -63,7 +63,7 @@ body{
     background: #eee;
 }
 
-/*--------------------------------- Products */
+/*--------------------------------- List Products */
 #nav-sidebar{
     box-sizing: border-box;
     position: fixed;
@@ -126,6 +126,59 @@ small{
     margin: 0 10px;
 }
 
+/* -------------------------------- Product Detail */
+#product_detail_container{
+    background: #fff;
+    margin-top: 30px; 
+    padding: unset;
+}
+
+.product-img-container{
+    position: relative;
+    padding: unset;
+}
+
+.product-img{
+    display: block;
+}
+
+.zoom-overlay{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: x-large;
+    color: rgb(109, 109, 109);
+}
+
+.zoom-overlay:hover{
+    cursor: pointer;
+}
+
+.product-container{
+    width: 100%;
+    justify-content: space-between;
+    margin-left: unset;
+
+}
+
+.enlarge-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0,0,0,0.5);
+    z-index: 9999; /* Ensure it appears on top of other content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enlarge-img img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 /* -------------------------------- General styling classes */
 .no-link-decoration{
     text-decoration: none;
@@ -146,11 +199,11 @@ small{
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   .container {
     max-width: 80%;
   }
-}
+} */
 
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
@@ -170,9 +223,7 @@ small{
 
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
-    .product-container{
-        margin: 50px;
-    }
+
 }
 
 /* pad the top a bit when navbar is collapsed on mobile */
