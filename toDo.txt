@@ -77,18 +77,20 @@ Shopping cart:
 -- On the cart page, add a row of 4 random products to the bottom of the page, with an add to cart button. When clicked: Message saying item added to cart, adds item to cart, that product will then be replaced by another product on the bottom of the screen"
 
 Product page:
+!-- White container background, leaving the off white background as a large border.
     Left top:
     !-- Image
-    -- Zoom button overlayed on the picture.
+    !-- Zoom button overlayed on the picture.
 
     Right of image:
-    -- White container background, leaving the off white background as a large border.
-    -- Title to the right with tags underneath.
-    -- Rating.
+    !-- Title to the right with tags underneath.
+    !-- Rating.
     -- Quantity selector.
-    -- Free delivery over [MIN_FREE_DELIVERY] -- Half price delivery over [MIN_HALF_DELIVERY].
-    -- Price with different colour text to stand out. -- Product delivery cost [STANDARD_DELIVERY_PERCENTAGE].
-    -- Add to cart and buy now button at the bottom.
+    !-- Free delivery over [MIN_FREE_DELIVERY] 
+    !-- Half price delivery over [MIN_HALF_DELIVERY].
+    !-- Price with different colour text to stand out. 
+    -- Product delivery cost [STANDARD_DELIVERY_PERCENTAGE].
+    !-- Add to cart and buy now button at the bottom.
 
     Underneath both:
     -- Description on the left

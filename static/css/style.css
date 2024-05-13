@@ -127,10 +127,14 @@ small{
 }
 
 /* -------------------------------- Product Detail */
-#product_detail_container{
+.related_products_container, .product_detail_container, .product_description_container{
     background: #fff;
     margin-top: 30px; 
     padding: unset;
+}
+
+.product_description_container{
+    padding: 50px;
 }
 
 .product-img-container{
@@ -140,6 +144,17 @@ small{
 
 .product-img{
     display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 380px;
+}
+
+.enlarge-product-img{
+    display: block;
+    height: 80vh;
+    width: auto;
+    
 }
 
 .zoom-overlay{
@@ -167,8 +182,8 @@ small{
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgb(0,0,0,0.5);
-    z-index: 9999; /* Ensure it appears on top of other content */
+    background: rgb(0,0,0,0.9);
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,10 +194,16 @@ small{
     max-height: 100%;
 }
 
+.price{
+    color: rgb(120, 177, 34);
+    font-size: xx-large;
+}
+
+
 /* -------------------------------- General styling classes */
 .no-link-decoration{
     text-decoration: none;
-    color: unset;
+    color: black;
 }
 
 .direction-active{

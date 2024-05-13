@@ -28,6 +28,7 @@ def cart_contents(request):
         'free_delivery_delta': free_delivery_delta,
         'half_delivery_delta': half_delivery_delta,
         'min_free_delivery': settings.MIN_FREE_DELIVERY,
+        'min_half_delivery': settings.MIN_HALF_DELIVERY,
         'grand_total': grand_total,
     }
     

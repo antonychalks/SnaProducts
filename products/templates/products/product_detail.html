@@ -14,45 +14,75 @@
     <div class="overlay-background">
     </div>
 
-    <div class="container-md" id="product_detail_container">
+    <div class="container-md product_detail_container">
         <div class="row product-container">
             <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
                 {% if product.image %}
                 <a href="{{ product.image.url}}" target="_blank">
-                    <img class="product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
+                    <img class="product-img mx-auto" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
                 </a>
                 {% else %}
                 <a href="{{ product.image.url}}" target="_blank">
-                    <img class="product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    <img class="product-img mx-auto" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                 </a>
                 {% endif %}
                 <i class="fa-solid fa-magnifying-glass zoom-overlay"></i>
             </div>
             <div class="col-12 col-lg-6 text-center">
-                <h5>{{product.name}} <small class="text-muted">{{product.sku}}</small></h5>
-                <h5>£{{product.price}}</h5>
-                <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="text-muted">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
+                <div class="d-flex justify-content-around">
+                <h3>{{product.name}} <small class="text-muted">{{product.sku}}</small></h3>
+                <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="no-link-decoration">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
+                </div>
+                <hr>
+                <p> Tags </p>
+                <hr>
                 {% if product.rating %}
                 <p><small class="text-muted">{{product.rating}}</small></p>
                 {% else %}
                 <p><small class="text-muted">No rating yet.</small></p>
                 {% endif %}
+                <hr>
+                <p> Quantity Selector </p>
+                <hr>
+                <div class="d-flex justify-content-around">
+                    <p> Free delivery over £{{min_free_delivery}} </p>
+                    <p> Half price delivery over £{{ min_half_delivery }} </p>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-around">
+                    <h5 class="price">£{{product.price}}</h5>
+                    <p> delivery charge </p>
+                    <button>Add to cart</button>
+                    <button>Buy now</button>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="container-md product_description_container">
         <div class="row">
             <div class="col-12">
                 <p>{{product.description}}</p>
             </div>
         </div>
     </div>
+
+    <div class="container-md related_products_container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Related products</h2>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Image overlay {% endcomment %}
     <div class="d-none enlarge-img">
         {% if product.image %}
         <a href="{{ product.image.url}}" target="_blank">
-            <img class="product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
+            <img class="enlarge-product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
         </a>
         {% else %}
         <a href="{{ product.image.url}}" target="_blank">
-            <img class="product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+            <img class="enlarge-product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
         </a>
         {% endif %}
     </div>
