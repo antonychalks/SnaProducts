@@ -99,3 +99,22 @@ Product page:
 
 Nav:
 -- Hovering over the main categories should drop the menu down.
+
+Adding products:
+- Add form with POST function to Product detail template.
+- Add .btn-outline-black CSS.
+- Add to bag view in bag/views.py
+- Add to bag url in bag/urls.py
+- git commit added bag functionality
+- In contexts.py add the "bag = request.session.get('bag', {})" to add to, or create the bag session
+- Add the "for item_id, quantity in bag.items():" loop.
+- In bag.html add html to show each product in table form.
+- git commit Add context processor & updated shopping bag template
+- Add has_sizes to product model.
+- Migrate
+- In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.
+-- Add the size selector after add to bag has been clicked. -- Possibly add a 'purchasing' container for add to bag, buy now, size selector and quantity.
+- Add if statement to adjust page layout
+- Add size to the bag template. -- In an IF statment to only show if product has_sizes.
+- git commit -m Added product sizes functionality.
+
