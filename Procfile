@@ -1,0 +1,1 @@
+web: gunicorn sna_products.wsgi
