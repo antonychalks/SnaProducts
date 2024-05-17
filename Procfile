@@ -1,1 +1,1 @@
-web: gunicorn sna_products.wsgi
+web: gunicorn snaProducts.wsgi:application

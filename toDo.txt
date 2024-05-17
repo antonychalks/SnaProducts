@@ -117,4 +117,50 @@ Adding products:
 - Add if statement to adjust page layout
 - Add size to the bag template. -- In an IF statment to only show if product has_sizes.
 - git commit -m Added product sizes functionality.
+    Adding size information to the shopping bag:
+    - In add_to_bag view set size to none to start. Then if request.Post has product_size, set size to equal request.POST['size'].
+    - To adjust the structure of the bag, add an If statement to check if the product being added has a size.  
+    - If the items not already in the bag, it just needs to be added to the bag, but it will be sent as a dictionary. This allows the item to have the same ID, but different sizes for each ID.
+    - If the item is already in the bag, check if another item with the same ID and same size already exists. If so it will incremenet the quantity. If not then it will set [it?] equal to the quantity.
+    - Now wrap the original code (if item_id in list) in an else block from the If size statement.
+    - In the context.py, change quantity to item_data except the key.
+    - Write an if statement that changes if the product has a size or not, finding this out by seeing if item_data is an integer or not.
+    - The original code should be implemented if the statement is true
+    - Else, get the product with get_object_or_404, from the Product model, pk=item_id
+    for loop for the size and quantity in all items that have a size field:
+        - Add the result of (quantity * price) to the total variable.
+        - Increment the cart product count by the quantity of the item.
+        - Append the item_id, quantity, product and size to the bag_items variable.
+    -git commit finished product size logic
+- Add plus and minus buttons to the quantity selector in product_detail.html.
+- Implement JS:
+    - Function ensure the buttons are disabled correctly
+        - Needs to get the current quantity.
+        - Add a disabled property to the add button if the quantity is 99.
+        - Add a disabled property to the minus button if the quantity is more than 1.
+    - Function that changes the quantity up when the add button is clicked.
+        - e.prevent default
+        - Find the closest quantity input box with .closest and .find.
+        - get the current quantity value from the input box.
+        - Add 1 to the value of the quantity box.
+        - Call the function to check the buttons are disabled correctly.
+    - Function that changes the quantity down when the minus button is clicked.
+        - copy and paste the quantity up function and adjust for minusing.
+    - Function to check the buttons are enabled and disabled whenever the quantity value changes.
+        - Event listener for the quantity changing (.change)
+        - Calls the function to check the buttons.
+- Add the JS script onto the page.
+- git commit Added quantity +/- buttons.
+- Paste the form group into the cart.html where the quantity is displayed.
+- Adjust html and styling to fit the bag
+- Implement a size input.
+- Include the script on the cart page as well.
+- Add two buttons for removing an item for the cart and for updating the quantity and size.
+- Implement the JS for this. Function for removing the item and a function for updating.
+- Git commit added quantity boxes to the cart page.
+
+
+    
+    
+
 
