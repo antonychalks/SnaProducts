@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from decimal import Decimal, ROUND_HALF_UP
 from cloudinary.models import CloudinaryField
 
 CATEGORY_TYPE = ((0, "Main"), (1, "Sub"))
@@ -17,7 +19,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
         
-    
     def get_display_name(self):
         return self.display_name
     
@@ -51,6 +52,16 @@ class Product(models.Model):
     def get_category_name(self):
         return self.category.display_name
 
+    def delivery(self):
+        percentage = Decimal(settings.STANDARD_DELIVERY_PERCENTAGE) / Decimal(100)
+        delivery_cost = self.price * percentage
+        rounded_delivery_cost = delivery_cost.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        if rounded_delivery_cost > settings.MIN_HALF_DELIVERY:
+            return rounded_delivery_cost/2
+        elif rounded_delivery_cost > settings.MIN_FREE_DELIVERY:
+            return 0
+        else:
+            return rounded_delivery_cost
     
     def generate_sku(self):
         """Generate a unique SKU"""

@@ -38,13 +38,13 @@ Scroll to top:
 Shopping cart:
 - Add new app called cart and add app to settings.
 - Create a new views function within the cart app.
-- Create new directory: bag/templates/bag/bag.html.
+- Create new directory: cart/templates/cart/cart.html.
 - Copy index.html into cart.html and remove the content block.
 - Copy the landing_page urls.py file to the cart app.
-- Implement the bag urls in the project urls file.
+- Implement the cart urls in the project urls file.
 - In base.html and other navigation files, implement the href url for the cart.
 - Create the content for the cart template. Has to have an empty cart if statement.
-- Create bag/contexts.py to help with the bag functionality
+- Create cart/contexts.py to help with the cart functionality
 - Add the context to the context processor in settings. "'cart.contexts.cart_contents',"
 - Add the "MIN_FREE_DELIVERY" & "MIN_HALF_DELIVERY" & "STANDARD_DELIVERY_PERCENTAGE"
 
@@ -54,6 +54,7 @@ Misc
 - Add testing for new views.py functionality
 -- Create a dedicated image view page.
 -- Overlay product image when clicked on the list_products.
+-- Go through all the aria labels.
 
 Featured products
 -- Add a featured products box on the home page
@@ -95,6 +96,8 @@ Product page:
     Underneath both:
     -- Description on the left
     -- Related Products on the right.
+-- List tags under an accordion
+-- Tags and rating on the same line
 
 List Products:
 -- On the list product page on phones, the images should be larger and not squashed for the products, maybe change to a side image card.
@@ -105,27 +108,26 @@ Nav:
 -- Hovering over the main categories should drop the menu down.
 
 Adding products:
-- Add form with POST function to Product detail template.
-- Add .btn-outline-black CSS.
-- Add to bag view in bag/views.py
-- Add to bag url in bag/urls.py
-- git commit added bag functionality
-- In contexts.py add the "bag = request.session.get('bag', {})" to add to, or create the bag session
-- Add the "for item_id, quantity in bag.items():" loop.
-- In bag.html add html to show each product in table form.
-- git commit Add context processor & updated shopping bag template
-- Add has_sizes to product model.
-- Migrate
-- In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.
--- Add the size selector after add to bag has been clicked. -- Possibly add a 'purchasing' container for add to bag, buy now, size selector and quantity.
-- Add if statement to adjust page layout
-- Add size to the bag template. -- In an IF statment to only show if product has_sizes.
-- git commit -m Added product sizes functionality.
-    Adding size information to the shopping bag:
-    - In add_to_bag view set size to none to start. Then if request.Post has product_size, set size to equal request.POST['size'].
-    - To adjust the structure of the bag, add an If statement to check if the product being added has a size.  
-    - If the items not already in the bag, it just needs to be added to the bag, but it will be sent as a dictionary. This allows the item to have the same ID, but different sizes for each ID.
-    - If the item is already in the bag, check if another item with the same ID and same size already exists. If so it will incremenet the quantity. If not then it will set [it?] equal to the quantity.
+ht !- Add form with POST function to Product detail template.
+py - Add to cart view in cart/views.py
+py - Add to cart url in cart/urls.py
+gi - git commit added cart functionality
+py - In contexts.py add the "cart = request.session.get('cart', {})" to add to, or create the cart session
+ht - Add the "for item_id, quantity in cart.items():" loop.
+ht - In cart.html add html to show each product in table form.
+gi - git commit Add context processor & updated shopping cart template
+py - Add has_sizes to product model.
+py - Migrate
+ht - In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.
+ht -- Add the size selector after add to cart has been clicked. -- Possibly add a 'purchasing' container for add to cart, buy now, size selector and quantity.
+ht - Add if statement to adjust page layout
+ht - Add size to the cart template. -- In an IF statment to only show if product has_sizes.
+gi - git commit -m Added product sizes functionality.
+    Adding size information to the shopping cart:
+    - In add_to_cart view set size to none to start. Then if request.Post has product_size, set size to equal request.POST['size'].
+    - To adjust the structure of the cart, add an If statement to check if the product being added has a size.  
+    - If the items not already in the cart, it just needs to be added to the cart, but it will be sent as a dictionary. This allows the item to have the same ID, but different sizes for each ID.
+    - If the item is already in the cart, check if another item with the same ID and same size already exists. If so it will incremenet the quantity. If not then it will set [it?] equal to the quantity.
     - Now wrap the original code (if item_id in list) in an else block from the If size statement.
     - In the context.py, change quantity to item_data except the key.
     - Write an if statement that changes if the product has a size or not, finding this out by seeing if item_data is an integer or not.
@@ -134,10 +136,10 @@ Adding products:
     for loop for the size and quantity in all items that have a size field:
         - Add the result of (quantity * price) to the total variable.
         - Increment the cart product count by the quantity of the item.
-        - Append the item_id, quantity, product and size to the bag_items variable.
+        - Append the item_id, quantity, product and size to the cart_items variable.
     -git commit finished product size logic
-- Add plus and minus buttons to the quantity selector in product_detail.html.
-- Implement JS:
+ht !- Add plus and minus buttons to the quantity selector in product_detail.html.
+js - Implement JS:
     - Function ensure the buttons are disabled correctly
         - Needs to get the current quantity.
         - Add a disabled property to the add button if the quantity is 99.
@@ -156,7 +158,7 @@ Adding products:
 - Add the JS script onto the page.
 - git commit Added quantity +/- buttons.
 - Paste the form group into the cart.html where the quantity is displayed.
-- Adjust html and styling to fit the bag
+- Adjust html and styling to fit the cart
 - Implement a size input.
 - Include the script on the cart page as well.
 - Add two buttons for removing an item for the cart and for updating the quantity and size.

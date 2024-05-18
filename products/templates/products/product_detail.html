@@ -15,7 +15,7 @@
     </div>
 
     <div class="container-md product_detail_container">
-        <div class="row product-container">
+        <div class="row product-container p-2">
             <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
                 {% if product.image %}
                 <a href="{{ product.image.url}}" target="_blank">
@@ -30,39 +30,61 @@
             </div>
             <div class="col-12 col-lg-6 text-center">
                 <div class="d-flex justify-content-around">
-                <h3>{{product.name}} <small class="text-muted">{{product.sku}}</small></h3>
-                <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="no-link-decoration">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
-                </div>
-                <hr>
-                <p> Tags </p>
-                <hr>
-                {% if product.rating %}
-                <p><small class="text-muted">{{product.rating}}</small></p>
-                {% else %}
-                <p><small class="text-muted">No rating yet.</small></p>
-                {% endif %}
-                <hr>
-                <p> Quantity Selector </p>
-                <hr>
-                <div class="d-flex justify-content-around">
-                    <p> Free delivery over £{{min_free_delivery}} </p>
-                    <p> Half price delivery over £{{ min_half_delivery }} </p>
+                    <h3>{{product.name}} <small class="text-muted">{{product.sku}}</small></h3>
+                    <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="no-link-decoration">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-around">
-                    <h5 class="price">£{{product.price}}</h5>
-                    <p> delivery charge </p>
-                    <form>
-                        <input>Add to cart</input>
-                    </form>
-                    <button>Buy now</button>
+                    <p> Tags </p>
+                    {% if product.rating %}
+                    <p><small class="text-muted">{{product.rating}}</small></p>
+                    {% else %}
+                    <p><small class="text-muted">No rating yet.</small></p>
+                    {% endif %}
                 </div>
+                <hr>
+                <form class="form" action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="btn-group input-group qty-group" role="group" aria-label="Button group to increment, or decrement the selected quantity.">
+                        <button class="btn btn-dark qty-change" data-change="decrement"> <i class="fa-solid fa-arrow-down"> 5</i></button>
+                        <button class="btn btn-dark qty-change" data-change="decrement"> <i class="fa-solid fa-chevron-down"> 1</i></button>
+                        <input id="{{product.id}}_qty" class="form-control btn qty-input" type="number" name="quantity" value="1" min="1" max="99" data-product_id="{{ product.id }}">
+                        <button class="btn btn-dark qty-change" data-change="increment"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
+                        <button class="btn btn-dark qty-change" data-change="increment"> <i class="fa-solid fa-arrow-up"> 5</i> </button>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-around">
+                        <p> Free delivery over £<span id="min_free_delivery">{{min_free_delivery}}</span> </p>
+                        <p> Half price delivery over £<span id="min_half_delivery">{{ min_half_delivery }}</span> </p>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-around">
+                        <h4 class="price">£<span id="product_price">{{product.price}}</span>
+                            {% if product.price > min_free_delivery %}
+                                <small class="delivery text-muted">Free delivery!</small>
+                            {% elif product.price > min_half_delivery %}
+                                <small class="delivery text-muted">+£<span id="product-delivery">{{product.delivery}}</span> Half price delivery!</small>
+                            {% else %}
+                                <small class="delivery text-muted">+£<span id="product-delivery">{{product.delivery}}</span></small>
+                            {% endif %}
+                            </h4>
+                        <h5 class="price price_qty d-none">£<span id="product_qty_price"></span>
+                            <small class="delivery text-muted"><span id="qty-delivery"></span></small>
+                        </h5>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-around">
+                        <input type="submit" class="btn btn-success rounded-1 text-uppercase" value="Add to Cart">
+                        <input type="submit" class="btn btn-success rounded-1 text-uppercase" value="Buy now">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <div class="container-md product_description_container">
         <div class="row">
             <div class="col-12">
+                <h2> Product Description </h2>
                 <p>{{product.description}}</p>
             </div>
         </div>
