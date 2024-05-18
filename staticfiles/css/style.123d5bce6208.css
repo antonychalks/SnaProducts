@@ -1,0 +1,259 @@
+html{
+    height: 100%;
+}
+
+body{
+    background: url('/media/background-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: calc(100vh - 164px);
+    font-family: "Encode Sans Expanded", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* from Bulma */
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.main-logo-link {
+    width: fit-content;
+}
+
+.shop-now-button {
+    background: green;
+    color: white;
+    min-width: 260px;
+}
+
+.btn-black {
+    background: black;
+    color: white;
+}
+
+.shop-now-button:hover,
+.shop-now-button:active,
+.shop-now-button:focus,
+.btn-black:hover,
+.btn-black:active,
+.btn-black:focus {
+    background: lightgreen;
+    color: white;
+}
+
+.text-white {
+    color: #fff !important;
+}
+
+.border-black {
+    border: 1px solid black !important;
+}
+
+.overlay-background{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: #eee;
+}
+
+/*--------------------------------- List Products */
+#nav-sidebar{
+    box-sizing: border-box;
+    position: fixed;
+    top: 62px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    margin: unset;
+}
+
+.overlay-button {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    margin: unset;
+    width: fit-content;
+    justify-content: space-around;
+    max-height: 80px;
+}
+
+.overlay-button button{
+    display: inline;
+}
+
+.edge-button{
+    width: 20%;
+}
+
+#to-top{
+    width: 150px;
+    margin: 0 10px;
+}
+
+.card-img {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.card-header{
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+small{
+    font-size: small;
+}
+
+.sort_filter{
+    height: 20px;
+    
+}
+
+.sort_filter span, .sort_filter button{
+    width: fit-content;
+    margin: 0 10px;
+}
+
+/* -------------------------------- Product Detail */
+.related_products_container, .product_detail_container, .product_description_container{
+    background: #fff;
+    margin-top: 30px; 
+    padding: unset;
+}
+
+.product_description_container{
+    padding: 50px;
+}
+
+.product-img-container{
+    position: relative;
+    padding: unset;
+}
+
+.product-img{
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 380px;
+}
+
+.enlarge-product-img{
+    display: block;
+    height: 80vh;
+    width: auto;
+    
+}
+
+.zoom-overlay{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: x-large;
+    color: rgb(109, 109, 109);
+}
+
+.zoom-overlay:hover{
+    cursor: pointer;
+}
+
+.product-container{
+    width: 100%;
+    justify-content: space-between;
+    margin-left: unset;
+
+}
+
+.enlarge-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0,0,0,0.9);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enlarge-img img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.price{
+    color: rgb(120, 177, 34);
+    font-size: xx-large;
+}
+
+
+/* -------------------------------- General styling classes */
+.no-link-decoration{
+    text-decoration: none;
+    color: black;
+}
+
+.direction-active{
+    background: #0045ac;
+}
+
+.mobile-navbar{
+    justify-content: space-around;
+}
+
+.category-badge:hover{
+
+}
+/* -------------------------------- Media Queries */
+
+/* Slightly larger container on xl screens */
+/* @media (min-width: 1200px) {
+  .container {
+    max-width: 80%;
+  }
+} */
+
+/* fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 91px;
+    }
+    
+}
+
+/* fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+
+}
+
+/* pad the top a bit when navbar is collapsed on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
+    }
+}
