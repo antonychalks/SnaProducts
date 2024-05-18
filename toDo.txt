@@ -96,6 +96,10 @@ Product page:
     -- Description on the left
     -- Related Products on the right.
 
+List Products:
+-- On the list product page on phones, the images should be larger and not squashed for the products, maybe change to a side image card.
+-- The department toggle button should start under the quantity of products line, then scroll with the page when scrolled enough.
+
 
 Nav:
 -- Hovering over the main categories should drop the menu down.
