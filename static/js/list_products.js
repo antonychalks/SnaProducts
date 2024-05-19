@@ -8,9 +8,7 @@ $(document).ready(function() {
     $('.zoom-overlay').on("click", function(e) {
         e.preventDefault()
         let productId = $(this).data("product_id");
-        console.log(productId)
         let englargeImg = $(`#enlarge-img-${productId}`)
-        console.log(englargeImg)
         englargeImg.toggleClass("d-none");
         imgEnlarged = true;
     });
@@ -92,12 +90,10 @@ $('.btn-remove-category').click(function(){
     var current_categories = [];
     var categories_displayed = $('.btn-remove-category');
     let thisCategory = $(this).data("category");
-    console.log(thisCategory)
 
     if (categories_displayed.length > 1){
         if ($(this).data("type") == 0) {
             currentUrl.searchParams.delete("category")
-            console.log("Deleting Category")
         } else {
             for (let i = 0; i < categories_displayed.length; i++) {
 
@@ -106,13 +102,9 @@ $('.btn-remove-category').click(function(){
                     if ($(categories_displayed[i]).data("category") != thisCategory){
                         let category = $(categories_displayed[i]).data("category");
                         current_categories.push(category);
-                    } else {
-                        console.log("removing ", categories_displayed[i])
                     }
-
                 }
             }
-
             let newCategories = current_categories.filter(word => word != thisCategory)
             newCategories = current_categories.join(',');
     

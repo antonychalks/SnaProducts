@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block extra_js %}
-<script src="{% static 'js/index.js' %}"></script>
-{% endblock %}
-
 {% block nav-includes %}
 {% include 'includes/site-nav.html' %}
 {% endblock %}
@@ -23,8 +19,55 @@
         <hr>
     </div>
     <div class="row">
-        {% if cart_items %}
-        <div class="table-responsive rounded"></div>
+        {% if cart_products %}
+        <div class="table-responsive rounded">
+            <table class="table-secondary">
+                {% for product in cart_products %}
+                <tr class="table-secondary">
+                    <td class="p-3 w-25">
+                        <img class="img-fluid rounded" src="{{ product.product.image.url }}">
+                    </td>   
+                    <td class="py-3 d-flex justify-content-around">
+                        <p class=""><strong>{{ product.product.name }}</strong></p>
+                        <p class=""><strong>Size: </strong>{% if product.product.has_sizes %}{{ product.size|upper }}{% else %}N/A{% endif %}</p>
+                        <p class="small text-muted">SKU: {{ product.product.sku|upper }}</p>
+                    </td>
+                    <td class="d-flex justify-content-around">  
+                        <form method="POST" action"" class="form update_form">
+                            {% csrf_token %}              
+                            <div class="btn-group input-group qty-group-cart" role="group" aria-label="Button group to increment, or decrement the selected quantity." >
+                                <button class="btn btn-dark cart-qty-change decrement-button" data-change="decrement" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-down"> 1</i></button>
+                                <input id="{{product.id}}_qty" class="cart-qty-input" type="number" name="quantity" value="1" min="1" max="99" data-id="{{product.product.id }}" onload="setButtonsDisplay({{ product.product.id }})">
+                                <button class="btn btn-dark cart-qty-change increment-button" data-change="increment" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
+                            </div>
+                        </form>
+                        <h4 class="cart_price"><small class="price_text {{product.product.id}}">Price per item:</small> £<span id="product_price">{{product.product.price}}</span></h4>
+                    </td>
+                    <td class="d-flex justify-content-end">
+                        <h5 class="price price_qty d-none"><small>Total:</small> £<span class="product_qty_price" data-id="{{product.product.id}}" data-price="{{product.product.price}}"></span></h5>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="d-flex justify-content-between"><p>Total: </p><h3>£{{ total }}</h3></div>
+            <div class="d-flex justify-content-between"><p>Remaining for free delivery: </p><h3>£{{free_delivery_delta}}</h3></div>
+            <div class="d-flex justify-content-between"><p>Remaining for half price delivery: </p><h3>£{{half_delivery_delta}}</h3></div>
+            <div class="d-flex justify-content-between"><p>Delivery Charge: </p><h3>£{{delivery}}</h3></div>
+            <div class="d-flex justify-content-end">
+                <h2>
+                    Total:
+                    <span class="price">
+                        {% if grand_total %}
+                            £{{ grand_total|floatformat:2 }}
+                        {% else %}
+                            £0.00
+                        {% endif %}
+                    </span>
+                </h2>
+            </div>
+
+
+        </div>
         {% else %}
         <div class="d-flex justify-content-between">
             <h5> Shopping Cart empty </h5>
@@ -40,4 +83,8 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+<script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

@@ -120,12 +120,12 @@ py - Add to cart view in cart/views.py
         !- If the item without a size isn't in the cart, add it to the cart.
         !- Updates the session cart varible with the new cart variable
         !- Redirects the user to the redirect URL
-py - Add to cart url in cart/urls.py
-gi - git commit added cart functionality
-py - In contexts.py add the "cart = request.session.get('cart', {})" to add to, or create the cart session
-ht - Add the "for item_id, quantity in cart.items():" loop.
+py - !Add to cart url in cart/urls.py
+gi - !git commit added cart functionality
+py - !In contexts.py add the "cart = request.session.get('cart', {})" to add to, or create the cart session
+ht - !Add the "for item_id, quantity in cart.items():" loop.
 ht - In cart.html add html to show each product in table form.
-gi - git commit Add context processor & updated shopping cart template
+gi - git commit "Updated shopping cart template"
 py - Add has_sizes to product model.
 py - Migrate
 ht - In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.

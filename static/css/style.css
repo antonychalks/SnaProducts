@@ -227,6 +227,39 @@ small{
     font-size: xx-large;
 }
 
+/* -------------------------------- Cart */
+.qty-group-cart, .cart-qty-change, .cart-qty-input{
+    max-height: 40px;
+}
+
+.cart-qty-input{
+    width: max-content;
+    text-align: center;
+}
+
+/* Removes input arrows inside the input box on Chrome, Safari, Edge, Opera. Credit: https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp  */
+.cart-qty-input::-webkit-outer-spin-button,
+.cart-qty-input::-webkit-inner-spin-button,
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Removes input arrows inside the input box on Mozzila Firefox. Credit: https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp  */
+input[type=number].cart-qty-input,
+input[type=number].qty-input{
+    -moz-appearance: textfield;
+}
+
+.cart_price{
+    color: rgb(34, 172, 177);
+    font-size: xx-large;
+}
+
+tr{
+    border-bottom: gray 1px solid;
+}
 
 /* -------------------------------- General styling classes */
 .no-link-decoration{

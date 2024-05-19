@@ -9,11 +9,11 @@ def cart_contents(request):
     product_count = 0
     cart = request.session.get('cart', {})
     
-    for product_id, product_data in cart.products():
+    for product_id, product_data in cart.items():
         if isinstance(product_data, int):
             product = get_object_or_404(Product, pk=product_id) #gets the product by the item_id
             total += product_data * product.price #Add the value of the products price * quantity of the product, and adds it to the total.
-            product_count += product_id #Adds the quantity to the product count
+            product_count += product_data #Adds the quantity to the product count
             cart_products.append({
                 'product_id': product_id,
                 'quantity': product_data,
@@ -39,9 +39,11 @@ def cart_contents(request):
         else:
             delivery = (total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE/100)/2)
             free_delivery_delta = settings.MIN_FREE_DELIVERY - total
+            half_delivery_delta = settings.MIN_HALF_DELIVERY - total
     else:
         delivery = 0
         free_delivery_delta = 0
+        half_delivery_delta = 0
         
     grand_total = delivery + total
     

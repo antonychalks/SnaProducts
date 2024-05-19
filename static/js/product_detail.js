@@ -51,20 +51,13 @@ $(document).ready(function () {
             let minHalfDelivery = parseInt($('#min_half_delivery').text());
             let minFreeDelivery = parseInt($('#min_free_delivery').text());
             let halfDelivery = productDeliveryQty/2
-            console.log(halfDelivery)
-
-            console.log("half: ", minHalfDelivery)
-            console.log("full: ", minFreeDelivery)
 
             if (newPrice >= minFreeDelivery){
-                console.log("Qualified for Free delivery")
                 $('#qty-delivery').text("Free delivery!");
                 
             } else if (newPrice >= minHalfDelivery){
-                console.log("Qualified for Half delivery")
                 $('#qty-delivery').text("+£" + halfDelivery);
             } else {
-                console.log("Did not qualify")
                 $('#qty-delivery').text("+£" + productDeliveryQty)
             }
 
