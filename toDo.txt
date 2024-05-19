@@ -52,8 +52,8 @@ Shopping cart:
 ___Pending:___
 Misc
 - Add testing for new views.py functionality
--- Create a dedicated image view page.
--- Overlay product image when clicked on the list_products.
+!-- Create a dedicated image view page.
+!-- Overlay product image when clicked on the list_products.
 -- Go through all the aria labels.
 
 Featured products
@@ -110,6 +110,16 @@ Nav:
 Adding products:
 ht !- Add form with POST function to Product detail template.
 py - Add to cart view in cart/views.py
+        !- Gets the current cart varible from the session.
+        !- gets the redirect url
+        !- If product_size is in request.POST then store it in the size variable
+        !- If the item has a size variable, and if the item with the correct size is in the cart, the quantity should go up by the quantity amount
+        !- If the item has a size variable, and the item is in the cart but not the correct size, add the item with the correct size to the cart
+        !- If the item isn't in the cart already, then add the item, with the correct size into the cart.
+        !- If the item doesn't have a size and is already in the cart, add the quantity to the item
+        !- If the item without a size isn't in the cart, add it to the cart.
+        !- Updates the session cart varible with the new cart variable
+        !- Redirects the user to the redirect URL
 py - Add to cart url in cart/urls.py
 gi - git commit added cart functionality
 py - In contexts.py add the "cart = request.session.get('cart', {})" to add to, or create the cart session
