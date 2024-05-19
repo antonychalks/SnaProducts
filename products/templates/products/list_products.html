@@ -59,10 +59,10 @@
         {% if current_categories or current_sorting or search_term %}
         <div class="row sort_filter justify-content-start">
             {% for category in current_categories %}
-            <span class="badge category-badge text-bg-secondary filter">   
-                    {{ category.get_display_name }}
-                <i class="fa-regular fa-circle-xmark btn-remove-category" data-category="{{category.name}}" data-type="{{category.type}}"></i>
-            </span>
+                <span class="badge category-badge text-bg-secondary filter">   
+                        {{ category.get_display_name }}
+                    <i class="fa-regular fa-circle-xmark btn-remove-category" data-category="{{category.name}}" data-type="{{category.type}}"></i>
+                </span>
             {% endfor %}
             
             {% if current_sorting != "None_None" %}
@@ -90,21 +90,18 @@
                                 <h5 class="card-title">{{product.name}} <small class="text-muted">{{product.sku}}</small></h5>
                             </div>
                             <div class="card-body">
-                                {% if product.image %}
-                                <a href="">
-                                    <img class="card-img" height="100%" width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
-                                </a>
-                                {% else %}
-                                <a href="">
-                                    <img class="card-img" height="auto" width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                                </a>
-                                {% endif %}
+                                    {% if product.image %}
+                                        <img class="card-img" height="100%" width="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
+                                    {% else %}
+                                        <img class="card-img" height="auto" width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                    {% endif %}
+                                <i class="fa-solid fa-magnifying-glass zoom-overlay img_zoom_activator " data-product_id="{{product.id}}"></i>
                                 <h5 class="card-text">£{{product.price}}</h5>
-                                {% if product.rating %}
-                                <p class="card-text"><small class="text-muted">{{product.rating}}</small></p>
-                                {% else %}
-                                <p class="card-text"><small class="text-muted">No rating yet.</small></p>
-                                {% endif %}
+                                    {% if product.rating %}
+                                        <p class="card-text"><small class="text-muted">{{product.rating}}</small></p>
+                                    {% else %}
+                                        <p class="card-text"><small class="text-muted">No rating yet.</small></p>
+                                    {% endif %}
                                 <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="text-muted">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
                             </div>
                         </div>
@@ -113,23 +110,35 @@
                         <hr>
                     </div>
                     {% if forloop.counter|divisibleby:2 %}
-                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-1">
-                        <hr>
-                    </div>
+                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-1">
+                            <hr>
+                        </div>
                     {% endif %}
 
                     {% if forloop.counter|divisibleby:3 %}
-                    <div class="col-12 d-none d-lg-block d-xl-none mb-1">
-                        <hr>
-                    </div>
+                        <div class="col-12 d-none d-lg-block d-xl-none mb-1">
+                            <hr>
+                        </div>
                     {% endif %}
 
                     {% if forloop.counter|divisibleby:4 %}
-                    <div class="col-12 d-none d-xl-block mb-1">
-                        <hr>
-                    </div>
+                        <div class="col-12 d-none d-xl-block mb-1">
+                            <hr>
+                        </div>
                     {% endif %}
                 </a>
+                {% comment %} Image overlay {% endcomment %}
+                <div id="enlarge-img-{{product.id}}"class="d-none enlarge-img">
+                    {% if product.image %}
+                    <a href="{{ product.image.url}}" target="_blank">
+                        <img class="enlarge-product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
+                    </a>
+                    {% else %}
+                    <a href="{{ product.image.url}}" target="_blank">
+                        <img class="enlarge-product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
+                    {% endif %}
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -139,6 +148,8 @@
             </div>
         </div>
     </div>
+
+
 {% endblock content %}
 
 {% block postloadjs %}

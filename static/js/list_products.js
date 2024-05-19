@@ -1,6 +1,33 @@
 $(document).ready(function() {
     $('#navbar-burger').addClass("d-none");
 
+    // Image overlay
+    let imgEnlarged = false
+    let productId = ""
+
+    $('.zoom-overlay').on("click", function(e) {
+        e.preventDefault()
+        let productId = $(this).data("product_id");
+        console.log(productId)
+        let englargeImg = $(`#enlarge-img-${productId}`)
+        console.log(englargeImg)
+        englargeImg.toggleClass("d-none");
+        imgEnlarged = true;
+    });
+
+    $('.enlarge-img').on("click", function(event) {
+        let enlargeImg = $('.enlarge-img');
+        if (event.target.nodeName != "img") {
+            for (let i = 0; i < enlargeImg.length; i++){
+                if (!$(enlargeImg[i]).hasClass("d-none")){
+                    $(enlargeImg[i]).addClass("d-none");
+                    imgEnlarged = false;
+                }
+            }
+        }
+    });
+
+    // Checks if the buttons are active and gives the active class to them
     var currentUrl = new URL(window.location);
     var direction = currentUrl.searchParams.get("direction");
     if(direction == "asc"){
@@ -13,6 +40,8 @@ $(document).ready(function() {
         $('#button-asc').removeClass("direction-active");
         $('#button-desc').removeClass("direction-active");
     }
+
+    // Displays the remove all button if any filters or sorts are active.
     var sort = currentUrl.searchParams.get('sort');
     var category = currentUrl.searchParams.get('category');
     var direction = currentUrl.searchParams.get('direction');
