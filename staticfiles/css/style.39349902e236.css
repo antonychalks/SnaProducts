@@ -232,7 +232,7 @@ small{
 }
 
 /* -------------------------------- Cart */
-.qty-group-cart, .cart-qty-change, .cart-qty-input{
+.cart-qty-group, .cart-qty-change, .cart-qty-input{
     max-height: 40px;
 }
 

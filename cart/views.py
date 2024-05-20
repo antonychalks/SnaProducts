@@ -11,6 +11,7 @@ def view_cart(request):
 def add_to_cart(request, product_id):
     """ A view to add a product to the site cart. """
     if request.method == 'POST':
+        print(request.POST)
         product = get_object_or_404(Product, id=product_id)
         redirect_url = request.POST.get('redirect_url')
         quantity = int(request.POST.get('quantity')) 

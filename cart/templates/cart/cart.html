@@ -29,6 +29,9 @@
                     </td>   
                     <td class="py-3 d-flex justify-content-around">
                         <p class=""><strong>{{ product.product.name }}</strong></p>
+                        <p class="small text-muted">SKU: {{ product.product.sku|upper }}</p>
+                    </td>
+                    <td class="py-3 d-flex justify-content-around">
                         {% if product.product.has_sizes %}
                             <strong>Size: {{product.size|upper}} </strong>
                             <select class="form-control size_selector rounded-0" form="update_form" name="product_size" id='id_product_size'>
@@ -36,18 +39,17 @@
                                 <option value="m" {% if product.size == "m" %} selected {% endif %}>M</option>
                                 <option value="l" {% if product.size == "l" %} selected {% endif %}>L</option>
                             </select>
-                            
                         {% else %}
-                            <strong>Size: </strong><p>N/A</p>
+                            <p><strong>Size: </strong>N/A</p>
                         {% endif %}
-                        <p class="small text-muted">SKU: {{ product.product.sku|upper }}</p>
+                        <p><strong> Quantity: </strong><span class="product-qty_{{product.product.id}}">{{ product.quantity }}</span></p>
                     </td>
                     <td class="d-flex justify-content-around">  
                         <form method="POST" id="update_form" action"" class="form update_form">
                             {% csrf_token %}              
-                            <div class="btn-group input-group qty-group-cart" role="group" aria-label="Button group to increment, or decrement the selected quantity." >
+                            <div class="btn-group input-group cart-qty-group" role="group" aria-label="Button group to increment, or decrement the selected quantity." >
                                 <button class="btn btn-dark cart-qty-change decrement-button" data-change="decrement" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-down"> 1</i></button>
-                                <input id="{{product.id}}_qty" class="cart-qty-input" type="number" name="quantity" value="1" min="1" max="99" data-id="{{product.product.id }}" onload="setButtonsDisplay({{ product.product.id }})">
+                                <input id="{{product.id}}_qty" class="cart-qty-input" type="number" name="quantity" value="{{ product.quantity }}" min="1" max="99" data-id="{{product.product.id }}" onload="setButtonsDisplay({{ product.product.id }})">
                                 <button class="btn btn-dark cart-qty-change increment-button" data-change="increment" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
                             </div>
                         </form>

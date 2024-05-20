@@ -99,6 +99,7 @@ $(document).ready(function () {
     
     // Displays the price with the quantity multiplier
     function displayPriceQty(){
+        console.log("setting price qty display", "qtyInputMap[id]: ", qtyInputMap)
         Object.keys(qtyInputMap).forEach(id => {
             if (qtyInputMap[id].value > 1){
                 let quantity = qtyInputMap[id].value;
@@ -156,11 +157,6 @@ $(document).ready(function () {
         }
     })
 
-    populateMapList();
-    Object.keys(qtyInputMap).forEach(id => {
-        setButtonsDisplay(id);
-    });
-
     // Update quantity on click Credit: Code institute Project Boutique_Ado
     $('.update-button').click(function(e) {
         var form = $(this).prev('.update_form');
@@ -180,6 +176,17 @@ $(document).ready(function () {
                 location.reload(); // once its done the webpage is reloaded.
             });
     })
+
+    // Populates the map lists after everything is loaded.
+    populateMapList();
+
+    // Shows the total price attached to a product if the qty is more than one.
+    displayPriceQty()
+
+    //Iterates through the buttons to check if they need to be disabled.
+    Object.keys(qtyInputMap).forEach(id => {
+        setButtonsDisplay(id);
+    });
 });
     
 $( window ).on( "unload", function () {
