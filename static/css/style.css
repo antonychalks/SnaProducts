@@ -330,7 +330,22 @@ tr{
         margin: 0;
     }
 
+    .cart-qty-group{
+        max-height: 30px;
+    }
+
+    .cart-qty-input, .cart-qty-change{
+        height: 30px;
+    }
+
     .cart-qty-change{
         width: 60px;
+        padding: 0;
     }
+
+    .cart-qty-change i{
+        font-size: xx-small;
+    }
+
+
 }

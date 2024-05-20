@@ -28,21 +28,9 @@
                         <img class="img-fluid rounded" src="{{ product.product.image.url }}">
                     </td>   
                     <td class="py-lg-3 d-flex justify-content-around">
-                        <p><strong>{{ product.product.name }}</strong><small class="text-muted">SKU: {{ product.product.sku|upper }}</small></p>
+                        <h2><strong>{{ product.product.name }}</strong></h2><small class="text-muted">SKU: {{ product.product.sku|upper }}</small>
                     </td>
-                    <td class="py-lg-3 d-flex justify-content-around">
-                        {% if product.product.has_sizes %}
-                            <strong>Size: {{product.size|upper}} </strong>
-                            <select class="form-control size_selector rounded-0" form="update_form" name="product_size" id='id_product_size'>
-                                <option value="s" {% if product.size == "s" %} selected {% endif %}>S</option>
-                                <option value="m" {% if product.size == "m" %} selected {% endif %}>M</option>
-                                <option value="l" {% if product.size == "l" %} selected {% endif %}>L</option>
-                            </select>
-                        {% else %}
-                            <p><strong>Size: </strong>N/A</p>
-                        {% endif %}
-                        <p><strong> Quantity: </strong><span class="product-qty_{{product.product.id}}">{{ product.quantity }}</span></p>
-                    </td>
+
                     <td class="py-lg-3 d-flex justify-content-around">  
                         <form method="POST" id="update_form" action"" class="form update_form">
                             {% csrf_token %}              
@@ -54,6 +42,19 @@
                         </form>
                         <button class="update-button btn btn-info"><small>Update</small></button>
                         <button class="remove-button btn btn-danger" id="remove_{{ product.product.id }}" data-size="{{ product.size }}"><small>Remove</small></button>
+                    </td>
+                    <td class="py-lg-3 d-flex justify-content-around">
+                        <p>Quantity: <span class="product-qty_{{product.product.id}}">{{ product.quantity }}</span></p>
+                        {% if product.product.has_sizes %}
+                            <p>Size: {{product.size|upper}}</p>
+                            <select class="form-control size_selector rounded-0" form="update_form" name="product_size" id='id_product_size'>
+                                <option value="s" {% if product.size == "s" %} selected {% endif %}>S</option>
+                                <option value="m" {% if product.size == "m" %} selected {% endif %}>M</option>
+                                <option value="l" {% if product.size == "l" %} selected {% endif %}>L</option>
+                            </select>
+                        {% else %}
+                            <p>Size: N/A</p>
+                        {% endif %}
                     </td>
                     <td class="py-lg-3 d-flex justify-content-end">
                         <h4 class="cart_price"><small class="price_text {{product.product.id}}">Price per item:</small> £<span id="product_price">{{product.product.price}}</span></h4>
