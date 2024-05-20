@@ -109,7 +109,7 @@ Nav:
 
 Adding products:
 ht !- Add form with POST function to Product detail template.
-py - Add to cart view in cart/views.py
+py !- Add to cart view in cart/views.py
         !- Gets the current cart varible from the session.
         !- gets the redirect url
         !- If product_size is in request.POST then store it in the size variable
@@ -120,15 +120,15 @@ py - Add to cart view in cart/views.py
         !- If the item without a size isn't in the cart, add it to the cart.
         !- Updates the session cart varible with the new cart variable
         !- Redirects the user to the redirect URL
-py - !Add to cart url in cart/urls.py
-gi - !git commit added cart functionality
-py - !In contexts.py add the "cart = request.session.get('cart', {})" to add to, or create the cart session
-ht - !Add the "for item_id, quantity in cart.items():" loop.
-ht - In cart.html add html to show each product in table form.
-gi - git commit "Updated shopping cart template"
-py - Add has_sizes to product model.
-py - Migrate
-ht - In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.
+py !- Add to cart url in cart/urls.py
+gi !- git commit added cart functionality
+py !- In contexts.py add the "cart = request.session.get('cart', {})" to add to, or create the cart session
+ht !- Add the "for item_id, quantity in cart.items():" loop.
+ht !- In cart.html add html to show each product in table form.
+gi !- git commit "Updated shopping cart template"
+py !- Add has_sizes to product model.
+py !- Migrate
+ht !- In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.
 ht -- Add the size selector after add to cart has been clicked. -- Possibly add a 'purchasing' container for add to cart, buy now, size selector and quantity.
 ht - Add if statement to adjust page layout
 ht - Add size to the cart template. -- In an IF statment to only show if product has_sizes.
@@ -167,10 +167,10 @@ js !- Implement JS:
         !- Calls the function to check the buttons.
 !- Add the JS script onto the page.
 !- git commit Added quantity +/- buttons.
-- Paste the form group into the cart.html where the quantity is displayed.
-- Adjust html and styling to fit the cart
+!- Paste the form group into the cart.html where the quantity is displayed.
+!- Adjust html and styling to fit the cart
 - Implement a size input.
-- Include the script on the cart page as well.
+!- Include the script on the cart page as well.
 - Add two buttons for removing an item for the cart and for updating the quantity and size.
 - Implement the JS for this. Function for removing the item and a function for updating.
 - Git commit added quantity boxes to the cart page.

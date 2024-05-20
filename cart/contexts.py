@@ -21,7 +21,7 @@ def cart_contents(request):
             }) #Adds the product details to the bag_items list.
         else:
             product = get_object_or_404(Product, pk=product_id)
-            for size, quantity in product_data['items_by_size'].items():
+            for size, quantity in product_data['products_by_size'].items():
                 total += quantity * product.price
                 product_count += quantity
                 cart_products.append({

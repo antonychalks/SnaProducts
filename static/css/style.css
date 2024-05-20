@@ -227,6 +227,10 @@ small{
     font-size: xx-large;
 }
 
+.size_selector{
+    width: 15%;
+}
+
 /* -------------------------------- Cart */
 .qty-group-cart, .cart-qty-change, .cart-qty-input{
     max-height: 40px;

@@ -63,11 +63,16 @@ $(document).ready(function () {
 
             $('#product_qty_price').text(newPrice.toFixed(2));
             $('.price_qty').removeClass("d-none");
+        } else if ($('.qty-input').val() == 1){
+            if (!$('.price_qty').hasClass("d-none")){
+                $('.price_qty').addClass("d-none");
+            }
         }
     }
 
     // Calls the function on page load to check if the quantity is already more than one, and displays the pirce if applicable.
     displayPriceQty()
+    setButtonsDisplay(productId)
 
     // Checks if the button needs to be displayed and the quantity price needs to be displayed whenever the input changes.
     $('.qty-input').change(function() {

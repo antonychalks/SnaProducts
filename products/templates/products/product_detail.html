@@ -77,6 +77,13 @@
                     <hr>
                     <div class="d-flex justify-content-around">
                         <input type="submit" class="btn btn-success rounded-1 text-uppercase" value="Add to Cart">
+                        {% if product.has_sizes %}
+                        <select class="form-control size_selector rounded-0" name="product_size" id='id_product_size'>
+                            <option value="s">S</option>
+                            <option value="m" selected>M</option>
+                            <option value="l">L</option>
+                        </select>
+                        {% endif %}
                         <input type="submit" class="btn btn-success rounded-1 text-uppercase" value="Buy now">
                     </div>
                 </form>
