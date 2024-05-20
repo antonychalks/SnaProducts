@@ -30,20 +30,20 @@
                     <td class="py-3 d-flex justify-content-around">
                         <p class=""><strong>{{ product.product.name }}</strong></p>
                         {% if product.product.has_sizes %}
-                            <strong>Size: </strong>
-                            <select class="form-control size_selector rounded-0" name="product_size" id='id_product_size'>
-                                <option value="s" {% if product.size == "S" %} selected {% endif %}>S</option>
-                                <option value="m" {% if product.size == "M" %} selected {% endif %}>M</option>
-                                <option value="l" {% if product.size == "L" %} selected {% endif %}>L</option>
+                            <strong>Size: {{product.size|upper}} </strong>
+                            <select class="form-control size_selector rounded-0" form="update_form" name="product_size" id='id_product_size'>
+                                <option value="s" {% if product.size == "s" %} selected {% endif %}>S</option>
+                                <option value="m" {% if product.size == "m" %} selected {% endif %}>M</option>
+                                <option value="l" {% if product.size == "l" %} selected {% endif %}>L</option>
                             </select>
-                            {{product.size|upper}}
+                            
                         {% else %}
                             <strong>Size: </strong><p>N/A</p>
                         {% endif %}
                         <p class="small text-muted">SKU: {{ product.product.sku|upper }}</p>
                     </td>
                     <td class="d-flex justify-content-around">  
-                        <form method="POST" action"" class="form update_form">
+                        <form method="POST" id="update_form" action"" class="form update_form">
                             {% csrf_token %}              
                             <div class="btn-group input-group qty-group-cart" role="group" aria-label="Button group to increment, or decrement the selected quantity." >
                                 <button class="btn btn-dark cart-qty-change decrement-button" data-change="decrement" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-down"> 1</i></button>
@@ -51,6 +51,8 @@
                                 <button class="btn btn-dark cart-qty-change increment-button" data-change="increment" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
                             </div>
                         </form>
+                        <button class="update-button btn btn-info"><small>Update</small></button>
+                        <button class="remove-button btn btn-danger" id="remove_{{ product.product.id }}" data-size="{{ product.size }}"><small>Remove</small></button>
                         <h4 class="cart_price"><small class="price_text {{product.product.id}}">Price per item:</small> £<span id="product_price">{{product.product.price}}</span></h4>
                     </td>
                     <td class="d-flex justify-content-end">

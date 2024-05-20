@@ -132,22 +132,22 @@ ht !- In the form on product_detail.html, add an if statement, if the product ha
 ht -- Add the size selector after add to cart has been clicked. -- Possibly add a 'purchasing' container for add to cart, buy now, size selector and quantity.
 ht !- Add if statement to adjust page layout
 ht !- Add size to the cart template. -- In an IF statment to only show if product has_sizes.
-gi - git commit -m Added product sizes functionality.
+gi !- git commit -m Added product sizes functionality.
     Adding size information to the shopping cart:
-    - In add_to_cart view set size to none to start. Then if request.Post has product_size, set size to equal request.POST['size'].
-    - To adjust the structure of the cart, add an If statement to check if the product being added has a size.  
-    - If the items not already in the cart, it just needs to be added to the cart, but it will be sent as a dictionary. This allows the item to have the same ID, but different sizes for each ID.
-    - If the item is already in the cart, check if another item with the same ID and same size already exists. If so it will incremenet the quantity. If not then it will set [it?] equal to the quantity.
-    - Now wrap the original code (if item_id in list) in an else block from the If size statement.
-    - In the context.py, change quantity to item_data except the key.
-    - Write an if statement that changes if the product has a size or not, finding this out by seeing if item_data is an integer or not.
-    - The original code should be implemented if the statement is true
-    - Else, get the product with get_object_or_404, from the Product model, pk=item_id
-    for loop for the size and quantity in all items that have a size field:
-        - Add the result of (quantity * price) to the total variable.
-        - Increment the cart product count by the quantity of the item.
-        - Append the item_id, quantity, product and size to the cart_items variable.
-    -git commit finished product size logic
+    !- In add_to_cart view set size to none to start. Then if request.Post has product_size, set size to equal request.POST['size'].
+    !- To adjust the structure of the cart, add an If statement to check if the product being added has a size.  
+    !- If the items not already in the cart, it just needs to be added to the cart, but it will be sent as a dictionary. This allows the item to have the same ID, but different sizes for each ID.
+    !- If the item is already in the cart, check if another item with the same ID and same size already exists. If so it will incremenet the quantity. If not then it will set [it?] equal to the quantity.
+    !- Now wrap the original code (if item_id in list) in an else block from the If size statement.
+    !- In the context.py, change quantity to item_data except the key.
+    !- Write an if statement that changes if the product has a size or not, finding this out by seeing if item_data is an integer or not.
+    !- The original code should be implemented if the statement is true
+    !- Else, get the product with get_object_or_404, from the Product model, pk=item_id
+    !for loop for the size and quantity in all items that have a size field:
+        !- Add the result of (quantity * price) to the total variable.
+        !- Increment the cart product count by the quantity of the item.
+        !- Append the item_id, quantity, product and size to the cart_items variable.
+    !-git commit finished product size logic
 ht !- Add plus and minus buttons to the quantity selector in product_detail.html.
 js !- Implement JS:
     !- Function ensure the buttons are disabled correctly
@@ -169,7 +169,7 @@ js !- Implement JS:
 !- git commit Added quantity +/- buttons.
 !- Paste the form group into the cart.html where the quantity is displayed.
 !- Adjust html and styling to fit the cart
-- Implement a size input.
+!- Implement a size input.
 !- Include the script on the cart page as well.
 - Add two buttons for removing an item for the cart and for updating the quantity and size.
 - Implement the JS for this. Function for removing the item and a function for updating.

@@ -161,25 +161,6 @@ $(document).ready(function () {
         setButtonsDisplay(id);
     });
 
-    // Update quantity on click Credit: Code institute Project Boutique_Ado
-    $('.update-button').click(function(e) {
-        var form = $(this).prev('.update_form');
-        form.submit();
-    })
-
-    // Remove item and reload on click. Credit: Code institute Project Boutique_Ado
-    $('.remove-button').click(function(e) {
-        var csrfToken = "{{ csrf_token }}";
-        var itemId = $(this).attr('id').split('remove_')[1]; //Gets the second half of the update link.
-        var size = $(this).data('size'); //data-size attribute from html element.
-        var url = `/bag/remove/${itemId}`; //Creates the url to be removed.
-        var data = {'csrfmiddlewaretoken': csrfToken, 'size': size}; 
-
-        $.post(url, data) // Posts the data to the url written above.
-            .done(function() { 
-                location.reload(); // once its done the webpage is reloaded.
-            });
-    })
 });
     
 $( window ).on( "unload", function () {
