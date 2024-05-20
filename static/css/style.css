@@ -16,6 +16,7 @@ body{
     width: 100vw;
 }
 
+
 /* from Bulma */
 .icon {
     align-items: center;
@@ -346,6 +347,4 @@ tr{
     .cart-qty-change i{
         font-size: xx-small;
     }
-
-
 }
