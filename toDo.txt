@@ -171,9 +171,9 @@ js !- Implement JS:
 !- Adjust html and styling to fit the cart
 !- Implement a size input.
 !- Include the script on the cart page as well.
-- Add two buttons for removing an item for the cart and for updating the quantity and size.
-- Implement the JS for this. Function for removing the item and a function for updating.
-- Git commit added quantity boxes to the cart page.
+!- Add two buttons for removing an item for the cart and for updating the quantity and size.
+!- Implement the JS for this. Function for removing the item and a function for updating.
+!- Git commit added quantity boxes to the cart page.
 
 
     
