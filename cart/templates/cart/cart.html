@@ -29,7 +29,17 @@
                     </td>   
                     <td class="py-3 d-flex justify-content-around">
                         <p class=""><strong>{{ product.product.name }}</strong></p>
-                        <p class=""><strong>Size: </strong>{% if product.product.has_sizes %}{{ product.size|upper }}{% else %}N/A{% endif %}</p>
+                        {% if product.product.has_sizes %}
+                            <strong>Size: </strong>
+                            <select class="form-control size_selector rounded-0" name="product_size" id='id_product_size'>
+                                <option value="s" {% if product.size == "S" %} selected {% endif %}>S</option>
+                                <option value="m" {% if product.size == "M" %} selected {% endif %}>M</option>
+                                <option value="l" {% if product.size == "L" %} selected {% endif %}>L</option>
+                            </select>
+                            {{product.size|upper}}
+                        {% else %}
+                            <strong>Size: </strong><p>N/A</p>
+                        {% endif %}
                         <p class="small text-muted">SKU: {{ product.product.sku|upper }}</p>
                     </td>
                     <td class="d-flex justify-content-around">  

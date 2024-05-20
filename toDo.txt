@@ -130,8 +130,8 @@ py !- Add has_sizes to product model.
 py !- Migrate
 ht !- In the form on product_detail.html, add an if statement, if the product has sizes, add a selector for the size.
 ht -- Add the size selector after add to cart has been clicked. -- Possibly add a 'purchasing' container for add to cart, buy now, size selector and quantity.
-ht - Add if statement to adjust page layout
-ht - Add size to the cart template. -- In an IF statment to only show if product has_sizes.
+ht !- Add if statement to adjust page layout
+ht !- Add size to the cart template. -- In an IF statment to only show if product has_sizes.
 gi - git commit -m Added product sizes functionality.
     Adding size information to the shopping cart:
     - In add_to_cart view set size to none to start. Then if request.Post has product_size, set size to equal request.POST['size'].
