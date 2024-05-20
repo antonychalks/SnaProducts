@@ -326,7 +326,11 @@ tr{
         padding: unset;
     }
 
-    .cart-qty-group{
-        
+    td p{
+        margin: 0;
+    }
+
+    .cart-qty-change{
+        width: 60px;
     }
 }
