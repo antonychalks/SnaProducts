@@ -175,6 +175,33 @@ js !- Implement JS:
 !- Implement the JS for this. Function for removing the item and a function for updating.
 !- Git commit added quantity boxes to the cart page.
 
+- Updating a product:
+    !- Adjust cart function:
+        !- Copy and paste the add_to_cart view, renaming to update_cart.
+        !- Remove the redirect as it will redirect back to the bag.
+        !- If the quantity is more than 0, find the product by size and update its quantity.
+        !- If the quantity is 0, delete the item from the cart.
+        - If the bag has no size, update the quantity with quantity, or bag.pop the item.
+    !- Update cart urls
+    !- Add the url to the form action attribute. This will call the javascript to go to the view.
+        (Note the quantity selector can go outside of the 1-99 range.)
+    - Remove item function:
+        !- Copy and paste the adjust_cart view, renaming it to remove_from_bag.
+        !- Remove quantity.
+        !- If the item has a specific size, remove only the item with that size.
+        !- If the item only has one size, delete the whole item. (Also add this to adjust_bag view)
+        !- If the item didn't have any sizes at all, the delete the whole item.
+        !- Return http.response code 200 as its being returned to JS.
+    !- Add remove_from_bag to the URLs.
+    !- In the JS update function, change size to product_size, and in the data variable.
+    !- Update the data-size attribute to data-product_size in the update link. 
+    !- Add slash to the end of the JS url.
+    - In bag create a new folder called templatetags
+    - Create two files in this folder called bag_tools.py and __init__.py
+    - Look at bag_tools.py.
+    - Add the calc into the price part of the template.
+    - git commit -m "Added update_bag and remove_from_bag functions, as well as calc subtotal template filter"
+
 
     
     

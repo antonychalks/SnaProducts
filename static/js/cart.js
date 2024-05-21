@@ -167,9 +167,9 @@ $(document).ready(function () {
     $('.remove-button').click(function(e) {
         var csrfToken = "{{ csrf_token }}";
         var itemId = $(this).attr('id').split('remove_')[1]; //Gets the second half of the update link.
-        var size = $(this).data('size'); //data-size attribute from html element.
-        var url = `/bag/remove/${itemId}`; //Creates the url to be removed.
-        var data = {'csrfmiddlewaretoken': csrfToken, 'size': size}; 
+        var size = $(this).data('product_size'); //data-size attribute from html element.
+        var url = `/bag/remove/${itemId}/`; //Creates the url to be removed.
+        var data = {'csrfmiddlewaretoken': csrfToken, 'product_size': size}; 
 
         $.post(url, data) // Posts the data to the url written above.
             .done(function() { 
