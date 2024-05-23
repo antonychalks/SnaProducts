@@ -246,7 +246,50 @@ js !- Implement JS:
     -- Change the success message to show more information such as the bag items.
 
 - Checkout app
-    - startapp checkout
+    !- startapp checkout
+    !- models.py order class
+        !- Fields: order_number, full_name, email, phone number, country, postcode, town_or_city, street_address1, street_address2, county, date, delivery_cost, order_total, grand_total
+        !- Generate order number using uuid.uuid4(), Generates a random string of 32 characters.
+        !- update_total, use aggregate function on (sum('lineitem_total')), check if delivery is free or half, find delivery cost and add it to the grand total.
+        !- Save, overrides save, if the model doesn't have an order number, Generate_order_number gets called.
+        !-__str__, returns order_number
+    !-models.py OrderLineItem class
+        !- Fields: order, product, product_size, quantity, lineitem_total
+        !- save, override the usual save, multiplies the product price by the quantity, to get lineitem_total.
+        !- __str__, returns the sku of the product.
+    !- Dry run migrations, makemigrations, migrate.
+    - git commit -m "Created checkout app and models"
+
+    - Admin.py
+        - Import Order OrderLineItem
+        - class OrderAdmin(admin.ModelAdmin)
+            - readonly_fields = order_number, date, delivery_cost, order_total, grand_total.
+            - fields = sets the order of the fields display in admin.
+            - List_display = Shows only a few items.
+            - Ordering = -date
+            - inlines = (OrderLineItemAdminInline)
+
+        - class OrderLineItemAdminInline(admin.TabularInline)
+            - model = OrderLineItem
+            - readonly_fields = line item
+
+        - admin.site.register(Order, OrderAdmin) 
+    
+    - signals.py
+        - create signals.py
+        - imports post_save and post_delete, sends signals after a post is saved or deleted.
+        - import receiver.
+        - import OrderLineItem
+
+        -function update on save. (sender, instance, created, **kwargs) sender of signal (OrderLineItem), instance of the model that sent it (each product line), create tells django whether its a new instance or one being updated, any key word arguments.
+            - instance,order.update_total()
+            - @receiver(post_save, sender=OrderLineItem)
+        - copy and paste for post delete.
+        apps.py to import signal.
+
+
+
+
 
 
     

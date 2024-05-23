@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_countries',
     'cloudinary',
     'landing_page',
     'products',
     'cart',
+    'checkout',
 ]
 
 MIDDLEWARE = [
