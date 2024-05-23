@@ -18,7 +18,7 @@ def cart_contents(request):
                 'product_id': product_id,
                 'quantity': product_data,
                 'product': product,
-            }) #Adds the product details to the bag_items list.
+            }) #Adds the product details to the cart_products list.
         else:
             product = get_object_or_404(Product, pk=product_id)
             for size, quantity in product_data['products_by_size'].items():

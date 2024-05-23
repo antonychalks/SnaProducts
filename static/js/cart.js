@@ -99,7 +99,6 @@ $(document).ready(function () {
     
     // Displays the price with the quantity multiplier
     function displayPriceQty(){
-        console.log("setting price qty display", "qtyInputMap[id]: ", qtyInputMap)
         Object.keys(qtyInputMap).forEach(id => {
             if (qtyInputMap[id].value > 1){
                 let quantity = qtyInputMap[id].value;
@@ -157,18 +156,22 @@ $(document).ready(function () {
         }
     })
 
-    // Update quantity on click Credit: Code institute Project Boutique_Ado
+    // Update quantity on click
     $('.update-button').click(function(e) {
-        var form = $(this).prev('.update_form');
-        form.submit();
-    })
+        e.preventDefault(); // Prevent default form submission
+        let productId = $(this).data("form_product_id");
+        var form = $(`#update_form_${productId}`); // Select the form by its ID
+        console.log(form)
+        form.submit(); // Submit the form
+    });
+
 
     // Remove item and reload on click. Credit: Code institute Project Boutique_Ado
     $('.remove-button').click(function(e) {
-        var csrfToken = "{{ csrf_token }}";
+        var csrfToken = $(this).data('csrf_token');
         var itemId = $(this).attr('id').split('remove_')[1]; //Gets the second half of the update link.
         var size = $(this).data('product_size'); //data-size attribute from html element.
-        var url = `/bag/remove/${itemId}/`; //Creates the url to be removed.
+        var url = `/cart/remove_from_cart/${itemId}/`; //Creates the url to be removed.
         var data = {'csrfmiddlewaretoken': csrfToken, 'product_size': size}; 
 
         $.post(url, data) // Posts the data to the url written above.

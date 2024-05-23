@@ -51,10 +51,36 @@ Shopping cart:
 
 ___Pending:___
 Misc
-- Add testing for new views.py functionality
+- Add testing for python functions. 
+    - Views.py across all apps
+        - Test for response codes to ensure page loads.
+        - Test any Post requests with correct inputs and incorrect.
+        - Test get requests return the correct responses.
+    - Test context.py
+        - Test for the correct results with pricing.    
+        - Test for two descimal places.
+
 !-- Create a dedicated image view page.
 !-- Overlay product image when clicked on the list_products.
 -- Go through all the aria labels.
+- Annotate
+    - Cart app
+        - Python files 
+        - Templates 
+    - Products app
+        - Python files 
+        - Templates 
+    - Landing page app
+        - Python files 
+        - Templates 
+    - Templates dir
+        - Include files
+        - Base.html
+        - Toasts
+    - JS   
+        - Doc strings for functions
+        - Actions that are taking place.   
+    - CSS
 
 Featured products
 -- Add a featured products box on the home page
@@ -106,6 +132,7 @@ List Products:
 
 Nav:
 -- Hovering over the main categories should drop the menu down.
+-- Implement a free delivery and half delivery tick box.
 
 Adding products:
 ht !- Add form with POST function to Product detail template.
@@ -200,7 +227,26 @@ js !- Implement JS:
     - Create two files in this folder called bag_tools.py and __init__.py
     - Look at bag_tools.py.
     - Add the calc into the price part of the template.
-    - git commit -m "Added update_bag and remove_from_bag functions, as well as calc subtotal template filter"
+    !- git commit -m "Added update_bag and remove_from_bag functions, as well as calc subtotal template filter"
+
+- Toasts:
+    !- Create a folder called toasts within the includes folder.
+    !- Create a file called toast_success.html.
+    !- Paste in the code that was obtained from bootstrap.
+    !- Create toast_info, toast_warning and toast_error .html and change the classes to match.
+    !- In cart/views.py, import Products and django.contrib.messages.
+    !- Get the product object in the add_to_bag function.
+    !- Use the messages function to implement a message when the quantity has been updated.
+    !- Add a script in postloadjs at the bottom of the page, which makes the toast elements shown.
+    !- Add the MESSAGE_STORAGE variable in settings.py/
+    !- Add CSS for .message-container .custom-toast and .toast-capper.
+    !- Add a with statement in base.html to check the message level and display the correct toast.
+    !- Add messages to wherever applicable throughout the views.py.
+    !- Implement arrow CSS.
+    -- Change the success message to show more information such as the bag items.
+
+- Checkout app
+    - startapp checkout
 
 
     

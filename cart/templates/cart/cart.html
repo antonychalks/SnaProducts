@@ -32,7 +32,7 @@
                     </td>
 
                     <td class="py-lg-3 d-flex justify-content-around">  
-                        <form method="POST" id="update_form" action"{% url 'update_bag' product.product.id %}" class="form update_form">
+                        <form method="POST" id="update_form_{{ product.product.id }}" action"{% url 'update_cart' product.product.id %}" class="form update_form">
                             {% csrf_token %}              
                             <div class="btn-group input-group cart-qty-group" role="group" aria-label="Button group to increment, or decrement the selected quantity." >
                                 <button class="btn btn-dark cart-qty-change decrement-button" data-change="decrement" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-down"><span class="d-lg-inline d-none">1</span></i></button>
@@ -40,14 +40,14 @@
                                 <button class="btn btn-dark cart-qty-change increment-button" data-change="increment" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-up"> <span class="d-lg-inline d-none">1</span></i> </button>
                             </div>
                         </form>
-                        <button class="update-button btn btn-info"><small>Update</small></button>
-                        <button class="remove-button btn btn-danger" id="remove_{{ product.product.id }}" data-product_size="{{ product.size }}"><small>Remove</small></button>
+                        <button form="update_form_{{ product.product.id }}" class="update-button btn btn-info" data-form_product_id="{{product.product.id}}"><small>Update</small></button>
+                        <button class="remove-button btn btn-danger" id="remove_{{ product.product.id }}" data-product_size="{{ product.size }}" data-csrf_token="{{ csrf_token }}"><small>Remove</small></button>
                     </td>
                     <td class="py-lg-3 d-flex justify-content-around">
                         <p>Quantity: <span class="product-qty_{{product.product.id}}">{{ product.quantity }}</span></p>
                         {% if product.product.has_sizes %}
                             <p>Size: {{product.size|upper}}</p>
-                            <select class="form-control size_selector rounded-0" form="update_form" name="product_size" id='id_product_size'>
+                            <select class="form-control size_selector rounded-0" form="update_form_{{ product.product.id }}" name="product_size" id='id_product_size'>
                                 <option value="s" {% if product.size == "s" %} selected {% endif %}>S</option>
                                 <option value="m" {% if product.size == "m" %} selected {% endif %}>M</option>
                                 <option value="l" {% if product.size == "l" %} selected {% endif %}>L</option>
