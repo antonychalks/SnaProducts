@@ -286,6 +286,55 @@ js !- Implement JS:
             !- @receiver(post_save, sender=OrderLineItem)
         !- copy and paste for post delete.
         !apps.py to import signal.
+    - forms.py
+        - Create forms.py
+        - Import forms from django and Order from models 
+        - class Order form
+        - Meta:
+            - Model is order
+            - Select the fields that will be written out.
+        - Overwritting __init__ to enable customisation.
+            - Calling the default __init__ method sets the form up as it would by default.
+            - Placeholders dictionary 
+            - Setting autofocus to true on the full name field sets the cursor to start on this field when the page loads.
+            - Iterating through the forms fields:
+                - Adding a star to the placeholder if the field is required.
+                - Setting placeholder to the values of the placeholder dictionary.
+                - Remove the form field labels, as the placeholders are set.
+    - git commit added forms.
+    - install crispy forms
+        - Add to installed apps.
+        - Tell it what template pack to use (bootstrap 4)
+        - 'builtins': ['crispy_forms.templatetags.crispy_forms_tags', 'crispy_forms.templatetags.crispy_forms_field',]
+        - Add 'django.template.context_processors.media' (for the media), 'bag.contexts.bag_contents', (bag contents)
+    -views.py
+        - Create a checkout view.
+        - Get the bag from the session.
+        - If theres no bag, send an error message stating there's nothing in the bag and redirect to the products page.
+        - Empty instance of order form
+        - Template
+        - Context containing the order_form
+        - Render
+    - urls.py
+        - new urls file
+        - insert checkout url.
+        - In the main urls file, implement checkout urls.
+    - Templates
+        - Create checkout templates.
+        - Copy cart template to the checkout.html file.
+        - Delete bag_items and table.
+        - Instructions to fill out the form
+        - Link to the css file.
+        - form action is url checkout, method of post, id payment_form, csrf token.
+        - render the form fields individually. {{ order_form.<fieldname> | as_crispy_field }}
+        - Option to save the information in the form to their profile.
+        - Option to login or sign up if the user is authenticated.
+        - Submit div: link back to the cart, or back to products page. Submit button. Information saying card will be charged.
+
+    - CSS
+        - Create static file within the app, another folder called checkout, then a style folder.
+
+
 
 
 
