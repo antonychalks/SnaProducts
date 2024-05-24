@@ -223,10 +223,10 @@ js !- Implement JS:
     !- In the JS update function, change size to product_size, and in the data variable.
     !- Update the data-size attribute to data-product_size in the update link. 
     !- Add slash to the end of the JS url.
-    - In bag create a new folder called templatetags
-    - Create two files in this folder called bag_tools.py and __init__.py
-    - Look at bag_tools.py.
-    - Add the calc into the price part of the template.
+    !- In cart app create a new folder called templatetags
+    !- Create two files in this folder called cart_tools.py and __init__.py
+    !- Look at cart_tools.py.
+    !- Add the calc into the price part of the template.
     !- git commit -m "Added update_bag and remove_from_bag functions, as well as calc subtotal template filter"
 
 - Toasts:
@@ -307,29 +307,29 @@ js !- Implement JS:
         - Tell it what template pack to use (bootstrap 4)
         !- 'builtins': ['crispy_forms.templatetags.crispy_forms_tags', 'crispy_forms.templatetags.crispy_forms_field',]
         !- Add 'django.template.context_processors.media' (for the media), 'bag.contexts.bag_contents', (bag contents)
-    -views.py
-        - Create a checkout view.
-        - Get the bag from the session.
-        - If theres no bag, send an error message stating there's nothing in the bag and redirect to the products page.
-        - Empty instance of order form
-        - Template
-        - Context containing the order_form
-        - Render
-    - urls.py
-        - new urls file
-        - insert checkout url.
-        - In the main urls file, implement checkout urls.
-    - Templates
-        - Create checkout templates.
-        - Copy cart template to the checkout.html file.
-        - Delete bag_items and table.
-        - Instructions to fill out the form
+    !- views.py
+        !- Create a checkout view.
+        !- Get the bag from the session.
+        !- If theres no bag, send an error message stating there's nothing in the bag and redirect to the products page.
+        !- Empty instance of order form
+        !- Template
+        !- Context containing the order_form
+        !- Render
+    !- urls.py
+        !- new urls file
+        !- insert checkout url.
+        !- In the main urls file, implement checkout urls.
+    !- Templates
+        !- Create checkout template directory.
+        !- Copy cart template to the checkout.html file.
+        !- Delete bag_items and table.
+        !- Instructions to fill out the form
         - Link to the css file.
-        - form action is url checkout, method of post, id payment_form, csrf token.
-        - render the form fields individually. {{ order_form.<fieldname> | as_crispy_field }}
-        - Option to save the information in the form to their profile.
-        - Option to login or sign up if the user is authenticated.
-        - Submit div: link back to the cart, or back to products page. Submit button. Information saying card will be charged.
+        !- form action is "url checkout", method "post", id "payment_form", csrf token.
+        !- render the form fields individually. {{ order_form.<fieldname> | as_crispy_field }}
+        !- Option to save the information in the form to their profile.
+        !- Option to login or sign up if the user is authenticated.
+        !- Submit div: link back to the cart, or back to products page. Submit button. Information saying card will be charged.
 
     - CSS
         - Create static file within the app, another folder called checkout, then a style folder.
