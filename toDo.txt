@@ -287,26 +287,26 @@ js !- Implement JS:
         !- copy and paste for post delete.
         !apps.py to import signal.
     - forms.py
-        - Create forms.py
-        - Import forms from django and Order from models 
-        - class Order form
-        - Meta:
-            - Model is order
-            - Select the fields that will be written out.
-        - Overwritting __init__ to enable customisation.
-            - Calling the default __init__ method sets the form up as it would by default.
-            - Placeholders dictionary 
-            - Setting autofocus to true on the full name field sets the cursor to start on this field when the page loads.
-            - Iterating through the forms fields:
-                - Adding a star to the placeholder if the field is required.
-                - Setting placeholder to the values of the placeholder dictionary.
-                - Remove the form field labels, as the placeholders are set.
-    - git commit added forms.
-    - install crispy forms
-        - Add to installed apps.
+        !- Create forms.py
+        !- Import forms from django and Order from models 
+        !- class Order form
+        !- Meta:
+            !- Model is order
+            !- Select the fields that will be written out.
+        !- Overwritting __init__ to enable customisation.
+            !- Calling the default __init__ method sets the form up as it would by default.
+            !- Placeholders dictionary 
+            !- Setting autofocus to true on the full name field sets the cursor to start on this field when the page loads.
+            !- Iterating through the forms fields:
+                !- Adding a star to the placeholder if the field is required.
+                !- Setting placeholder to the values of the placeholder dictionary.
+                !- Remove the form field labels, as the placeholders are set.
+    !- git commit added forms.
+    !- install crispy forms
+        !- Add to installed apps.
         - Tell it what template pack to use (bootstrap 4)
-        - 'builtins': ['crispy_forms.templatetags.crispy_forms_tags', 'crispy_forms.templatetags.crispy_forms_field',]
-        - Add 'django.template.context_processors.media' (for the media), 'bag.contexts.bag_contents', (bag contents)
+        !- 'builtins': ['crispy_forms.templatetags.crispy_forms_tags', 'crispy_forms.templatetags.crispy_forms_field',]
+        !- Add 'django.template.context_processors.media' (for the media), 'bag.contexts.bag_contents', (bag contents)
     -views.py
         - Create a checkout view.
         - Get the bag from the session.
