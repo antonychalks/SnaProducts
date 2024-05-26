@@ -514,7 +514,7 @@ js !- Implement JS:
         - post the data to the view.
         - Once the post is done, wrap the form handling into .done()
         - Add a fail function, reloads the page.
-    - git commit -m "Added checkout form data chaching in payment intent"
+    !- git commit -m "Added checkout form data chaching in payment intent"
     - webhook_handler.py:
         - copy the supplied data from the course material as the video is outdated.
         - Add a loop that loops through the fields and values in shipping_details.address.items
@@ -540,14 +540,14 @@ js !- Implement JS:
                 except Exception as e:
                     - If the order was created then delete it.
                     - Return 500 to the server
-            - Return HttpResponse stating the order was created in the database by the webhook, status=200
-    - Models.py:
-        - Create original_cart field that will contain the original shopping bag that created it.
-        - Create stripe_pid field as it is guaranteed to be unique.
-    - admin.py:
-        - Add both new fields to the admin class.
-    - checkout.html:
-        - Add new hidden input (line 111)
+            !- Return HttpResponse stating the order was created in the database by the webhook, status=200
+    !- Models.py:
+        !- Create original_cart field that will contain the original shopping bag that created it.
+        !- Create stripe_pid field as it is guaranteed to be unique.
+    !- admin.py:
+        !- Add both new fields to the admin class.
+    !- checkout.html:
+        !- Add new hidden input (line 111)
     - views.py:
         - get the pid from the hidden input
         - Save the stripe_pid field as pid.
