@@ -417,13 +417,14 @@ js !- Implement JS:
             !- else:
                 !- All the previous code is wrapped in the else statement.
             !- Import  OrderLineItem, OrderForm, Product and bag_contents.
-        - Create the checkout_success view:
-            - Get the save_info from the session context.
-            - order = order_number from the object in the Order model.
-            - Success message with their order_number and telling them they'll receive an email.
-            - Delete the shopping cart as the order has gone.
-            - Set the template to checkout_success.html
-            - context = "order" : order.
+        !- Create the checkout_success view:
+            !- Get the save_info from the session context.
+            !- order = order_number from the object in the Order model.
+            !- Success message with their order_number and telling them they'll receive an email.
+            !- Delete the shopping cart as the order has gone.
+            !- Set the template to checkout_success.html
+            !- context = "order" : order.
+
     - Urls.py:
         - Create URL for cart success.
     - checkout_success.html:

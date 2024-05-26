@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
 
@@ -98,6 +98,7 @@ def checkout(request):
     }
 
     return render(request, template, context)
+
 
 def checkout_success(request, order_number):
     """
