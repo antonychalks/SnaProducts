@@ -447,11 +447,11 @@ js !- Implement JS:
         !- Add .fadeToggle(100); to the payment form and loading-overlay
     !- git commit -m "Added loading spinner overlay"
     !- In checkout directory, create webhook_handler.py.
-        - Import HttpResponse.
-        - Create class StripeWH_Handler.
-            -__init__ is a set-up method called every time a new instance of the class is created.
-                - Use it to assign the request as an attribute of the class in case we need to access any attributes coming from stripe.
-            - create a method called handle_event(self, event):
+        !- Import HttpResponse.
+        !- Create class StripeWH_Handler.
+            !-__init__ is a set-up method called every time a new instance of the class is created.
+                !- Use it to assign the request as an attribute of the class in case we need to access any attributes coming from stripe.
+            !- create a method called handle_event(self, event):
                 - return HttpResponse with content, webhook received, type of event, status=200.
     - git commit -m "Added webhook handler."
             - Create method handle_payment_intent_succeeded. (Sent each time the payment process is completed)
