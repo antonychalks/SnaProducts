@@ -17,38 +17,20 @@ def list_products(request):
     display_category = None
     
     if request.GET:
-        if 'sort' in request.GET: #Checks for sort in the request.GET so that this code gets run
-            sortkey = request.GET['sort'] #stores the request in a varibale
-            sort = sortkey #stores the sortkey variable in a varibale so that the original is kept
+        if 'sort' in request.GET: # Checks for sort in the request.GET so that this code gets run
+            sortkey = request.GET['sort'] # Stores the request in a varaible
+            sort = sortkey # Stores the sortkey variable in a variable so that the original is kept
             if sortkey == 'name':
-                sortkey = 'lower_name' #renames sortkey to lower_name
-                products = products.annotate(lower_name=Lower('name'))#creates a temporary field on the model for lower name
+                sortkey = 'lower_name' # Renames sortkey to lower_name
+                products = products.annotate(lower_name=Lower('name'))# Creates a temporary field on the model for lower name
             if sortkey == 'category':
                 sortkey = 'category__name'
-            if 'direction' in request.GET: #checks for a direction in the GET request
-                direction = request.GET['direction'] #stores the direction request in a variable
-                if direction == 'desc': #if the variable is desc for descending it will add a minus to the front of the sortkey varible
+            if 'direction' in request.GET: # Checks for a direction in the GET request
+                direction = request.GET['direction'] # Stores the direction request in a variable
+                if direction == 'desc': # If the variable is desc for descending it will add a minus to the front of the sortkey varible
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
             display_sorting = sort.capitalize()
-        
-        # if 'category' in request.GET:
-        #     # if category has parent then continue, else if category has no parent, display all categories with parent of category.
-        #     categories = request.GET['category'].split(',')
-        #     parent_categories = Category.objects.filter(type=0)
-        #     categories = Category.objects.filter(name__in=categories)
-        #     for category in categories:
-        #         for c in parent_categories:
-        #             if category == c:
-        #                 parent = Category.objects.filter(name=c)
-        #                 children = parent[0].children.all()
-        #                 products = products.filter(category__name__in=children)
-        #                 print(categories)
-        #                 print(children)
-        #                 print(products)
-        #             else:
-        #                 products = products.filter(category__name__in=categories)
-        #                 print(products)
         
         if 'category' in request.GET:
             selected_categories = request.GET['category'].split(',')

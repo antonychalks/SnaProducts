@@ -205,10 +205,10 @@ js !- Implement JS:
 - Updating a product:
     !- Adjust cart function:
         !- Copy and paste the add_to_cart view, renaming to update_cart.
-        !- Remove the redirect as it will redirect back to the bag.
+        !- Remove the redirect as it will redirect back to the cart.
         !- If the quantity is more than 0, find the product by size and update its quantity.
         !- If the quantity is 0, delete the item from the cart.
-        - If the bag has no size, update the quantity with quantity, or bag.pop the item.
+        !- If the cart has no size, update the quantity with quantity, or cart.pop the item.
     !- Update cart urls
     !- Add the url to the form action attribute. This will call the javascript to go to the view.
         (Note the quantity selector can go outside of the 1-99 range.)
@@ -331,8 +331,234 @@ js !- Implement JS:
         !- Option to login or sign up if the user is authenticated.
         !- Submit div: link back to the cart, or back to products page. Submit button. Information saying card will be charged.
 
-    - CSS
-        - Create static file within the app, another folder called checkout, then a style folder.
+    !- CSS
+        !- Create static file within the app, another folder called checkout, then a style folder.
+
+- Stripe
+    !- Install stripe with pip and add to requirements.text.
+    !- In postloadjs on the checkout template, add the two JSON scripts.
+    !- Views.py, add the JSON scripts to the context using the same keys.
+    !- Add js to the checkout static folder.
+    !- Write the js:
+        !- Get the stripe public key from the template by getting the id.text whilst slicing the first and last character off.
+        !- Use the same method to get the client secret key.
+        !- Setting up stripe just requires using Stripe(stripe_public_key)
+        !- Create stripe elements by using stripe.elements()
+        !- Card element = elements.create('card')
+        !- Mount the card to the #card-element div.
+        !- The card element can be styled within the JS.
+        !- Create the CSS for checkout.
+        !- Handling real time validation errors:
+            !- Add an event listener to the card for it changing. This means it will be checked every time the input is changed.
+            !- If event.error:
+                !- Create a html to display the error message.
+                !- Set the html to the inner of the error div.
+            !- Else:
+                !- Set the html to the errorDiv to be empty.
+        i- Stripe uses payment intents: when the payment goes to the processing page,
+            the checkout view sends stripe a payment intent with the value of the shopping cart.
+            Stripe then returns client_secret which we return back to the template. Client_secret is then used
+            in the template to call confirmCardPayment() to verify the card.
+    !- In settings.py:
+        !- STRIPE_CURRENCY = 'gbp'
+        !- STRIPE_PUBLIC_KEY
+        !- STRIPE_SECRET_KEY
+
+    !- In checkout/views.py:
+        !- import bag_contents context.
+        !- Set current_cart equal to the cart_contents request
+        !- Set total equal to the current_cart('grand_total') value
+        !- Stripe wants the value to be an integer, so round the total and times it to be 100. £39.99 becomes 3999p
+        !- Set stripe public and secret keys to a variable with the same name.
+        !- set stripe.api.key to stripe_secret_key
+        !- Create the payment intent with stripe.paymentIntent.create(amount=stripe_total, currency = settings.STRIPE_CURRENCY)
+    !- In stripe_payment.JS
+        !- Handle the submission of the form:
+            !- Add an event listener for the form being submitted.
+            !- Prevent default.
+            !- Prevent the card being updated.
+            !- Set the submit button to disabled.
+            !- Confirm card payment by sending the card details to stripe.
+            - Then with the result, execute the following function:
+                - If an error is returned:
+                    !- Insert an error message into the error div, writing out what the error was.
+                    !- Set disabled to false in the card.update variable.
+                    !- Set disabled to false for the submit button.
+                !- If there isn't an error:
+                    !If result.paymentIntent.status is succeeded:
+                        !- form.submit()
+        !- Check the form is working by using the test card numbers.
+        -- Create tests that use these cards.
+    !- In views.py
+        !- Create handling for checkout POST so the order gets uploaded to the database.
+            !- if request.method is POST:
+                !- Get the cart.
+                !- form_data dictionary to include all the form fields.
+                !- Set order_form = OrderForm(form_data)
+                !-if the order_form is valid:
+                    !- order = order_form.save()
+                    !- iterate through each item in bag.items and add it to the order form:
+                        !-Try:
+                            !- get the productID
+                            !- if item_data is an integer (only has quantity and not size):
+                                !- Set order_line_item to be a dictionary with the order, product and quantity.
+                                !- Save order_line_item
+                            !- if item_data isn't an integer:
+                                !- Iterate through the size and quantity of the item_data['items_by_size'].items():
+                                    !- Set order_line_item to be a dictionary with the order, product, quantity and product_size.
+                                    !- Save order_line_item
+                        !- if the product doesn't exist
+                            !- delete the empty order and return user to the cart page.
+                            !- Send an error message, One of the products in your bag wasn't found in our database. Please call us for assistance.
+                    !- Attach whether the user wanted to save their profile. request.session['save_info'] = 'save-info' in request.Post
+                    !- reverse checkout_success to send the user to the success page with the order_number
+                !- If the order form isn't valid, attach an error message to state there was an error with the form.
+                -- See if we can get an error for what is wrong to tell the user.
+            !- else:
+                !- All the previous code is wrapped in the else statement.
+            !- Import  OrderLineItem, OrderForm, Product and bag_contents.
+        - Create the checkout_success view:
+            - Get the save_info from the session context.
+            - order = order_number from the object in the Order model.
+            - Success message with their order_number and telling them they'll receive an email.
+            - Delete the shopping cart as the order has gone.
+            - Set the template to checkout_success.html
+            - context = "order" : order.
+    - Urls.py:
+        - Create URL for cart success.
+    - checkout_success.html:
+        - Create Checkout success page.
+        - Loop through the products in the order to display every item, with the name, size, quantity and price.
+        - Add an anchor to the product detail page for the product.
+        - Include order info, date, details, delivery address, billing info.
+        - If statement around second_line_address and county field.
+    - checkout/__init__.py:
+        - default_app_config = 'checkout.apps.CheckoutConfig'
+    - models.py:
+        - add or 0 to the order_total to prevent the order_total being set to none if every item is deleted.
+    - git commit -m "Added checkout success page functionality."
+    - checkout.html:
+        - Add loading spinner to the page.
+    - checkout.css:
+        - Add css for the loading spinner.
+    - stripe_payment.js:
+        - Add .fadeToggle(100); to the payment form and loading-overlay
+    - git commit -m "Added loading spinner overlay"
+    - In checkout directory, create webhook_handler.py.
+        - Import HttpResponse.
+        - Create class StripeWH_Handler.
+            -__init__ is a set-up method called every time a new instance of the class is created.
+                - Use it to assign the request as an attribute of the class in case we need to access any attributes coming from stripe.
+            - create a method called handle_event(self, event):
+                - return HttpResponse with content, webhook received, type of event, status=200.
+    - git commit -m "Added webhook handler."
+            - Create method handle_payment_intent_succeeded. (Sent each time the payment process is completed)
+
+            - Second method incase the intent failed. handle_payment_intent_failed.
+    - urls.py
+        - create url for webhook. 'wh', webook, name="webhook"
+        - from .webhooks import webhook
+    - Webhooks.py
+        - Create webhooks.py
+        - Create webhooks function that takes request:
+            - Import settings, http response, webhook handler class, stripe, require post decorator, csrf excempt.
+            - Paste in from stripe with a few modifications.
+            - Setup:
+                - wh_secret = settings.STRIPE_WH_SECRET
+                - stripe.api_key = settings.STRIPE_SECRET_KEY
+            - Change endpoint secret to wh_secret.
+            - Add a generic exception handler to catch any other exceptions.
+    - settings.py
+        - STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+    !- stripe website:
+        !- Add endpoint: url/checkout/wh/
+        !- click receive all events.
+        !- Add endpoint, listen for all
+        !- Add the environmental variables
+    - webhooks.py:
+    - modifying the webhook view to use the webhook handler:
+        - pass an instance of the webhook request to the handler.
+        - create a dictionary called event_map
+            - Keys are the names of the webhooks coming from stripe: 'payment_intent.succeeded'
+            - Values will be the methods inside the handler: handler.handle_payment_intent_succeeded
+            - complete for failed as well.
+        - Get the event from stripe
+            - store event['type'] in event_type eg. 'payment_intent.succeeded' or 'payment_intent.failed'
+        - event_handler = event_map.get(event_type, handler.handle_event), gets the value of the type from the dictionary.
+        - Call the event handler with the event: response = event_handler(event)
+        - return response stripe.
+    - git commit -m "Created webhook handlers"
+    - stripe_payment.js:
+        - add billing details and shipment to the payment method.
+    - Views.py to add if the user wants their information saved for next time.
+        - cache_checkout_data view:
+            - import post decorator and HttpResponse.
+            - require post decorator
+            - try:
+                - make a post request to this view and give it the client secret from the payment intent.
+                - store the client_secret ID in pid
+                - Set up stripe with the secret key so we can modify the payment intent
+                - Modify the payment intent: stripe.PaymentIntent.modify(pid, metadata={'cart': json.dumps(request.session.get('cart', {}),'save_info': request.POST.get('save_info'),'username': request.user})
+                - return HttpResponse with status 200
+            - except Exception as e:
+                - messages error: ' Sorry your payment cannot be processed right now.'
+                - return HttpResponse status 400
+    - Add the new view to urls.py
+    - stripe_payment.js:
+        - get the boolean value in saveInfo by checking if the checkbox save info is checked.
+        - add the csrf token.
+        - create the postData object with the csrf token, client secret and saveInfo.
+        - create the new url
+        - post the data to the view.
+        - Once the post is done, wrap the form handling into .done()
+        - Add a fail function, reloads the page.
+    - git commit -m "Added checkout form data chaching in payment intent"
+    - webhook_handler.py:
+        - copy the supplied data from the course material as the video is outdated.
+        - Add a loop that loops through the fields and values in shipping_details.address.items
+        - If the value is blank, set shipping_details.address[field] to None.
+        - Check if the order exists already, if it does then nothing needs to be done, if not create the order for the database in the webhook.
+            - Set order_exists to false
+            - set attempt = 1
+            - Create a while loop that will attempt up to 5 times:
+                try:
+                    - Try and store the order in order by using .get on Order.objects with field __iexact (make sure the fields match but not case sensitive)
+                    - Break if the order exists.
+                except Order.DoesNotExist:
+                    - Increment attempt by 1
+                    - Sleep for 5 seconds.
+            - If order_exists:
+                - Return a http.response to stripe, verifying the order exists in our database. Status=200
+            - Else:
+                try:
+                    - Create the order with all the fields.
+                    - Copy code from the view that does the same thing.
+                    - Don't load the cart from the session, load it from the json version in payment intent.
+                    - No form to save, instead use Order.objects.create with all the data from the payment intent.
+                except Exception as e:
+                    - If the order was created then delete it.
+                    - Return 500 to the server
+            - Return HttpResponse stating the order was created in the database by the webhook, status=200
+    - Models.py:
+        - Create original_cart field that will contain the original shopping bag that created it.
+        - Create stripe_pid field as it is guaranteed to be unique.
+    - admin.py:
+        - Add both new fields to the admin class.
+    - checkout.html:
+        - Add new hidden input (line 111)
+    - views.py:
+        - get the pid from the hidden input
+        - Save the stripe_pid field as pid.
+        - Save the original_cart field as the json dump of cart
+        - Save the order.
+        - Add commit=False to the first save event.
+    - webhook_handler.py:
+        - Add the original_cart and stripe_pid fields to the try statement that trys to find the order.
+        - Also add the fields when making the order later in the function if the order isn't found.
+        - import: Order, OrderLineItem from .models, Product from products.models, json and time
+    - git commit -m "Completed webhook handler and checkout functionality"
+
+User Profile:
 
 
 
@@ -341,7 +567,12 @@ js !- Implement JS:
 
 
 
-    
-    
+
+
+
+
+
+
+
 
 
