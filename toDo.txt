@@ -457,28 +457,28 @@ js !- Implement JS:
             - Create method handle_payment_intent_succeeded. (Sent each time the payment process is completed)
 
             - Second method incase the intent failed. handle_payment_intent_failed.
-    - urls.py
-        - create url for webhook. 'wh', webook, name="webhook"
-        - from .webhooks import webhook
-    - Webhooks.py
-        - Create webhooks.py
-        - Create webhooks function that takes request:
-            - Import settings, http response, webhook handler class, stripe, require post decorator, csrf excempt.
-            - Paste in from stripe with a few modifications.
-            - Setup:
+    !- urls.py
+        !- create url for webhook. 'wh', webook, name="webhook"
+        !- from .webhooks import webhook
+    !- Webhooks.py
+        !- Create webhooks.py
+        !- Create webhooks function that takes request:
+            !- Import settings, http response, webhook handler class, stripe, require post decorator, csrf excempt.
+            !- Paste in from stripe with a few modifications.
+            !- Setup:
                 - wh_secret = settings.STRIPE_WH_SECRET
                 - stripe.api_key = settings.STRIPE_SECRET_KEY
             - Change endpoint secret to wh_secret.
             - Add a generic exception handler to catch any other exceptions.
-    - settings.py
-        - STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+    !- settings.py
+        !- STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
     !- stripe website:
         !- Add endpoint: url/checkout/wh/
         !- click receive all events.
         !- Add endpoint, listen for all
         !- Add the environmental variables
-    - webhooks.py:
-    - modifying the webhook view to use the webhook handler:
+    !- webhooks.py:
+    !- modifying the webhook view to use the webhook handler:
         - pass an instance of the webhook request to the handler.
         - create a dictionary called event_map
             - Keys are the names of the webhooks coming from stripe: 'payment_intent.succeeded'
@@ -490,8 +490,8 @@ js !- Implement JS:
         - Call the event handler with the event: response = event_handler(event)
         - return response stripe.
     - git commit -m "Created webhook handlers"
-    - stripe_payment.js:
-        - add billing details and shipment to the payment method.
+    !- stripe_payment.js:
+        !- add billing details and shipment to the payment method.
     - Views.py to add if the user wants their information saved for next time.
         - cache_checkout_data view:
             - import post decorator and HttpResponse.
