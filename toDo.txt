@@ -445,8 +445,8 @@ js !- Implement JS:
         !- Add css for the loading spinner.
     !- stripe.js:
         !- Add .fadeToggle(100); to the payment form and loading-overlay
-    - git commit -m "Added loading spinner overlay"
-    - In checkout directory, create webhook_handler.py.
+    !- git commit -m "Added loading spinner overlay"
+    !- In checkout directory, create webhook_handler.py.
         - Import HttpResponse.
         - Create class StripeWH_Handler.
             -__init__ is a set-up method called every time a new instance of the class is created.
