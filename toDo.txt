@@ -438,13 +438,13 @@ js !- Implement JS:
         !- default_app_config = 'checkout.apps.CheckoutConfig'
     !- models.py:
         !- add or 0 to the order_total to prevent the order_total being set to none if every item is deleted.
-    - git commit -m "Added checkout success page functionality."
-    - checkout.html:
-        - Add loading spinner to the page.
-    - checkout.css:
-        - Add css for the loading spinner.
-    - stripe_payment.js:
-        - Add .fadeToggle(100); to the payment form and loading-overlay
+    !- git commit -m "Added checkout success page functionality."
+    !- checkout.html:
+        !- Add loading spinner to the page.
+    !- stripe.css:
+        !- Add css for the loading spinner.
+    !- stripe.js:
+        !- Add .fadeToggle(100); to the payment form and loading-overlay
     - git commit -m "Added loading spinner overlay"
     - In checkout directory, create webhook_handler.py.
         - Import HttpResponse.
