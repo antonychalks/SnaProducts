@@ -31,17 +31,17 @@ def add_to_cart(request, product_id):
         if size:
             # If the product is in the cart, 
             if product_id in list(cart.keys()):
-                #If the product with the same size is in the cart.
+                # If the product with the same size is in the cart.
                 if size in cart[product_id]['products_by_size'].keys():
-                    #If it is then it will increase the amount of items in the cart by the quantity
+                    # If it is then it will increase the amount of items in the cart by the quantity
                     cart[product_id]['products_by_size'][size] += quantity
                     messages.success(request, f'Quantity updated for {size.upper()} {product.name} in your cart')
                 else:
-                    #If the product with the size isn't in the cart, it will create a new entry.
+                    # If the product with the size isn't in the cart, it will create a new entry.
                     cart[product_id]['products_by_size'][size] = quantity
                     messages.success(request, f'Added item: {product.name}, with new size: {size.upper()} to your cart')
             else:
-                #If the product isn't already in the cart, it will be added now.
+                # If the product isn't already in the cart, it will be added now.
                 cart[product_id] = {'products_by_size' : {size: quantity}}
                 messages.success(request, f'Added new item: {product.name} in {size.upper()} to your cart')
         # If the product doesn't have a size, the cart will be checked for the product.  

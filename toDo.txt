@@ -213,13 +213,13 @@ js !- Implement JS:
     !- Add the url to the form action attribute. This will call the javascript to go to the view.
         (Note the quantity selector can go outside of the 1-99 range.)
     - Remove item function:
-        !- Copy and paste the adjust_cart view, renaming it to remove_from_bag.
+        !- Copy and paste the adjust_cart view, renaming it to remove_from_cart.
         !- Remove quantity.
         !- If the item has a specific size, remove only the item with that size.
-        !- If the item only has one size, delete the whole item. (Also add this to adjust_bag view)
+        !- If the item only has one size, delete the whole item. (Also add this to adjust_cart view)
         !- If the item didn't have any sizes at all, the delete the whole item.
         !- Return http.response code 200 as its being returned to JS.
-    !- Add remove_from_bag to the URLs.
+    !- Add remove_from_cart to the URLs.
     !- In the JS update function, change size to product_size, and in the data variable.
     !- Update the data-size attribute to data-product_size in the update link. 
     !- Add slash to the end of the JS url.
@@ -235,7 +235,7 @@ js !- Implement JS:
     !- Paste in the code that was obtained from bootstrap.
     !- Create toast_info, toast_warning and toast_error .html and change the classes to match.
     !- In cart/views.py, import Products and django.contrib.messages.
-    !- Get the product object in the add_to_bag function.
+    !- Get the product object in the add_to_cart function.
     !- Use the messages function to implement a message when the quantity has been updated.
     !- Add a script in postloadjs at the bottom of the page, which makes the toast elements shown.
     !- Add the MESSAGE_STORAGE variable in settings.py/
@@ -309,8 +309,8 @@ js !- Implement JS:
         !- Add 'django.template.context_processors.media' (for the media), 'bag.contexts.bag_contents', (bag contents)
     !- views.py
         !- Create a checkout view.
-        !- Get the bag from the session.
-        !- If theres no bag, send an error message stating there's nothing in the bag and redirect to the products page.
+        !- Get the cart from the session.
+        !- If theres no cart, send an error message stating there's nothing in the cart and redirect to the products page.
         !- Empty instance of order form
         !- Template
         !- Context containing the order_form
@@ -322,7 +322,7 @@ js !- Implement JS:
     !- Templates
         !- Create checkout template directory.
         !- Copy cart template to the checkout.html file.
-        !- Delete bag_items and table.
+        !- Delete cart_items and table.
         !- Instructions to fill out the form
         - Link to the css file.
         !- form action is "url checkout", method "post", id "payment_form", csrf token.

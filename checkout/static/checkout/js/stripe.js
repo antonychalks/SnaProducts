@@ -65,25 +65,24 @@ form.addEventListener('submit', function(ev) {
     var url = '/checkout/cache_checkout_data/';
 
     $.post(url, postData).done(function () {
+        let full_name = ` ${$.trim(form.first_name.value)} ${$.trim(form.last_name.value)}, `
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: card,
                 billing_details: {
-                    firstName: $.trim(form.first_name.value),
-                    secondName: $.trim(form.second_name.value),
+                    name: full_name,
                     email: $.trim(form.email.value),
                     address:{
                         line1: $.trim(form.first_line_address.value),
                         line2: $.trim(form.second_line_address.value),
                         city: $.trim(form.town_or_city.value),
                         country: $.trim(form.country.value),
-                        county: $.trim(form.county.value),
+                        state: $.trim(form.county.value),
                     }
                 }
             },
             shipping: {
-                firstName: $.trim(form.first_name.value),
-                secondName: $.trim(form.second_name.value),
+                name: full_name,
                 phone: $.trim(form.phone_number.value),
                 address: {
                     line1: $.trim(form.first_line_address.value),
@@ -91,7 +90,7 @@ form.addEventListener('submit', function(ev) {
                     city: $.trim(form.town_or_city.value),
                     country: $.trim(form.country.value),
                     postal_code: $.trim(form.postcode.value),
-                    county: $.trim(form.county.value),
+                    state: $.trim(form.county.value),
                 }
             },
         }).then(function(result) {

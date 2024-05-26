@@ -18,7 +18,7 @@ def cache_checkout_data(request):
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
-            'bag': json.dumps(request.session.get('bag', {})),
+            'cart': json.dumps(request.session.get('cart', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
         })
@@ -35,7 +35,7 @@ def checkout(request):
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
-
+        print(request.POST)
         form_data = {
             'first_name': request.POST['first_name'],
             'last_name': request.POST['last_name'],
@@ -44,8 +44,8 @@ def checkout(request):
             'country': request.POST['country'],
             'postcode': request.POST['postcode'],
             'town_or_city': request.POST['town_or_city'],
-            'first_line_address': request.POST['street_address1'],
-            'second_line_address': request.POST['street_address2'],
+            'first_line_address': request.POST['first_line_address'],
+            'second_line_address': request.POST['second_line_address'],
             'county': request.POST['county'],
         }
         order_form = OrderForm(form_data)
@@ -55,7 +55,7 @@ def checkout(request):
             order.stripe_pid = pid
             order.original_cart = json.dumps(cart)
             order.save()
-            for product_id, product_data in cart.products():
+            for product_id, product_data in cart.items():
                 try:
                     product = Product.objects.get(id=product_id)
                     if isinstance(product_data, int):
@@ -129,8 +129,8 @@ def checkout_success(request, order_number):
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
 
-    if 'bag' in request.session:
-        del request.session['bag']
+    if 'cart' in request.session:
+        del request.session['cart']
 
     template = 'checkout/checkout_success.html'
     context = {

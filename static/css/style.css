@@ -16,6 +16,10 @@ body{
     width: 100vw;
 }
 
+.header{
+    background: white;
+}
+
 
 /* from Bulma */
 .icon {
