@@ -425,18 +425,19 @@ js !- Implement JS:
             !- Set the template to checkout_success.html
             !- context = "order" : order.
 
-    - Urls.py:
-        - Create URL for cart success.
+    !- Urls.py:
+        !- Create URL for cart success.
+
     - checkout_success.html:
         - Create Checkout success page.
         - Loop through the products in the order to display every item, with the name, size, quantity and price.
         - Add an anchor to the product detail page for the product.
         - Include order info, date, details, delivery address, billing info.
         - If statement around second_line_address and county field.
-    - checkout/__init__.py:
-        - default_app_config = 'checkout.apps.CheckoutConfig'
-    - models.py:
-        - add or 0 to the order_total to prevent the order_total being set to none if every item is deleted.
+    !- checkout/__init__.py:
+        !- default_app_config = 'checkout.apps.CheckoutConfig'
+    !- models.py:
+        !- add or 0 to the order_total to prevent the order_total being set to none if every item is deleted.
     - git commit -m "Added checkout success page functionality."
     - checkout.html:
         - Add loading spinner to the page.
