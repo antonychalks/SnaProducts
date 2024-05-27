@@ -8,8 +8,16 @@
 <script src="{% static 'js/side-nav.js' %}"></script>
 {% endblock %}
 
-{% block nav-includes %}
-
+{% block extra_title %}
+    {% if current_categories %}
+        {% for category in current_categories %}
+            {%  if category.type == 0 %}
+                || {{ category.name |title }}
+            {% endif %}
+        {%  endfor %}
+    {% else %}
+        || All Products
+    {%  endif %}
 {% endblock %}
 
 {% block content %}
