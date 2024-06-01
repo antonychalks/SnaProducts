@@ -200,6 +200,20 @@
         </div>
         <div class="row">
 			<div class="col-12 col-lg-7 text-right">
+                {% if from_profile %}
+                <a href="{% url 'profile' %}" class="btn btn-info rounded-0 my-2">
+					<span class="icon mr-2">
+						<i class="fa-solid fa-percent"></i>
+					</span>
+					<span class="text-uppercase">Click to return to the profile page</span>
+				</a>
+                <a href="{% url 'products' %}" class="btn btn-success rounded-0 my-2">
+					<span class="icon mr-2">
+						<i class="fa-solid fa-shop"></i>
+					</span>
+					<span class="text-uppercase">Click to see all products.</span>
+				</a>
+                {% else %}
 				<a href="{% url 'products' %}?category=specials" class="btn btn-info rounded-0 my-2">
 					<span class="icon mr-2">
 						<i class="fa-solid fa-percent"></i>
@@ -212,6 +226,7 @@
 					</span>
 					<span class="text-uppercase">Back to all products.</span>
 				</a>
+                {%  endif %}
 			</div>
 		</div>
     </div>

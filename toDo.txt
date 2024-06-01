@@ -650,49 +650,53 @@ User Profile:
                         !- if the field is empty, set to placeholder colour.
                         !- If the field isn't empty, set the colour to black.
 
-       Setting the POST handler for the profile view.
-        - Views.py:
-            - import messages
-            - if request.method is POST
-                - Set the form to be the UserProfileForm with an instance of the profile.
-                - If the form is valid:
-                    - form.save()
-                    - Success message
-                    - Add the on_profile_page context and set to True
+        Setting the POST handler for the profile view.
+        !- Views.py:
+            !- import messages
+            !- if request.method is POST
+                !- Set the form to be the UserProfileForm with an instance of the profile.
+                !- If the form is valid:
+                    !- form.save()
+                    !- Success message
+                !- Add the on_profile_page context and set to True
 
-    - Toasts/message_success:
-        - change if grand_total to if grand_total and not on_profile_page
+    !- Toasts/message_success:
+        !- change if grand_total to if grand_total and not on_profile_page
 
     Order history
-    - Profile.html:
-        - Create a table showing order number, date, items, order total
-        - for loop to display each order attached to the profile.
-        - Order number is a link to order history URL with the order number. (trunchatechars:6)
-        - date is from order.date
-        - order total is the same
-        - items field is an unorderedlist:
-            - for item in order.lineitems.all
-            - if has_sizes - display size, name and quantity (i.e M T-Shirt x 5)
+    !- Profile.html:
+        !- Create a table showing order number, date, items, order total
+        !- for loop to display each order attached to the profile.
+        !- Order number is a link to order history URL with the order number. (trunchatechars:6)
+        !- date is from order.date
+        !- order total is the same
+        !- items field is an unorderedlist:
+            !- for item in order.lineitems.all
+            !- if has_sizes - display size, name and quantity (i.e M T-Shirt x 5)
 
-    - Profile.css
-        - max-height incase of loads of orders.
-        - overflow-y: auto for scroll bar.
 
-    views.py:
-        - Import Order model.
-        - order_history view
-            - get the order from the model with the order number
-            - info message for the order, confirming the order has already been placed and confirmed.
-            - Set the template to the checkout success template.
-            - Context:
-                - Add order to the context
-                - from_profile = True
+    !- Profile.css
+        !- max-height incase of loads of orders.
+        !- overflow-y: auto for scroll bar.
 
-    urls.py:
-        - Create url for order history
 
-    Checkout success:
-        - Display a button to send the user back to the profile page rather than the special deals page.
+    - views.py:
+        !- Import Order model.
+        !- order_history view
+            !- get the order from the model with the order number
+            !- info message for the order, confirming the order has already been placed and confirmed.
+            !- Set the template to the checkout success template.
+            !- Context:
+                !- Add order to the context
+                !- from_profile = True
+
+
+    !- urls.py:
+        !- Create url for order history
+
+
+    !- Checkout success:
+        !- Display a button to send the user back to the profile page rather than the special deals page.
 
 
     - Views.py
@@ -702,51 +706,52 @@ User Profile:
 
 
     Attaching user to order
-    - admin.py:
-        - Add user_profile to fields.
+    !- admin.py:
+        !- Add user_profile to fields.
+
 
     checkout/views.py:
-        - Checkout success view:
-            - if user.isAuthenticated:
-                - Get the users profile and save in profile.
-                - set order.user_profile to equal profile
-                - order.save
-                - if save_info:
-                    - Save all the save_info into a dictionary.
-                    - Store the UserProfile form in a variable, passing the dictionary and profile instance to the form.
-                    - if the form is valid:
-                        - save the form.
-        - Checkout view:
-            - If the user is authenticated:
-                In a try statement:
-                - Get the profile from the Profile model objects with request.user.
-                - Get the order form and use initial={<dictionary>} with the details from profile to preset the form.
-                except if the userprofile doesn't exist:
-                - render empty form
-            - If user isnt authenticated:
-                - render empty form
+        !- Checkout success view:
+            !- if user.isAuthenticated:
+                !- Get the users profile and save in profile.
+                !- set order.user_profile to equal profile
+                !- order.save
+                !- if save_info:
+                    !- Save all the save_info into a dictionary.
+                    !- Store the UserProfile form in a variable, passing the dictionary and profile instance to the form.
+                    !- if the form is valid:
+                        !- save the form.
+        !- Checkout view:
+            !- If the user is authenticated:
+                !In a try statement:
+                !- Get the profile from the Profile model objects with request.user.
+                !- Get the order form and use initial={<dictionary>} with the details from profile to preset the form.
+                !except if the userprofile doesn't exist:
+                1- render empty form
+            !- If user isnt authenticated:
+                !- render empty form
 
 
     Sending confirmation email:
         In checkout app
-        - Create confirmation_email folder.
-            - Create confirmation_email_subject.txt
-            - Create confirmation_email_body.txt
-            - Fill out text with django template literals for personalised emails.
+        !- Create confirmation_email folder.
+            !- Create confirmation_email_subject.txt
+            !- Create confirmation_email_body.txt
+            !- Fill out text with django template literals for personalised emails.
 
         - webhook_handler.py:
-            - import send_mail from django.core.mail
-            - import render_to_string from django.template.loader
-            - import settings from django.conf
-            - _send_confirmation_email(self, order) function:
-                - store the customers email in a variable.
-                - subject = render_to_string(confirmation_email_subject.txt, {'order' = order})
-                - body = render_to_string(confirmation_email_body.txt, {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
-                - send_mail = (subject, body, settings.DEFAULT_FROM_EMAIL, [customers email variable]
-            - if order exists:
-                - self._send_confirmation_email(order)
-            - if the order was created by the webhook handler:
-                - before the status code 200 is sent to stripe: self._send_confirmation_email(order)
+            !- import send_mail from django.core.mail
+            !- import render_to_string from django.template.loader
+            !- import settings from django.conf
+            !- _send_confirmation_email(self, order) function:
+                !- store the customers email in a variable.
+                !- subject = render_to_string(confirmation_email_subject.txt, {'order' = order})
+                !- body = render_to_string(confirmation_email_body.txt, {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
+                !- send_mail = (subject, body, settings.DEFAULT_FROM_EMAIL, [customers email variable]
+            !- if order exists:
+                !- self._send_confirmation_email(order)
+            !- if the order was created by the webhook handler:
+                !- before the status code 200 is sent to stripe: self._send_confirmation_email(order)
 
         settings.py:
             - Add DEFAULT_FROM_EMAIL = snaProducts@example.com at the bottom of the page

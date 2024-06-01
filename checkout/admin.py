@@ -21,7 +21,7 @@ class OrderAdmin(admin.ModelAdmin):
               'first_line_address','second_line_address',
               'county', 'delivery_cost', 'order_total',
               'grand_total', 'original_cart',
-              'stripe_pid')
+              'stripe_pid', 'user_profile')
 
     list_display = ('order_number', 'date', 'first_name',
                     'last_name', 'order_total',
