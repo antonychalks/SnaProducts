@@ -572,14 +572,14 @@ js !- Implement JS:
 
 User Profile:
     !- startapp profiles
-    - add to settings
+    !- add to settings
     - profile model:
-        - import user from contrib.auth
-        - user = models.OneToOneField(User, on_delete=models.CASCADE)
-        - Other fields: phone_number, country, postcode, town_or_city, street_address1, street_address2, county, sign-up date, money spent, previous orders.
-        - Set null and blank = true. for the address and contact fields.
-        - Set the __str__
-        - Add a receiver for post_save, sender=User
+        !- import user from contrib.auth
+        !- user = models.OneToOneField(User, on_delete=models.CASCADE)
+        !- Other fields: phone_number, country, postcode, town_or_city, street_address1, street_address2, county, sign-up date, money spent, previous orders.
+        !- Set null and blank = true. for the address and contact fields.
+        !- Set the __str__
+        !- Add a receiver for post_save, sender=User
 
     - checkout model:
         - import UserProfile
@@ -700,30 +700,57 @@ User Profile:
         -- Get 404 error and redirect
         -- Display error message.
 
+
     Attaching user to order
     - admin.py:
         - Add user_profile to fields.
 
     checkout/views.py:
-    - Checkout success view:
-        - if user.isAuthenticated:
-            - Get the users profile and save in profile.
-            - set order.user_profile to equal profile
-            - order.save
-            - if save_info:
-                - Save all the save_info into a dictionary.
-                - Store the UserProfile form in a variable, passing the dictionary and profile instance to the form.
-                - if the form is valid:
-                    - save the form.
-    - Checkout view:
-        - If the user is authenticated:
-            In a try statement:
-            - Get the profile from the Profile model objects with request.user.
-            - Get the order form and use initial={<dictionary>} with the details from profile to preset the form.
-            except if the userprofile doesn't exist:
-            - render empty form
-        - If user isnt authenticated:
-            - render empty form
+        - Checkout success view:
+            - if user.isAuthenticated:
+                - Get the users profile and save in profile.
+                - set order.user_profile to equal profile
+                - order.save
+                - if save_info:
+                    - Save all the save_info into a dictionary.
+                    - Store the UserProfile form in a variable, passing the dictionary and profile instance to the form.
+                    - if the form is valid:
+                        - save the form.
+        - Checkout view:
+            - If the user is authenticated:
+                In a try statement:
+                - Get the profile from the Profile model objects with request.user.
+                - Get the order form and use initial={<dictionary>} with the details from profile to preset the form.
+                except if the userprofile doesn't exist:
+                - render empty form
+            - If user isnt authenticated:
+                - render empty form
+
+
+    Sending confirmation email:
+        In checkout app
+        - Create confirmation_email folder.
+            - Create confirmation_email_subject.txt
+            - Create confirmation_email_body.txt
+            - Fill out text with django template literals for personalised emails.
+
+        - webhook_handler.py:
+            - import send_mail from django.core.mail
+            - import render_to_string from django.template.loader
+            - import settings from django.conf
+            - _send_confirmation_email(self, order) function:
+                - store the customers email in a variable.
+                - subject = render_to_string(confirmation_email_subject.txt, {'order' = order})
+                - body = render_to_string(confirmation_email_body.txt, {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
+                - send_mail = (subject, body, settings.DEFAULT_FROM_EMAIL, [customers email variable]
+            - if order exists:
+                - self._send_confirmation_email(order)
+            - if the order was created by the webhook handler:
+                - before the status code 200 is sent to stripe: self._send_confirmation_email(order)
+
+        settings.py:
+            - Add DEFAULT_FROM_EMAIL = snaProducts@example.com at the bottom of the page
+
 
 
 
