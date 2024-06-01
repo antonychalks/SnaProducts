@@ -609,27 +609,27 @@ User Profile:
         !- Update the url for the profile page.
 
     - In views.py
-        - Import profile URL and get_object_or_404
-        - Assign request.profile to the profile variable
-        - Add profile to context.
+        !- Import profile, URL and get_object_or_404
+        !- Assign request.profile to the profile variable
+        !- Add profile to context.
 
-    - In profile.html
-        - Render the profile.
+    !- In profile.html
+        !- Render the profile.
 
     - Create the form for the User to edit their address.
-        - Copy the checkout forms.py
+        !- Copy the checkout forms.py
         - forms.py:
-            - Change the model that is imported, the name of the class, and the meta in the class
-            - Change the fields method to an exclude method, and exclude the user field
-            - Add default in front of all the fields.
-            - Change autofocus
+            !- Change the model that is imported, the name of the class, and the meta in the class
+            !- Change the fields method to an exclude method, and exclude the user field
+            !- Add default in front of all the fields.
+            !- Change autofocus
             - Change the classes attribute to add match the site.
-            - Remove the asterisk on the country model.
+            !- Remove the asterisk on the country model.
 
         - views.py:
-            - Import the form to the view.
-            - Add the form as a variable.
-            - Add the variable to the context.
+            !- Import the form to the view.
+            !- Add the form as a variable.
+            !- Add the variable to the context.
 
         - profile.html:
             - Add the crispy form to update the users address.
