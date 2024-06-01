@@ -88,14 +88,16 @@ Featured products
 
 
 Special Offers
--- Add a field to product model called deal and is_new
+-- Add a boolean field to product model called deal and is_new
 -- Add an admin option to create a deal on a product based on percentage discount.
 -- Function the change deal field automatically if a deal is applied.
 -- Change the category function to search for active deal and is_new fields if that is what selected.
 -- Create a script that displays products with deals, to use on multiple pages.
 
+
 Scroll to top:
 -- Adjust the up one row function so the first click will go up a level and center the row.
+
 
 Sorting products:
 - Add different categories. -- Needs more categories to sort by
@@ -103,6 +105,7 @@ Sorting products:
 
 Shopping cart:
 -- On the cart page, add a row of 4 random products to the bottom of the page, with an add to cart button. When clicked: Message saying item added to cart, adds item to cart, that product will then be replaced by another product on the bottom of the screen"
+
 
 Product page:
 !-- White container background, leaving the off white background as a large border.
@@ -126,13 +129,16 @@ Product page:
 -- List tags under an accordion
 -- Tags and rating on the same line
 
+
 List Products:
 -- On the list product page on phones, the images should be larger and not squashed for the products, maybe change to a side image card.
 -- The department toggle button should start under the quantity of products line, then scroll with the page when scrolled enough.
 
+
 Nav:
 -- Hovering over the main categories should drop the menu down.
 -- Implement a free delivery and half delivery tick box.
+
 
 Adding products:
 ht !- Add form with POST function to Product detail template.
@@ -229,7 +235,8 @@ js !- Implement JS:
     !- Add the calc into the price part of the template.
     !- git commit -m "Added update_bag and remove_from_bag functions, as well as calc subtotal template filter"
 
-- Toasts:
+
+!- Toasts:
     !- Create a folder called toasts within the includes folder.
     !- Create a file called toast_success.html.
     !- Paste in the code that was obtained from bootstrap.
@@ -244,6 +251,7 @@ js !- Implement JS:
     !- Add messages to wherever applicable throughout the views.py.
     !- Implement arrow CSS.
     -- Change the success message to show more information such as the bag items.
+
 
 !- Checkout app
     !- startapp checkout
@@ -333,6 +341,7 @@ js !- Implement JS:
 
     !- CSS
         !- Create static file within the app, another folder called checkout, then a style folder.
+
 
 !- Stripe
     !- Install stripe with pip and add to requirements.text.
@@ -560,6 +569,7 @@ js !- Implement JS:
         !- import: Order, OrderLineItem from .models, Product from products.models, json and time
     !- git commit -m "Completed webhook handler and checkout functionality"
 
+
 User Profile:
     !- startapp profiles
     - add to settings
@@ -591,9 +601,196 @@ User Profile:
     - Css
         - Create local static directory with CSS.
 
-- All Auth templates:
-    - Adjust to ensure they follow the correct styling and structure.
+    - All Auth templates:
+        - Adjust to ensure they follow the correct styling and structure.
+        - Adjust CSS by applying it to the inner content of the aull-auth-container div, so as to not apply the classes to every template.
 
+    - Base.html:
+        - Update the url for the profile page.
+
+    - In views.py
+        - Import profile URL and get_object_or_404
+        - Assign request.profile to the profile variable
+        - Add profile to context.
+
+    - In profile.html
+        - Render the profile.
+
+    - Create the form for the User to edit their address.
+        - Copy the checkout forms.py
+        - forms.py:
+            - Change the model that is imported, the name of the class, and the meta in the class
+            - Change the fields method to an exclude method, and exclude the user field
+            - Add default in front of all the fields.
+            - Change autofocus
+            - Change the classes attribute to add match the site.
+            - Remove the asterisk on the country model.
+
+        - views.py:
+            - Import the form to the view.
+            - Add the form as a variable.
+            - Add the variable to the context.
+
+        - profile.html:
+            - Add the crispy form to update the users address.
+            - Add another section for the previous orders.
+            -- Show current shipping address.
+            -- Add saved items list.
+
+        - profile.css
+            - Add CSS to style the forms.
+            - Country field is displaying as black still.
+                - Change CSS to display the colour as black after it has changed.
+                - Add JS
+                    - Get the value of the country field and store it in a variable.
+                    - If that value is empty:
+                        - Set the placeholder colour to the placeholder colour.
+                    - Add event listener for the value changing.
+                        - Get the value of the country field as a variable again.
+                        - if the field is empty, set to placeholder colour.
+                        - If the field isn't empty, set the colour to black.
+
+       Setting the POST handler for the profile view.
+        - Views.py:
+            - import messages
+            - if request.method is POST
+                - Set the form to be the UserProfileForm with an instance of the profile.
+                - If the form is valid:
+                    - form.save()
+                    - Success message
+                    - Add the on_profile_page context and set to True
+
+    - Toasts/message_success:
+        - change if grand_total to if grand_total and not on_profile_page
+
+    Order history
+    - Profile.html:
+        - Create a table showing order number, date, items, order total
+        - for loop to display each order attached to the profile.
+        - Order number is a link to order history URL with the order number. (trunchatechars:6)
+        - date is from order.date
+        - order total is the same
+        - items field is an unorderedlist:
+            - for item in order.lineitems.all
+            - if has_sizes - display size, name and quantity (i.e M T-Shirt x 5)
+
+    - Profile.css
+        - max-height incase of loads of orders.
+        - overflow-y: auto for scroll bar.
+
+    views.py:
+        - Import Order model.
+        - order_history view
+            - get the order from the model with the order number
+            - info message for the order, confirming the order has already been placed and confirmed.
+            - Set the template to the checkout success template.
+            - Context:
+                - Add order to the context
+                - from_profile = True
+
+    urls.py:
+        - Create url for order history
+
+    Checkout success:
+        - Display a button to send the user back to the profile page rather than the special deals page.
+
+
+    - Views.py
+        -- Add a redirect if the user isn't authenticated, in case a URL is entered.
+        -- Get 404 error and redirect
+        -- Display error message.
+
+    Attaching user to order
+    - admin.py:
+        - Add user_profile to fields.
+
+    checkout/views.py:
+    - Checkout success view:
+        - if user.isAuthenticated:
+            - Get the users profile and save in profile.
+            - set order.user_profile to equal profile
+            - order.save
+            - if save_info:
+                - Save all the save_info into a dictionary.
+                - Store the UserProfile form in a variable, passing the dictionary and profile instance to the form.
+                - if the form is valid:
+                    - save the form.
+    - Checkout view:
+        - If the user is authenticated:
+            In a try statement:
+            - Get the profile from the Profile model objects with request.user.
+            - Get the order form and use initial={<dictionary>} with the details from profile to preset the form.
+            except if the userprofile doesn't exist:
+            - render empty form
+        - If user isnt authenticated:
+            - render empty form
+
+
+
+Saved Items:
+    saved items app:
+        -- Create new app
+        -- Add the app to settings.py
+
+    models.py:
+        -- Add a saved items model.
+        -- Fields:
+            -- Many to Many key for products model.
+            -- List name.
+            -- is_gift.
+            -- Public/Private
+            -- List price
+            -- Notify when on sale.
+            -- Description.
+        -- Function that creates list price by adding all the item prices together.
+        -- migrate
+
+    Views.py:
+        -- Create List
+            -- Displays a form page to create new list with all the fields from the model.
+        -- Delete list
+            -- Deletes the list as a whole.
+        -- Update list
+            -- Updates the details of a list (not the products)
+        -- list view:
+            -- Form to edit the list details
+            -- Displays template
+        -- Add to list view
+            -- Adds an item to a list
+        -- Remove from list view
+            -- Removes item from list
+        -- Adjust list view
+            -- Adjusts the size of the item in the list.
+
+    cart.html:
+        -- Add to list button (Displays current lists or adds new list)
+            -- Ask if the user wants to delete the product from the cart.
+        -- Shows saved lists as a list at the bottom.
+            -- Accordion to display
+
+    saved_items.html
+        -- Shows each list individually
+        -- As a table, displays each product
+            -- Same fields displayed as cart.
+            -- Quantity selector
+            -- Size selector if available
+            -- Remove from list.
+            -- Add to other list
+            -- Button to add to cart (if item is in the cart, button to remove from cart).
+        -- Delete list button.
+
+    product_detail.html:
+        -- Add to list button, same as cart.html
+
+    profile.html:
+        -- Display all lists in a table.
+            -- Button to create a new empty list.
+            -- Shows a card for each list.
+            -- Clicking the card takes you to the list page.
+            -- Displays how many items in each list, the name, description, price.
+
+    urls.py:
+        -- Create urls for creating list, deleting a list, updating a lists details, viewing list, adding to list, removing from list, updating items in the list.
 
 
 
