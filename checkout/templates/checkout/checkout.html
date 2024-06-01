@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% load static %}
 {% load cart_tools %}
 
@@ -15,8 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="overlay-background"></div>
-<div class="container">
+<div class="container checkout-container">
     <div class="row">
         <h2 class="logo-font"> Checkout </h2>
         <hr>
@@ -39,7 +39,8 @@
                             {% if product.product.image %}
                                 <img class="w-100" src="{{ product.product.image.url }}" alt="{{ product.name }}">
                             {% else %}
-                                <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                <img class="w-100" src="{{ MEDIA_URL }}noimage.jpg" alt="{{ product.name }}">
+                                <a href="https://www.vecteezy.com/free-vector/photo">Photo Vectors by Vecteezy</a>
                             {% endif %}
                         </a>
                     </div>
@@ -104,7 +105,7 @@
                     <div class="mb-3" id="card-element"></div>
 
                     <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                    <!-- Pass the client secret to the view so we can get the payment intent id -->
+                    <!-- Pass the client secret to the view, so we can get the payment intent id -->
                     <input type="hidden" value="{{ client_secret }}" name="client_secret">
                 </fieldset>
                 <p class="small text-danger my-0">

@@ -53,12 +53,12 @@ $('.top-button').click(function(e) {
     window.scrollTo(0,0)
 })
 
-$('.arrow-up').click(function(e){
+$('.scroll-up').click(function(e){
     let cardHeight = $('.product-card').height() + 16;
     window.scrollBy(0, -cardHeight)
 })
 
-$('.arrow-down').click(function(e){
+$('.scroll-down').click(function(e){
     let cardHeight = $('.product-card').height() + 16;
     window.scrollBy(0, cardHeight)
 })

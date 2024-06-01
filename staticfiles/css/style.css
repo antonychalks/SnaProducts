@@ -20,6 +20,9 @@ body{
     background: white;
 }
 
+.nav-item{
+    margin-left: 10px;
+}
 
 /* from Bulma */
 .icon {
@@ -127,13 +130,13 @@ small{
 }
 
 .sort_filter{
-    height: 20px;
-    
+    height: max-content;
 }
 
 .sort_filter span, .sort_filter button{
     width: fit-content;
-    margin: 0 10px;
+    margin: 4px 10px;
+    font-weight: unset;
 }
 
 /* -------------------------------- Product Detail */
@@ -197,7 +200,7 @@ small{
     margin: 8px 0;
 }
 
-.enlarge-img {
+.enlarge-img{
     position: fixed;
     top: 0;
     left: 0;
@@ -417,5 +420,11 @@ tr{
 
     .cart-qty-change i{
         font-size: xx-small;
+    }
+
+/*    Restyle Bootstrap */
+    .row{
+        margin-left: unset;
+        margin-right: unset;
     }
 }

@@ -5,15 +5,15 @@ from cloudinary.models import CloudinaryField
 
 CATEGORY_TYPE = ((0, "Main"), (1, "Sub"))
 
+
 # Create your models here.
 class Category(models.Model):
-    
     class Meta:
         verbose_name_plural = 'Categories'
     
     parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
-    name  = models.CharField(max_length=254)
-    display_name  = models.CharField(max_length=254, null=True, blank=True)
+    name = models.CharField(max_length=254)
+    display_name = models.CharField(max_length=254, null=True, blank=True)
     type = models.IntegerField(choices=CATEGORY_TYPE, editable=False)
     
     def __str__(self):
@@ -28,7 +28,8 @@ class Category(models.Model):
         else:
             self.type = 0  # Set type to 0 if category doesn't have a parent
         super(Category, self).save(*args, **kwargs)
-    
+
+
 class Product(models.Model):
     category = models.ForeignKey('Category', limit_choices_to={'type': 1},  null=True, blank=True, on_delete=models.SET_DEFAULT, default=18)
     sku = models.CharField(max_length=254, unique=True, editable=False)
@@ -76,7 +77,7 @@ class Product(models.Model):
             if category.parent:
                 sku_prefix = category.parent.name[:2].upper()
             else:
-               sku_prefix = "NU" 
+                sku_prefix = "NU"
         else:
             sku_prefix = "NU"
 

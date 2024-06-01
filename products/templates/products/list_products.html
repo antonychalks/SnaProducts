@@ -35,9 +35,9 @@
         </div>
         <div class="row overlay-button">
             <div class="btn-group" role="group" aria-label="Button group to move up one row, to the top of the page, or down one row">
-                <button class="btn btn-secondary top-button edge-button arrow-up"><i class="fa-solid fa-arrow-up"></i></button>
+                <button class="btn btn-secondary top-button edge-button scroll-up"><i class="fa-solid fa-arrow-up"></i></button>
                 <button class="btn btn-secondary top-button" id="to-top"> Back to top </button>
-                <button class="btn btn-secondary top-button edge-button arrow-down"><i class="fa-solid fa-arrow-down"></i></button>
+                <button class="btn btn-secondary top-button edge-button scroll-down"><i class="fa-solid fa-arrow-down"></i></button>
             </div>
         </div>
         <div class="row mt-1">
@@ -64,7 +64,7 @@
             </div>
         </div>
         {% if current_categories or current_sorting or search_term %}
-        <div class="row sort_filter justify-content-start">
+        <div class="row sort_filter justify-content-evenly justify-content-lg-start">
             {% for category in current_categories %}
                 <span class="badge category-badge text-bg-secondary filter">   
                         {{ category.get_display_name }}

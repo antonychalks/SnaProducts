@@ -86,12 +86,13 @@ Featured products
 -- Add a featured products box on the home page
 -- Add admin functionality to add products to featured product either, on the product page, on the featured products admin page and on the products list admin page.
 
+
 Special Offers
 -- Add a field to product model called deal and is_new
 -- Add an admin option to create a deal on a product based on percentage discount.
--- Add an admin option to create a deal based on price of shopping basket.
 -- Function the change deal field automatically if a deal is applied.
 -- Change the category function to search for active deal and is_new fields if that is what selected.
+-- Create a script that displays products with deals, to use on multiple pages.
 
 Scroll to top:
 -- Adjust the up one row function so the first click will go up a level and center the row.
@@ -128,7 +129,6 @@ Product page:
 List Products:
 -- On the list product page on phones, the images should be larger and not squashed for the products, maybe change to a side image card.
 -- The department toggle button should start under the quantity of products line, then scroll with the page when scrolled enough.
-
 
 Nav:
 -- Hovering over the main categories should drop the menu down.
@@ -202,7 +202,7 @@ js !- Implement JS:
 !- Implement the JS for this. Function for removing the item and a function for updating.
 !- Git commit added quantity boxes to the cart page.
 
-- Updating a product:
+!- Updating a product:
     !- Adjust cart function:
         !- Copy and paste the add_to_cart view, renaming to update_cart.
         !- Remove the redirect as it will redirect back to the cart.
@@ -212,7 +212,7 @@ js !- Implement JS:
     !- Update cart urls
     !- Add the url to the form action attribute. This will call the javascript to go to the view.
         (Note the quantity selector can go outside of the 1-99 range.)
-    - Remove item function:
+    !- Remove item function:
         !- Copy and paste the adjust_cart view, renaming it to remove_from_cart.
         !- Remove quantity.
         !- If the item has a specific size, remove only the item with that size.
@@ -245,7 +245,7 @@ js !- Implement JS:
     !- Implement arrow CSS.
     -- Change the success message to show more information such as the bag items.
 
-- Checkout app
+!- Checkout app
     !- startapp checkout
     !- models.py order class
         !- Fields: order_number, full_name, email, phone number, country, postcode, town_or_city, street_address1, street_address2, county, date, delivery_cost, order_total, grand_total
@@ -324,7 +324,7 @@ js !- Implement JS:
         !- Copy cart template to the checkout.html file.
         !- Delete cart_items and table.
         !- Instructions to fill out the form
-        - Link to the css file.
+        !- Link to the css file.
         !- form action is "url checkout", method "post", id "payment_form", csrf token.
         !- render the form fields individually. {{ order_form.<fieldname> | as_crispy_field }}
         !- Option to save the information in the form to their profile.
@@ -334,7 +334,7 @@ js !- Implement JS:
     !- CSS
         !- Create static file within the app, another folder called checkout, then a style folder.
 
-- Stripe
+!- Stripe
     !- Install stripe with pip and add to requirements.text.
     !- In postloadjs on the checkout template, add the two JSON scripts.
     !- Views.py, add the JSON scripts to the context using the same keys.
@@ -428,12 +428,12 @@ js !- Implement JS:
     !- Urls.py:
         !- Create URL for cart success.
 
-    - checkout_success.html:
-        - Create Checkout success page.
-        - Loop through the products in the order to display every item, with the name, size, quantity and price.
-        - Add an anchor to the product detail page for the product.
-        - Include order info, date, details, delivery address, billing info.
-        - If statement around second_line_address and county field.
+    !- checkout_success.html:
+        !- Create Checkout success page.
+        !- Loop through the products in the order to display every item, with the name, size, quantity and price.
+        !- Add an anchor to the product detail page for the product.
+        !- Include order info, date, details, delivery address, billing info.
+        !- If statement around second_line_address and county field.
     !- checkout/__init__.py:
         !- default_app_config = 'checkout.apps.CheckoutConfig'
     !- models.py:
@@ -452,11 +452,11 @@ js !- Implement JS:
             !-__init__ is a set-up method called every time a new instance of the class is created.
                 !- Use it to assign the request as an attribute of the class in case we need to access any attributes coming from stripe.
             !- create a method called handle_event(self, event):
-                - return HttpResponse with content, webhook received, type of event, status=200.
-    - git commit -m "Added webhook handler."
-            - Create method handle_payment_intent_succeeded. (Sent each time the payment process is completed)
+                !- return HttpResponse with content, webhook received, type of event, status=200.
+    !- git commit -m "Added webhook handler."
+            !- Create method handle_payment_intent_succeeded. (Sent each time the payment process is completed)
 
-            - Second method incase the intent failed. handle_payment_intent_failed.
+            !- Second method incase the intent failed. handle_payment_intent_failed.
     !- urls.py
         !- create url for webhook. 'wh', webook, name="webhook"
         !- from .webhooks import webhook
@@ -466,10 +466,10 @@ js !- Implement JS:
             !- Import settings, http response, webhook handler class, stripe, require post decorator, csrf excempt.
             !- Paste in from stripe with a few modifications.
             !- Setup:
-                - wh_secret = settings.STRIPE_WH_SECRET
-                - stripe.api_key = settings.STRIPE_SECRET_KEY
-            - Change endpoint secret to wh_secret.
-            - Add a generic exception handler to catch any other exceptions.
+                !- wh_secret = settings.STRIPE_WH_SECRET
+                !- stripe.api_key = settings.STRIPE_SECRET_KEY
+            !- Change endpoint secret to wh_secret.
+            !- Add a generic exception handler to catch any other exceptions.
     !- settings.py
         !- STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
     !- stripe website:
@@ -479,67 +479,67 @@ js !- Implement JS:
         !- Add the environmental variables
     !- webhooks.py:
     !- modifying the webhook view to use the webhook handler:
-        - pass an instance of the webhook request to the handler.
-        - create a dictionary called event_map
-            - Keys are the names of the webhooks coming from stripe: 'payment_intent.succeeded'
-            - Values will be the methods inside the handler: handler.handle_payment_intent_succeeded
-            - complete for failed as well.
-        - Get the event from stripe
-            - store event['type'] in event_type eg. 'payment_intent.succeeded' or 'payment_intent.failed'
-        - event_handler = event_map.get(event_type, handler.handle_event), gets the value of the type from the dictionary.
-        - Call the event handler with the event: response = event_handler(event)
-        - return response stripe.
-    - git commit -m "Created webhook handlers"
+        !- pass an instance of the webhook request to the handler.
+        !- create a dictionary called event_map
+            !- Keys are the names of the webhooks coming from stripe: 'payment_intent.succeeded'
+            !- Values will be the methods inside the handler: handler.handle_payment_intent_succeeded
+            !- complete for failed as well.
+        !- Get the event from stripe
+            !- store event['type'] in event_type eg. 'payment_intent.succeeded' or 'payment_intent.failed'
+        !- event_handler = event_map.get(event_type, handler.handle_event), gets the value of the type from the dictionary.
+        !- Call the event handler with the event: response = event_handler(event)
+        !- return response stripe.
+    !- git commit -m "Created webhook handlers"
     !- stripe_payment.js:
         !- add billing details and shipment to the payment method.
-    - Views.py to add if the user wants their information saved for next time.
-        - cache_checkout_data view:
-            - import post decorator and HttpResponse.
-            - require post decorator
-            - try:
-                - make a post request to this view and give it the client secret from the payment intent.
-                - store the client_secret ID in pid
-                - Set up stripe with the secret key so we can modify the payment intent
-                - Modify the payment intent: stripe.PaymentIntent.modify(pid, metadata={'cart': json.dumps(request.session.get('cart', {}),'save_info': request.POST.get('save_info'),'username': request.user})
-                - return HttpResponse with status 200
-            - except Exception as e:
-                - messages error: ' Sorry your payment cannot be processed right now.'
-                - return HttpResponse status 400
-    - Add the new view to urls.py
-    - stripe_payment.js:
-        - get the boolean value in saveInfo by checking if the checkbox save info is checked.
-        - add the csrf token.
-        - create the postData object with the csrf token, client secret and saveInfo.
-        - create the new url
-        - post the data to the view.
-        - Once the post is done, wrap the form handling into .done()
-        - Add a fail function, reloads the page.
+    !- Views.py to add if the user wants their information saved for next time.
+        !- cache_checkout_data view:
+            !- import post decorator and HttpResponse.
+            !- require post decorator
+            !- try:
+                !- make a post request to this view and give it the client secret from the payment intent.
+                !- store the client_secret ID in pid
+                !- Set up stripe with the secret key so we can modify the payment intent
+                !- Modify the payment intent: stripe.PaymentIntent.modify(pid, metadata={'cart': json.dumps(request.session.get('cart', {}),'save_info': request.POST.get('save_info'),'username': request.user})
+                !- return HttpResponse with status 200
+            !- except Exception as e:
+                !- messages error: ' Sorry your payment cannot be processed right now.'
+                !- return HttpResponse status 400
+    !- Add the new view to urls.py
+    !- stripe_payment.js:
+        !- get the boolean value in saveInfo by checking if the checkbox save info is checked.
+        !- add the csrf token.
+        !- create the postData object with the csrf token, client secret and saveInfo.
+        !- create the new url
+        !- post the data to the view.
+        !- Once the post is done, wrap the form handling into .done()
+        !- Add a fail function, reloads the page.
     !- git commit -m "Added checkout form data chaching in payment intent"
-    - webhook_handler.py:
-        - copy the supplied data from the course material as the video is outdated.
-        - Add a loop that loops through the fields and values in shipping_details.address.items
-        - If the value is blank, set shipping_details.address[field] to None.
-        - Check if the order exists already, if it does then nothing needs to be done, if not create the order for the database in the webhook.
-            - Set order_exists to false
-            - set attempt = 1
-            - Create a while loop that will attempt up to 5 times:
-                try:
-                    - Try and store the order in order by using .get on Order.objects with field __iexact (make sure the fields match but not case sensitive)
-                    - Break if the order exists.
-                except Order.DoesNotExist:
-                    - Increment attempt by 1
-                    - Sleep for 5 seconds.
-            - If order_exists:
-                - Return a http.response to stripe, verifying the order exists in our database. Status=200
-            - Else:
-                try:
-                    - Create the order with all the fields.
-                    - Copy code from the view that does the same thing.
-                    - Don't load the cart from the session, load it from the json version in payment intent.
-                    - No form to save, instead use Order.objects.create with all the data from the payment intent.
-                except Exception as e:
-                    - If the order was created then delete it.
-                    - Return 500 to the server
+    !- webhook_handler.py:
+        !- copy the supplied data from the course material as the video is outdated.
+        !- Add a loop that loops through the fields and values in shipping_details.address.items
+        !- If the value is blank, set shipping_details.address[field] to None.
+        !- Check if the order exists already, if it does then nothing needs to be done, if not create the order for the database in the webhook.
+            !- Set order_exists to false
+            !- set attempt = 1
+            !- Create a while loop that will attempt up to 5 times:
+                !try:
+                    !- Try and store the order in order by using .get on Order.objects with field __iexact (make sure the fields match but not case sensitive)
+                    !- Break if the order exists.
+                !except Order.DoesNotExist:
+                    !- Increment attempt by 1
+                    !- Sleep for 5 seconds.
+            !- If order_exists:
+                !- Return a http.response to stripe, verifying the order exists in our database. Status=200
+            !- Else:
+                !try:
+                    !- Create the order with all the fields.
+                    !- Copy code from the view that does the same thing.
+                    !- Don't load the cart from the session, load it from the json version in payment intent.
+                    !- No form to save, instead use Order.objects.create with all the data from the payment intent.
+                !except Exception as e:
+                    !- If the order was created then delete it.
+                    !- Return 500 to the server
             !- Return HttpResponse stating the order was created in the database by the webhook, status=200
     !- Models.py:
         !- Create original_cart field that will contain the original shopping bag that created it.
@@ -548,21 +548,51 @@ js !- Implement JS:
         !- Add both new fields to the admin class.
     !- checkout.html:
         !- Add new hidden input (line 111)
-    - views.py:
-        - get the pid from the hidden input
-        - Save the stripe_pid field as pid.
-        - Save the original_cart field as the json dump of cart
-        - Save the order.
-        - Add commit=False to the first save event.
-    - webhook_handler.py:
-        - Add the original_cart and stripe_pid fields to the try statement that trys to find the order.
-        - Also add the fields when making the order later in the function if the order isn't found.
-        - import: Order, OrderLineItem from .models, Product from products.models, json and time
-    - git commit -m "Completed webhook handler and checkout functionality"
+    !- views.py:
+        !- get the pid from the hidden input
+        !- Save the stripe_pid field as pid.
+        !- Save the original_cart field as the json dump of cart
+        !- Save the order.
+        !- Add commit=False to the first save event.
+    !- webhook_handler.py:
+        !- Add the original_cart and stripe_pid fields to the try statement that trys to find the order.
+        !- Also add the fields when making the order later in the function if the order isn't found.
+        !- import: Order, OrderLineItem from .models, Product from products.models, json and time
+    !- git commit -m "Completed webhook handler and checkout functionality"
 
 User Profile:
+    !- startapp profiles
+    - add to settings
+    - profile model:
+        - import user from contrib.auth
+        - user = models.OneToOneField(User, on_delete=models.CASCADE)
+        - Other fields: phone_number, country, postcode, town_or_city, street_address1, street_address2, county, sign-up date, money spent, previous orders.
+        - Set null and blank = true. for the address and contact fields.
+        - Set the __str__
+        - Add a receiver for post_save, sender=User
 
+    - checkout model:
+        - import UserProfile
+        - Add a model field for adding a user.
+        - Migrate
 
+    - views.py:
+        - Create profile view.
+        - returns profile.html
+        - empty context
+
+    - urls.py:
+        - Create new urls.py file in profile app.
+        - Add url includes to the project url file.
+
+    - profile.html
+        - Create the HTML for the profile app.
+
+    - Css
+        - Create local static directory with CSS.
+
+- All Auth templates:
+    - Adjust to ensure they follow the correct styling and structure.
 
 
 
