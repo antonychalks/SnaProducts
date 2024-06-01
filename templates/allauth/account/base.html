@@ -1,1 +1,14 @@
 {% extends "base.html" %}
+
+{% block content %}
+    <div class="container-md product_detail_container">
+        <div class="row justify-content-end">
+            <div class="col-12">
+                <div class="m-5 border-black p-2">
+                    {% block inner_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

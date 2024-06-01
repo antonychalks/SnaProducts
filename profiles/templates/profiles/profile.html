@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+
+{% block extra_title %}
+    Products || Home
+{% endblock %}
+
+{% block nav-includes %}
+{% include 'includes/site-nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container-md product_detail_container">
+    <div class="row h-100 justify-content-end">
+        <div class="col-6">
+            <div class="my-5">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

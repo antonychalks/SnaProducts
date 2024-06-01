@@ -573,7 +573,7 @@ js !- Implement JS:
 User Profile:
     !- startapp profiles
     !- add to settings
-    - profile model:
+    !- profile model:
         !- import user from contrib.auth
         !- user = models.OneToOneField(User, on_delete=models.CASCADE)
         !- Other fields: phone_number, country, postcode, town_or_city, street_address1, street_address2, county, sign-up date, money spent, previous orders.
@@ -581,32 +581,32 @@ User Profile:
         !- Set the __str__
         !- Add a receiver for post_save, sender=User
 
-    - checkout model:
-        - import UserProfile
-        - Add a model field for adding a user.
-        - Migrate
+    !- checkout model:
+        !- import UserProfile
+        !- Add a model field for adding a user.
+        !- Migrate
 
-    - views.py:
-        - Create profile view.
-        - returns profile.html
-        - empty context
+    !- views.py:
+        !- Create profile view.
+        !- returns profile.html
+        !- empty context
 
-    - urls.py:
-        - Create new urls.py file in profile app.
-        - Add url includes to the project url file.
+    !- urls.py:
+        !- Create new urls.py file in profile app.
+        !- Add url includes to the project url file.
 
-    - profile.html
-        - Create the HTML for the profile app.
+    !- profile.html
+        !- Create the HTML for the profile app.
 
-    - Css
-        - Create local static directory with CSS.
+    !- Css
+        !- Create local static directory with CSS.
 
-    - All Auth templates:
-        - Adjust to ensure they follow the correct styling and structure.
-        - Adjust CSS by applying it to the inner content of the aull-auth-container div, so as to not apply the classes to every template.
+    !- All Auth templates:
+        !- Adjust to ensure they follow the correct styling and structure.
+        !- Adjust CSS by applying it to the inner content of the aull-auth-container div, to not apply the classes to every template.
 
-    - Base.html:
-        - Update the url for the profile page.
+    !- Base.html:
+        !- Update the url for the profile page.
 
     - In views.py
         - Import profile URL and get_object_or_404
