@@ -626,29 +626,29 @@ User Profile:
             - Change the classes attribute to add match the site.
             !- Remove the asterisk on the country model.
 
-        - views.py:
+        !- views.py:
             !- Import the form to the view.
             !- Add the form as a variable.
             !- Add the variable to the context.
 
         - profile.html:
-            - Add the crispy form to update the users address.
-            - Add another section for the previous orders.
+            !- Add the crispy form to update the users address.
+            !- Add another section for the previous orders.
             -- Show current shipping address.
             -- Add saved items list.
 
         - profile.css
-            - Add CSS to style the forms.
+            !- Add CSS to style the forms.
             - Country field is displaying as black still.
-                - Change CSS to display the colour as black after it has changed.
-                - Add JS
-                    - Get the value of the country field and store it in a variable.
-                    - If that value is empty:
-                        - Set the placeholder colour to the placeholder colour.
-                    - Add event listener for the value changing.
-                        - Get the value of the country field as a variable again.
-                        - if the field is empty, set to placeholder colour.
-                        - If the field isn't empty, set the colour to black.
+                !- Change CSS to display the colour as black after it has changed.
+                !- Add JS
+                    !- Get the value of the country field and store it in a variable.
+                    !- If that value is empty:
+                        !- Set the placeholder colour to the placeholder colour.
+                    !- Add event listener for the value changing.
+                        !- Get the value of the country field as a variable again.
+                        !- if the field is empty, set to placeholder colour.
+                        !- If the field isn't empty, set the colour to black.
 
        Setting the POST handler for the profile view.
         - Views.py:
