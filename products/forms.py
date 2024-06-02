@@ -10,10 +10,21 @@ class ProductManagementForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        categories = Category.objects.all()
+        parent_categories = Category.objects.filter(type=0)
 
-        display_name = [(c.id, c.get_display_name()) for c in categories]
-        self.fields['category'].choices = display_name
+        choices = []
+        for parent in parent_categories:
+            if parent.name == "misc":
+                display_name = parent.get_display_name() + " (Default)"
+                choices.insert(0, (parent.id, display_name))  # add as flat option
+            elif parent.name != "special_offers":
+                # Only get children categories if parent is not 'special_offers' or 'misc'
+                children_in_parent = Category.objects.filter(parent=parent)
+                category_choices = [
+                    (category.id, category.get_display_name()) for category in children_in_parent
+                ]
+                choices.append((parent.get_display_name(), category_choices))  # add as optgroup
+        self.fields['category'].choices = choices
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black rounded-0'

@@ -774,6 +774,28 @@ Managing products
             !- Loop through the rest of the fields to give them the classes to match the rest of the site.
             -- Possibly required to get type display name in the future.
 
+!- Views.py:
+    !- import product_management_form from forms.py
+    !- add_product view.
+        !- Gets the product_management_form from and stores it in form.
+        !- template is products/add_product.html
+        !- context must include the form
+        !- render with template and context
+
+!- urls.py
+    !- Add url called add, pointing to add_product view, called add_product.
+    !- Turn the product detail slug to int:product_id to prevent the add url directing to product detail
+    !- Trailing slashes
+
+!- add_product.html
+    !- Create the file.
+    !- Write HTML to match the sites styling.
+
+-- Make a product active or inactive.
+-- Buttons to make multiple products active or inactive depending on filtering options.
+-- Add deals to the products.
+-- Adding deals makes the product appear in the special offers page.
+
 
 Saved Items:
     saved items app:

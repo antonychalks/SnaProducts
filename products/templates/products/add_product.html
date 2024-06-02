@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}
+
+{% block extra_title %}
+    || Add Product
+{% endblock %}
+
+{% block nav-includes %}
+{% include 'includes/site-nav.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-md product_detail_container">
+        <h2 class="m-3">Product Management</h2>
+        <hr>
+        <h4 class="m-3">Add Product</h4>
+        <hr>
+        <div class="row product-container p-2">
+            <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
+                <form method="POST" action="{% url 'add_product' %}" class="form m-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <div class="text-right">
+                        <a class="btn btn-danger rounded-2" href="{% url 'products' %}">Cancel</a>
+                        <button class="btn btn-success rounded-2" type="submit">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-md product_description_container">
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-md related_products_container">
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Image overlay {% endcomment %}
+    <div class="d-none enlarge-img">
+        {% if product.image %}
+        <a href="{{ product.image.url}}" target="_blank">
+            <img class="enlarge-product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
+        </a>
+        {% else %}
+        <a href="{{ product.image.url}}" target="_blank">
+            <img class="enlarge-product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+        </a>
+        {% endif %}
+    </div>
+{% endblock content %}
