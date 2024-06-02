@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
 
@@ -91,8 +92,12 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+@login_required
 def manage_products(request):
     """ A view to manage all products, including sorting and search queries """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
 
     products = Product.objects.all()
     query = None
@@ -165,8 +170,13 @@ def manage_products(request):
     return render(request, 'products/manage_products.html', context)
 
 
+@login_required
 def add_product(request):
     """ A view for superusers to add a new product """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
     if request.method == 'POST':
         if "cancel" in request.POST:
             product_form = ProductManagementForm()
@@ -199,8 +209,13 @@ def add_product(request):
     return render(request, template, context)
 
 
+@login_required
 def add_category(request):
     """ A view for superusers to add a new product """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
     if request.method == 'POST':
         if "cancel" in request.POST:
             form = CategoryManagementForm()
@@ -233,8 +248,13 @@ def add_category(request):
     return render(request, template, context)
 
 
+@login_required
 def edit_product(request, product_id):
     """ A view for superusers to add a new product """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         if "cancel" in request.POST:
@@ -266,8 +286,13 @@ def edit_product(request, product_id):
     return render(request, template, context)
 
 
+@login_required
 def edit_category(request, category_id):
     """ A view for superusers to add a new product """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
     category = get_object_or_404(Category, pk=category_id)
     if request.method == 'POST':
         if "cancel" in request.POST:
@@ -304,16 +329,26 @@ def edit_category(request, category_id):
     return render(request, template, context)
 
 
+@login_required
 def delete_product(request, product_id):
     """ Delete a product from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
     messages.success(request, 'Product deleted!')
     return redirect(reverse('manage_products'))
 
 
+@login_required
 def delete_category(request, category_id):
     """ Delete a product from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
     category = get_object_or_404(Category, pk=category_id)
     category.delete()
     messages.success(request, 'Category deleted!')

@@ -111,6 +111,12 @@
                                     {% endif %}
                                 <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="text-muted">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
                             </div>
+                            {% if request.user.is_superuser %}
+                            <div class="button-group w-100 d-flex justify-content-between p-1">
+                                <a class="btn btn-info" href="{% url 'edit_product' product.id %}">Edit</a>
+                                <a class="btn btn-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-12 d-sm-none mb-1">

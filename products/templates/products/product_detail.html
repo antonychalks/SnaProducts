@@ -19,6 +19,12 @@
     </div>
 
     <div class="container-md floating_container product_detail_container">
+        <div class="row">
+            <div class="button-group w-100 d-flex justify-content-evenly p-1">
+                <a class="btn btn-info" href="{% url 'edit_product' product.id %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+            </div>
+        </div>
         <div class="row product-container p-2">
             <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
                 {% if product.image %}
@@ -96,7 +102,7 @@
     </div>
     <div class="container-md floating_container product_description_container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 p-4">
                 <h2> Product Description </h2>
                 <p>{{product.description}}</p>
             </div>
