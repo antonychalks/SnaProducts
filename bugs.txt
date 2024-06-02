@@ -41,3 +41,8 @@ Solution: Moved the ID to be for the toggle button, apposed to the whole div.
 Problem: On smaller screens there is a horizontal scroll.
 Cause: After searching across the DOM I couldn't find the specific element that was wider than the vp.
 Solution: Set the max width of every element to 100vw.
+
+Problem: When adding a new product, clicking the submit and view product would return an error. "Reverse for 'product_detail' with arguments '(None,)' not found. 1 pattern(s) tried: ['products/(?P<product_id>[0-9]+)/\\Z']""
+Cause: This was caused by the form being reset to blank (Which prevents the form being submitted multiple times), this caused the form instance to be blank, so the product ID could not be found.
+Solution: I reset the form on the other two redirects, but not the redirect that sends the user to the product page.
+

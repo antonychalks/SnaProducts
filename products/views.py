@@ -175,13 +175,14 @@ def add_product(request):
             product_form = ProductManagementForm(request.POST, request.FILES)
             if product_form.is_valid():
                 product_form.save()
-                product_form = ProductManagementForm()
                 messages.success(request, 'Product added successfully')
                 if "view" in request.POST:
                     return redirect(reverse('product_detail', args=[product_form.instance.id]))
                 elif "manage" in request.POST:
+                    product_form = ProductManagementForm()
                     return redirect(reverse('manage_products'))
                 elif "return" in request.POST:
+                    product_form = ProductManagementForm()
                     return redirect(reverse('add_product'))
             else:
                 messages.error(request, 'Failed to add product. Please ensure the form is valid.')
