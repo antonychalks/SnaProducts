@@ -16,57 +16,46 @@
 
 
 {% block content %}
-    <div class="container-md product_detail_container px-4 py-1">
+    <div class="container-md floating_container px-4 py-1">
         <h2 class="m-4">Product Management</h2>
     </div>
-    <div class="container-md product_detail_container">
+    <div class="container-md floating_container py-1">
         <h4 class="m-3">Add Product</h4>
         <hr>
         <div class="row product-container p-2">
-            <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
+            <div class="col-12 container product-img-container" id="product-img-container">
                 <form method="POST" action="{% url 'add_product' %}" class="form m-2" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form | crispy }}
+                    {{ product_form | crispy }}
                     <div class="row">
-                        <div class="btn-group-vertical col-8">
-                            <button class="btn btn-success rounded-2 mb-2" name="return" type="submit">Add Product then add another</button>
-                            <button class="btn btn-success rounded-2 mb-2" name="manage" type="submit">Add Product then management page.</button>
-                            <button class="btn btn-success rounded-2 " name="view" type="submit">Add Product then this products page.</button>
-                        </div>
-                        <div class="col-4 text-center align-middle form-cancel-button">
-                            <a class="btn btn-danger rounded-2" href="{% url 'products' %}">Cancel</a>
+                        <div class="btn-group col-8 w-100 d-flex justify-content-between">
+                            <button class="btn btn-success rounded-2 mx-1" name="return" type="submit">Add Product then add another</button>
+                            <button class="btn btn-success rounded-2 mx-1" name="manage" type="submit">Add Product then management page.</button>
+                            <button class="btn btn-success rounded-2 mx-1" name="view" type="submit">Add Product then this products page.</button>
+                            <a class="btn btn-danger rounded-2 mx-1" href="{% url 'products' %}">Cancel</a>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="container-md product_description_container">
-        <div class="row">
+    <div class="container-md floating_container py-1">
+        <h4 class="m-3">Add Category</h4>
+        <hr>
+        <div class="row p-2">
             <div class="col-12">
-
+                <form method="POST" action="{% url 'add_category' %}" class="form m-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ category_form | crispy }}
+                    <div class="row">
+                        <div class="btn-group col-8 w-100 d-flex justify-content-between">
+                            <button class="btn btn-success rounded-2 mx-1" name="return" type="submit">Submit and return to add more.</button>
+                            <button class="btn btn-success rounded-2 mx-1" name="manage" type="submit">Submit and view management page.</button>
+                            <a class="btn btn-danger rounded-2 mx-1" href="{% url 'products' %}">Cancel</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-
-    <div class="container-md related_products_container">
-        <div class="row">
-            <div class="col-12">
-
-            </div>
-        </div>
-    </div>
-
-    {% comment %} Image overlay {% endcomment %}
-    <div class="d-none enlarge-img">
-        {% if product.image %}
-        <a href="{{ product.image.url}}" target="_blank">
-            <img class="enlarge-product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
-        </a>
-        {% else %}
-        <a href="{{ product.image.url}}" target="_blank">
-            <img class="enlarge-product-img" width="auto" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-        </a>
-        {% endif %}
     </div>
 {% endblock content %}

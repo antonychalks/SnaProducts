@@ -806,8 +806,8 @@ Managing products
 
 
 Adding new category
--- Forms.py
-    -- Add a new form for adding a new category
+!-- Forms.py
+    !-- Add a new form for adding a new category
 
 -- Add_product.html
     -- Implement a new form for adding a category.

@@ -4,7 +4,8 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Product, Category
-from .forms import ProductManagementForm
+from .forms import ProductManagementForm, CategoryManagementForm
+
 
 # Create your views here.
 def list_products(request):
@@ -92,14 +93,47 @@ def product_detail(request, product_id):
 def add_product(request):
     """ A view for syperusers to add a new product """
     if request.method == 'POST':
-        form = ProductManagementForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            form = ProductManagementForm()
+        product_form = ProductManagementForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            product_form.save()
+            product_form = ProductManagementForm()
             messages.success(request, 'Product added successfully')
             if "view" in request.POST:
-                return redirect(reverse('product_detail', args=[form.instance.id]))
+                return redirect(reverse('product_detail', args=[product_form.instance.id]))
             elif "manage" in request.POST:
+                return redirect(reverse('add_product'))
+            elif "return" in request.POST:
+                return redirect(reverse('add_product'))
+        else:
+            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        product_form = ProductManagementForm()
+
+    category_form = CategoryManagementForm()
+    template = 'products/add_product.html'
+    context = {
+        'product_form': product_form,
+        'category_form': category_form,
+    }
+
+    return render(request, template, context)
+
+
+def add_category(request):
+    """ A view for syperusers to add a new product """
+    if request.method == 'POST':
+        print(request.POST)
+        form = CategoryManagementForm(request.POST, request.FILES)
+        if form.is_valid():
+            if "parent" in request.POST == "":
+                form.save(commit=False)
+                form.instance.type = 0
+                form.save()
+            else:
+                form.save()
+            form = ProductManagementForm()
+            messages.success(request, 'Category added successfully')
+            if "manage" in request.POST:
                 return redirect(reverse('add_product'))
             elif "return" in request.POST:
                 return redirect(reverse('add_product'))

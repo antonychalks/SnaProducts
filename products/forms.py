@@ -1,9 +1,11 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Row
 from django import forms
+
 from .models import Product, Category
 
 
 class ProductManagementForm(forms.ModelForm):
-
     class Meta:
         model = Product
         fields = '__all__'
@@ -11,6 +13,21 @@ class ProductManagementForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         parent_categories = Category.objects.filter(type=0)
+
+        # self.helper = FormHelper()
+        # self.helper.layout = Layout(
+        #     Row(
+        #         Field('category'),
+        #         Field('name'),
+        #         Field('price'),
+        #     ),
+        #     'description',
+        #     Row(
+        #         Field('rating'),
+        #         Field('image'),
+        #         Field('has_sizes'),
+        #     ),
+        # )
 
         choices = []
         for parent in parent_categories:
@@ -25,6 +42,24 @@ class ProductManagementForm(forms.ModelForm):
                 ]
                 choices.append((parent.get_display_name(), category_choices))  # add as optgroup
         self.fields['category'].choices = choices
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'border-black rounded-0'
+
+
+class CategoryManagementForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        parent_categories = Category.objects.filter(type=0)
+        choices = [(parent.id, parent.get_display_name()) for parent in parent_categories]
+        no_parent = (None, "New category is a parent.")
+        choices.insert(0, no_parent)
+
+        self.fields['parent'].choices = choices
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black rounded-0'

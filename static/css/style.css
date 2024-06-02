@@ -348,8 +348,6 @@ tr{
     overflow-y: auto;
 }
 
-
-
 /* -------------------------------- General styling classes */
 .no-link-decoration{
     text-decoration: none;
@@ -362,6 +360,12 @@ tr{
 
 .mobile-navbar{
     justify-content: space-around;
+}
+
+.floating_container{
+    background: #fff;
+    margin-top: 30px;
+    padding: unset;
 }
 
 /* -------------------------------- Media Queries */
