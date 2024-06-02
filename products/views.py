@@ -18,23 +18,25 @@ def list_products(request):
     direction = None
     display_sorting = {}
     display_category = None
-    
+
     if request.GET:
-        if 'sort' in request.GET: # Checks for sort in the request.GET so that this code gets run
-            sortkey = request.GET['sort'] # Stores the request in a varaible
-            sort = sortkey # Stores the sortkey variable in a variable so that the original is kept
+        if 'sort' in request.GET:  # Checks for sort in the request.GET so that this code gets run
+            sortkey = request.GET['sort']  # Stores the request in a variable
+            sort = sortkey  # Stores the sortkey variable in a variable so that the original is kept
             if sortkey == 'name':
-                sortkey = 'lower_name' # Renames sortkey to lower_name
-                products = products.annotate(lower_name=Lower('name'))# Creates a temporary field on the model for lower name
+                sortkey = 'lower_name'  # Renames sortkey to lower_name
+                products = products.annotate(
+                    lower_name=Lower('name'))  # Creates a temporary field on the model for lower name
             if sortkey == 'category':
                 sortkey = 'category__name'
-            if 'direction' in request.GET: # Checks for a direction in the GET request
-                direction = request.GET['direction'] # Stores the direction request in a variable
-                if direction == 'desc': # If the variable is desc for descending it will add a minus to the front of the sortkey varible
+            if 'direction' in request.GET:  # Checks for a direction in the GET request
+                direction = request.GET['direction']  # Stores the direction request in a variable
+                # If the variable is desc for descending it will add a minus to the front of the sortkey varible
+                if direction == 'desc':
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
             display_sorting = sort.capitalize()
-        
+
         if 'category' in request.GET:
             selected_categories = request.GET['category'].split(',')
             categories = []
@@ -49,24 +51,23 @@ def list_products(request):
             all_category_names = [cat.name for cat in categories]
             products = products.filter(category__name__in=all_category_names)
 
-
             display_category = str(categories[0]).replace("_", " ").title()
 
-            
         if 'search' in request.GET:
             query = request.GET['search']
             if not query:
                 messages.error(request, "You need to enter the product you are searching for.")
                 return redirect(reverse('products'))
 
-            queries = Q(name__icontains = query) | Q(description__icontains = query)
-            # i before contains makes the query case insensitive. | creates or statement i.e: name = query or description = query
+            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            # 'i' before contains makes the query case insensitive.
+            #  '|' creates or statement i.e: name = query or description = query.
             products = products.filter(queries)
-            
+
         print(categories)
-    
+
     sort_option = f'{sort}_{direction}'
-    
+
     context = {
         'products': products,
         'search_term': query,
@@ -83,15 +84,87 @@ def product_detail(request, product_id):
     """ A view to show individual product details """
 
     products = get_object_or_404(Product, pk=product_id)
-    
+
     context = {
         'product': products,
     }
     return render(request, 'products/product_detail.html', context)
 
 
+def manage_products(request):
+    """ A view to manage all products, including sorting and search queries """
+
+    products = Product.objects.all()
+    query = None
+    categories = None
+    sort = None
+    direction = None
+    display_sorting = {}
+    display_category = None
+
+    if request.GET:
+        if 'sort' in request.GET:  # Checks for sort in the request.GET so that this code gets run
+            sortkey = request.GET['sort']  # Stores the request in a variable
+            sort = sortkey  # Stores the sortkey variable in a variable so that the original is kept
+            if sortkey == 'name':
+                sortkey = 'lower_name'  # Renames sortkey to lower_name
+                products = products.annotate(
+                    lower_name=Lower('name'))  # Creates a temporary field on the model for lower name
+            if sortkey == 'category':
+                sortkey = 'category__name'
+            if 'direction' in request.GET:  # Checks for a direction in the GET request
+                direction = request.GET['direction']  # Stores the direction request in a variable
+                # If the variable is desc for descending it will add a minus to the front of the sortkey varible
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+            products = products.order_by(sortkey)
+            display_sorting = sort.capitalize()
+
+        if 'category' in request.GET:
+            selected_categories = request.GET['category'].split(',')
+            categories = []
+
+            for category_name in selected_categories:
+                category = Category.objects.get(name=category_name)
+                categories.append(category)  # Add the selected category
+
+                if category.type == 0:
+                    categories.extend(category.children.all())  # Add children categories if it's a parent category
+
+            all_category_names = [cat.name for cat in categories]
+            products = products.filter(category__name__in=all_category_names)
+
+            display_category = str(categories[0]).replace("_", " ").title()
+
+        if 'manage_search' in request.GET:
+            query = request.GET['manage_search']
+            if not query:
+                messages.error(request, "You need to enter the product you are searching for.")
+                return redirect(reverse('products'))
+
+            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            # 'i' before contains makes the query case insensitive.
+            #  '|' creates or statement i.e: name = query or description = query.
+            products = products.filter(queries)
+
+        print(categories)
+
+    sort_option = f'{sort}_{direction}'
+
+    context = {
+        'products': products,
+        'search_term': query,
+        'current_categories': categories,
+        'current_sorting': sort_option,
+        'display_sorting': display_sorting,
+        'display_category': display_category,
+    }
+
+    return render(request, 'products/manage_products.html', context)
+
+
 def add_product(request):
-    """ A view for syperusers to add a new product """
+    """ A view for superusers to add a new product """
     if request.method == 'POST':
         if "cancel" in request.POST:
             product_form = ProductManagementForm()
@@ -114,7 +187,7 @@ def add_product(request):
         product_form = ProductManagementForm()
 
     category_form = CategoryManagementForm()
-    template = 'products/add_product.html'
+    template = 'products/add.html'
     context = {
         'product_form': product_form,
         'category_form': category_form,
@@ -124,7 +197,7 @@ def add_product(request):
 
 
 def add_category(request):
-    """ A view for syper users to add a new product """
+    """ A view for superusers to add a new product """
     if request.method == 'POST':
         if "cancel" in request.POST:
             form = CategoryManagementForm()
@@ -149,7 +222,7 @@ def add_category(request):
     else:
         form = ProductManagementForm()
 
-    template = 'products/add_product.html'
+    template = 'products/add.html'
     context = {
         'form': form,
     }
