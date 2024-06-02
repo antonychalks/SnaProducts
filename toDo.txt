@@ -831,14 +831,13 @@ Editing Products
     - Change the File to suit editing the file.
 
 - in views.py
-    - create manage_products view
-        -
+    !- create manage_products view
 
     - create edit_product view
-        - Get product or 404 with product_id and assign to product.
+        !- Get product or 404 with product_id and assign to product.
         - POST handler:
             -if request.method is POST
-                - assign ProductManageForm with request.post and request.files and instance of product.
+                !- assign ProductManageForm with request.post and request.files and instance of product.
                 - if form is valid
                     - save the form
                     - success message

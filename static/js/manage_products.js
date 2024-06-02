@@ -37,19 +37,12 @@ $('.scroll-down').click(function(e){
     window.scrollBy(0, 777.6)
 })
 
-$('#sort-selector').change(function(){
-    var selector = $(this)
-    var currentUrl = new URL(window.location);
-    var selectedVal = selector.val();
-
-    if(selectedVal != "reset"){
-        var sort = selectedVal;
-        currentUrl.searchParams.set("sort", sort);
-        window.location.replace(currentUrl);
-    } else {
-        currentUrl.searchParams.delete("sort");
-        window.location.replace(currentUrl);
-    }
+$('#category-selector').change(function(){
+    const selector = $(this);
+    const categoryId = selector.val();
+    const newPathname = `/products/edit_category/${categoryId}/`;
+    window.location.pathname = newPathname; // Set the new URL
+    console.log(window.location.pathname);
 })
 
 $('.btn-remove-search').click(function(){

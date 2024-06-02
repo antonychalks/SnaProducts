@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}
+
+{% block extra_title %}
+    || Edit Product {{ product.name }}
+{% endblock %}
+
+{% block nav-includes %}
+{% include 'includes/site-nav.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="overlay-background d-lg-none">
+    </div>
+    <div class="container-md floating_container px-4 py-1">
+        <h2 class="m-4">Product Management</h2>
+    </div>
+    <div class="container-md floating_container py-1">
+        <h4 class="m-3">Edit Product</h4>
+        <hr>
+        <div class="row product-container p-2">
+            <div class="col-12 container product-img-container" id="product-img-container">
+                <form method="POST" action="{% url 'edit_product' product.id %}" class="form m-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <div class="row">
+                        <div class="btn-group col-8 w-100 d-flex justify-content-between">
+                            <button class="btn btn-success rounded-2 mx-1" name="manage" type="submit">Update Product then management page.</button>
+                            <button class="btn btn-success rounded-2 mx-1" name="view" type="submit">Update Product then this products page.</button>
+                            <button class="btn btn-danger rounded-2 mx-1" name="cancel" type="submit">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

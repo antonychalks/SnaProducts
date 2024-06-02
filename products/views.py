@@ -150,8 +150,10 @@ def manage_products(request):
         print(categories)
 
     sort_option = f'{sort}_{direction}'
+    all_categories = Category.objects.all()
 
     context = {
+        'all_categories': all_categories,
         'products': products,
         'search_term': query,
         'current_categories': categories,
@@ -178,7 +180,7 @@ def add_product(request):
                 if "view" in request.POST:
                     return redirect(reverse('product_detail', args=[product_form.instance.id]))
                 elif "manage" in request.POST:
-                    return redirect(reverse('add_product'))
+                    return redirect(reverse('manage_products'))
                 elif "return" in request.POST:
                     return redirect(reverse('add_product'))
             else:
@@ -211,20 +213,91 @@ def add_category(request):
                     form.save()
                 else:
                     form.save()
-                form = ProductManagementForm()
+                form = CategoryManagementForm()
                 messages.success(request, 'Category added successfully')
                 if "manage" in request.POST:
-                    return redirect(reverse('add_product'))
+                    return redirect(reverse('manage_products'))
                 elif "return" in request.POST:
                     return redirect(reverse('add_product'))
             else:
-                messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+                messages.error(request, 'Failed to add category. Please ensure the form is valid.')
     else:
-        form = ProductManagementForm()
+        form = CategoryManagementForm()
 
     template = 'products/add.html'
     context = {
         'form': form,
+    }
+
+    return render(request, template, context)
+
+
+def edit_product(request, product_id):
+    """ A view for superusers to add a new product """
+    product = get_object_or_404(Product, pk=product_id)
+    if request.method == 'POST':
+        if "cancel" in request.POST:
+            product_form = ProductManagementForm()
+            return redirect(reverse('manage_products'))
+        else:
+            product_form = ProductManagementForm(request.POST, request.FILES, instance=product)
+            if product_form.is_valid():
+                product_form.save()
+                product_form = ProductManagementForm()
+                messages.success(request, 'Product updated successfully')
+                if "view" in request.POST:
+                    return redirect(reverse('product_detail', args=[product_form.instance.id]))
+                elif "manage" in request.POST:
+                    return redirect(reverse('manage_products'))
+            else:
+                messages.error(request, 'Failed to edit product. Please ensure the form is valid.')
+    else:
+        product_form = ProductManagementForm(instance=product)
+        messages.info(request, f'You are editing {product.name}')
+
+    category_form = CategoryManagementForm()
+    template = 'products/edit_product.html'
+    context = {
+        'form': product_form,
+        'product': product,
+    }
+
+    return render(request, template, context)
+
+
+def edit_category(request, category_id):
+    """ A view for superusers to add a new product """
+    category = get_object_or_404(Category, pk=category_id)
+    if request.method == 'POST':
+        if "cancel" in request.POST:
+            form = CategoryManagementForm()
+            return redirect(reverse('manage_products'))
+        else:
+            form = CategoryManagementForm(request.POST, request.FILES, instance=category)
+            if form.is_valid():
+                if "parent" in request.POST == "":
+                    form.save(commit=False)
+                    form.instance.type = 0
+                    form.save()
+                else:
+                    form.save()
+                form = CategoryManagementForm()
+                messages.success(request, 'Category added successfully')
+                return redirect(reverse('manage_products'))
+
+            else:
+                messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        form = CategoryManagementForm(instance=category)
+        messages.info(request, f'You are editing {category.get_display_name()}')
+
+    products = Product.objects.filter(category=category_id)
+
+    template = 'products/edit_category.html'
+    context = {
+        'form': form,
+        'category': category,
+        'products': products
     }
 
     return render(request, template, context)

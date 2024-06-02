@@ -77,6 +77,16 @@
             <button class="badge category-badge text-bg-secondary d-none btn-remove-all"> Remove All <i class="fa-regular fa-circle-xmark"></i></button>
         </div>
         {% endif %}
+
+        <div class="btn-group sort-select-wrapper" role="group">
+            <select id="category-selector" class="custom-select custom-select-sm rounded-0 border-black">
+                <option value="reset" >Choose a category to edit...</option>
+                {%  for c in all_categories %}
+                    <option value="{{ c.id }}" >{% if c.type == 0 %} <strong>{{ c.get_display_name }}</strong>{% else %}{{ c.get_display_name }} {% endif %}</option>
+                {%  endfor %}
+            </select>
+        </div>
+
         <div class="row">
             <form method="GET" action="{% url 'manage_products' %}">
               <div class="input-group">
@@ -91,7 +101,6 @@
                 </div>
               </div>
             </form>
-
         </div>
 
         <table class="table table-striped border-black">
@@ -115,8 +124,8 @@
                 <td>{{ product.rating }}</td>
                 <td>{{ product.get_category_name }}</td>
                 <td>{{ product.has_sizes }}</td>
-                <td><a class="btn btn-info">Edit</a></td>
-                <td><a class="btn btn-danger">Delete</a></td>
+                <td><a class="btn btn-info" href="{% url 'edit_product' product.id %}">Edit</a></td>
+                <td><a class="btn btn-danger" href="">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
