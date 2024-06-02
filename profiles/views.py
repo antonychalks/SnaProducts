@@ -20,7 +20,6 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
 
-    form = UserProfileForm(instance=profile)
     orders = profile.orders.all()
 
     context = {

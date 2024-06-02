@@ -791,6 +791,42 @@ Managing products
     !- Create the file.
     !- Write HTML to match the sites styling.
 
+!- views.py
+    !- add_product view:
+        !- if request method is post
+            !- store the request.ProductManageForm request.Post and request.Files in the form variable.
+            !- if the form is valid
+                !- save it
+                !- success message
+                !- return redirect depending on button clicked.
+            !- else
+                !- Error message
+        !- else
+            !- form = ProductForm()
+
+
+Adding new category
+-- Forms.py
+    -- Add a new form for adding a new category
+
+-- Add_product.html
+    -- Implement a new form for adding a category.
+
+-- Views.py
+    -- add_category view:
+        -- if request method is post
+            -- Store the request. CategoryManageForm request.Post in the form variable
+            -- if the form is valid
+                -- save it
+                -- success message
+                -- return redirect back to the add page.
+                -- Add another button to return to the manage page.
+            - else
+                -- Error message
+        -- else
+            -- form = ProductForm()
+
+
 -- Make a product active or inactive.
 -- Buttons to make multiple products active or inactive depending on filtering options.
 -- Add deals to the products.

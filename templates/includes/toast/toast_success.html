@@ -17,10 +17,14 @@
         {% if grand_total and not on_profile_page %}
             <p class="logo-font bg-white text-black py-1">Your cart ({{ product_count }})</p>
             <div class="cart-notification-wrapper">
-                {% for item in cart_items %}
+                {% for product in cart_items %}
                     <div class="row">
                         <div class="col-3 my-1">
-                            <img class="w-100" src="{{ item.product.image.url }}">
+                            {% if product.product.image %}
+                            <img class="w-100" src="{{ product.product.image.url }}" alt="{{ product.product.name }}">
+                            {% else %}
+                            <img class="w-100" src="{{ MEDIA_URL }}noimage.jpg" alt="{{ product.product.name }}">
+                            {% endif %}
                         </div>
                         <div class="col-9">
                             <p class="my-0"><strong>{{ item.product.name }}</strong></p>

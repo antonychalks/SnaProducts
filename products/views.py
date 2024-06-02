@@ -91,7 +91,22 @@ def product_detail(request, product_id):
 
 def add_product(request):
     """ A view for syperusers to add a new product """
-    form = ProductManagementForm()
+    if request.method == 'POST':
+        form = ProductManagementForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            form = ProductManagementForm()
+            messages.success(request, 'Product added successfully')
+            if "view" in request.POST:
+                return redirect(reverse('product_detail', args=[form.instance.id]))
+            elif "manage" in request.POST:
+                return redirect(reverse('add_product'))
+            elif "return" in request.POST:
+                return redirect(reverse('add_product'))
+        else:
+            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        form = ProductManagementForm()
 
     template = 'products/add_product.html'
     context = {
