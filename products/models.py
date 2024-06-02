@@ -3,7 +3,7 @@ from django.conf import settings
 from decimal import Decimal, ROUND_HALF_UP
 from cloudinary.models import CloudinaryField
 
-CATEGORY_TYPE = ((0, "Main"), (1, "Sub"))
+CATEGORY_TYPE = ((0, "Parent"), (1, "Child"))
 
 
 # Create your models here.
@@ -21,6 +21,9 @@ class Category(models.Model):
         
     def get_display_name(self):
         return self.display_name
+
+    def get_type(self):
+        return self.get_type_display()
     
     def save(self, *args, **kwargs):
         if self.parent:

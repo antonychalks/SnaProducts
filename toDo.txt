@@ -623,7 +623,7 @@ User Profile:
             !- Change the fields method to an exclude method, and exclude the user field
             !- Add default in front of all the fields.
             !- Change autofocus
-            - Change the classes attribute to add match the site.
+            - Change the classes attribute to match the site.
             !- Remove the asterisk on the country model.
 
         !- views.py:
@@ -637,9 +637,9 @@ User Profile:
             -- Show current shipping address.
             -- Add saved items list.
 
-        - profile.css
+        !- profile.css
             !- Add CSS to style the forms.
-            - Country field is displaying as black still.
+            !- Country field is displaying as black still.
                 !- Change CSS to display the colour as black after it has changed.
                 !- Add JS
                     !- Get the value of the country field and store it in a variable.
@@ -753,10 +753,26 @@ User Profile:
             !- if the order was created by the webhook handler:
                 !- before the status code 200 is sent to stripe: self._send_confirmation_email(order)
 
-        settings.py:
-            - Add DEFAULT_FROM_EMAIL = snaProducts@example.com at the bottom of the page
+        !settings.py:
+            !- Add DEFAULT_FROM_EMAIL = snaProducts@example.com at the bottom of the page
 
 
+Managing products
+!- Create forms.py in products app
+!- Forms.py
+    !- import forms from django
+    !- import Products and categories
+    - create a product_management_form class.
+        !- class meta:
+            !- model product
+            !- fields __all__
+        - __init__ override
+            !- super().__init__(*args, **kwargs)
+            !- store all the category items in the category variable
+            !- Loop through for c in categories to get all the friendly names for display.
+            !- Assign the friendly names to the category choices.
+            !- Loop through the rest of the fields to give them the classes to match the rest of the site.
+            -- Possibly required to get type display name in the future.
 
 
 Saved Items:
