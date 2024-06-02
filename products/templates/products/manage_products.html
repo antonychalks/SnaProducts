@@ -125,11 +125,14 @@
                 <td>{{ product.get_category_name }}</td>
                 <td>{{ product.has_sizes }}</td>
                 <td><a class="btn btn-info" href="{% url 'edit_product' product.id %}">Edit</a></td>
-                <td><a class="btn btn-danger" href="">Delete</a></td>
+
+                <td><a class="btn btn-danger" href="{% url 'delete_product' product.id %}">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
     </div>
+
+
 
 
 {% endblock content %}

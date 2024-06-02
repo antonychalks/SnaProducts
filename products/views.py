@@ -301,3 +301,19 @@ def edit_category(request, category_id):
     }
 
     return render(request, template, context)
+
+
+def delete_product(request, product_id):
+    """ Delete a product from the store """
+    product = get_object_or_404(Product, pk=product_id)
+    product.delete()
+    messages.success(request, 'Product deleted!')
+    return redirect(reverse('manage_products'))
+
+
+def delete_category(request, category_id):
+    """ Delete a product from the store """
+    category = get_object_or_404(Category, pk=category_id)
+    category.delete()
+    messages.success(request, 'Category deleted!')
+    return redirect(reverse('manage_products'))

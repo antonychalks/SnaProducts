@@ -14,20 +14,6 @@ class ProductManagementForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         parent_categories = Category.objects.filter(type=0)
 
-        # self.helper = FormHelper()
-        # self.helper.layout = Layout(
-        #     Row(
-        #         Field('category'),
-        #         Field('name'),
-        #         Field('price'),
-        #     ),
-        #     'description',
-        #     Row(
-        #         Field('rating'),
-        #         Field('image'),
-        #         Field('has_sizes'),
-        #     ),
-        # )
 
         choices = []
         for parent in parent_categories:
@@ -56,7 +42,7 @@ class CategoryManagementForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         parent_categories = Category.objects.filter(type=0)
         choices = [(parent.id, parent.get_display_name()) for parent in parent_categories]
-        no_parent = (None, "New category is a parent.")
+        no_parent = (None, "Category is a parent.")
         choices.insert(0, no_parent)
 
         self.fields['parent'].choices = choices

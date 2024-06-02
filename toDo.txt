@@ -827,56 +827,58 @@ Adding new category
             -- form = ProductForm()
 
 Editing Products
-- Copy the add template and rename to edit
-    - Change the File to suit editing the file.
+!- Copy the add template and rename to edit
+    !- Change the File to suit editing the file.
 
-- in views.py
+!- in views.py
     !- create manage_products view
 
-    - create edit_product view
+    !- create edit_product view
         !- Get product or 404 with product_id and assign to product.
-        - POST handler:
-            -if request.method is POST
+        !- POST handler:
+            !-if request.method is POST
                 !- assign ProductManageForm with request.post and request.files and instance of product.
-                - if form is valid
-                    - save the form
-                    - success message
-                    - redirect options
-                - else
-                    - error message with the errors attached
-            - else:
-                - form = ProductManageForm with an instance of product_id
-                - info message to inform the user what product is being edited
-        - tell it what template to use
-        - Add form and product to context
-        - render
+                !- if form is valid
+                    !- save the form
+                    !- success message
+                    !- redirect options
+                !- else
+                    !- error message with the errors attached
+            !- else:
+                !- form = ProductManageForm with an instance of product_id
+                !- info message to inform the user what product is being edited
+        !- tell it what template to use
+        !- Add form and product to context
+        !- render
 
-    - create edit_category view
-        - Get product or 404 with product_id and assign to product.
-        - POST handler:
-            -if request.method is POST
-                - assign ProductManageForm with request.post and request.files and instance of product.
-                - if form is valid
-                    - save the form
-                    - success message
-                    - redirect options
-                - else
-                    - error message with the errors attached
-            - else:
-                - form = ProductManageForm with an instance of product_id
-                - info message to inform the user what product is being edited
-        - tell it what template to use
-        - Add form and product to context
-        - render
-
-
-- urls.py
-    - add the url for editing a product.
+    !- create edit_category view
+        !- Get product or 404 with product_id and assign to product.
+        !- POST handler:
+            !-if request.method is POST
+                !- assign ProductManageForm with request.post and request.files and instance of product.
+                !- if form is valid
+                    !- save the form
+                    !- success message
+                    !- redirect options
+                !!- else
+                    !- error message with the errors attached
+            !- else:
+                !- form = ProductManageForm with an instance of product_id
+                !- info message to inform the user what product is being edited
+        !- tell it what template to use
+        !- Add form and product to context
+        !- render
 
 
+!- urls.py
+    !- add the url for editing a product.
 
+- Deleting a product.
+    - urls.py
+        - add the delete url
 
-
+    - views.py
+        -
 
 -- Make a product active or inactive.
 -- Buttons to make multiple products active or inactive depending on filtering options.
