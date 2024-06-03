@@ -60,6 +60,8 @@ Misc
         - Test for the correct results with pricing.    
         - Test for two descimal places.
 
+-- Research why the current img isn't being shown when editing products, if not, remove widgets.py, custom_clearable_rile_input.html, and the image line in forms.
+
 !-- Create a dedicated image view page.
 !-- Overlay product image when clicked on the list_products.
 -- Go through all the aria labels.
