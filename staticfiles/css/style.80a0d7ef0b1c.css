@@ -7,7 +7,7 @@ html{
 }
 
 body{
-    background: url("/static/media/background-image.1df1a651cd68.jpg") no-repeat center center fixed;
+    background: url("/media/background-image.1df1a651cd68.jpg") no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
     font-family: "Encode Sans Expanded", sans-serif;
