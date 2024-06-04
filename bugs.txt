@@ -52,4 +52,4 @@ Solution: Made the width of both boxes wider so the text doesn't go on two lines
 
 Problem: The current sorting selector wasn't being selected sometimes on the list products page.
 Cause: The django if statement for adding the selected attribute didn't account for the sort key being selected without a direction.
-Solution: Added {sortkey}_None to the if statement.
+Solution: Added current_sorting.sort, current_sorting.direction and current_sorting.combined so DJango if statements can check for just one part of the sortkey.
