@@ -43,16 +43,16 @@
         <div class="row mt-1">
             <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Button group to select the order of products">
-                    <button type="button" class="btn btn-primary" id="button-asc">Ascending</button>
-                    <button type="button" class="btn btn-primary" id="button-desc">Descending</button>
+                    <button type="button" class="btn btn-primary {% if current_sorting.direction == asc %} direction-active {%  endif %}" id="button-asc">Ascending</button>
+                    <button type="button" class="btn btn-primary {% if current_sorting.direction == desc %} direction-active {%  endif %}" id="button-desc">Descending</button>
                   
                     <div class="btn-group sort-select-wrapper" role="group">
                         <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
-                            <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
-                            <option value="price" {% if current_sorting == 'price_asc' or current_sorting == 'price_desc' %}selected{% endif %}>Price</option>
-                            <option value="rating" {% if current_sorting == 'rating_asc' or current_sorting == 'rating_desc'%}selected{% endif %}>Rating</option>
-                            <option value="name" {% if current_sorting == 'name_asc' or current_sorting == 'name_desc' %}selected{% endif %}>Name</option>
-                            <option value="category" {% if current_sorting == 'category_asc' or current_sorting == 'category_desc' %}selected{% endif %}>Category</option>
+                            <option value="reset" {% if current_sorting.sort == 'None' %}selected{% endif %}>Sort by...</option>
+                            <option value="price" {% if current_sorting.sort == 'price' %}selected{% endif %}>Price</option>
+                            <option value="rating" {% if current_sorting.sort == 'rating'%}selected{% endif %}>Rating</option>
+                            <option value="name" {% if current_sorting.sort == 'name' %}selected{% endif %}>Name</option>
+                            <option value="category" {% if current_sorting.sort == 'category' or curr  %}selected{% endif %}>Category</option>
                         </select>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 </p>
             </div>
         </div>
-        {% if current_categories or current_sorting or search_term %}
+        {% if current_categories or current_sorting.combine != 'None_None' or search_term %}
         <div class="row sort_filter justify-content-evenly justify-content-lg-start">
             {% for category in current_categories %}
                 <span class="badge category-badge text-bg-secondary filter">   
@@ -72,11 +72,12 @@
                 </span>
             {% endfor %}
             
-            {% if current_sorting != "None_None" %}
-                <span class="badge category-badge text-bg-secondary filter">
+            {% if current_sorting.combined != 'None_None' %}
+                <span class="badge category-badge text-bg-secondary filter" id="current_sorting_badge">
                     {{ display_sorting }} <i class="fa-regular fa-circle-xmark btn-remove-sort"></i>
                 </span>
-            {% endif %} 
+            {% endif %}
+
             {% if search_term %}
                 <span class="badge category-badge text-bg-secondary filter">
                     {{ search_term }}<i class="fa-regular fa-circle-xmark btn-remove-search"></i>

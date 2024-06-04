@@ -86,6 +86,8 @@ body{
     margin: unset;
     transform: translateX(-85%) rotate(-90deg);
     transform-origin: bottom right;
+    height: 38px;
+    width: 200px;
 }
 
 #nav-sidebar{

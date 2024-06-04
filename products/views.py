@@ -35,6 +35,8 @@ def list_products(request):
                 # If the variable is desc for descending it will add a minus to the front of the sortkey varible
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
+            else:
+                direction = 'asc'
             products = products.order_by(sortkey)
             display_sorting = sort.capitalize()
 
@@ -67,7 +69,11 @@ def list_products(request):
 
         print(categories)
 
-    sort_option = f'{sort}_{direction}'
+    sort_option = {
+        'sort': sort,
+        'direction': direction,
+        'combined': f'{sort}_{direction}',
+    }
 
     context = {
         'products': products,

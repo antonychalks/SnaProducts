@@ -46,3 +46,10 @@ Problem: When adding a new product, clicking the submit and view product would r
 Cause: This was caused by the form being reset to blank (Which prevents the form being submitted multiple times), this caused the form instance to be blank, so the product ID could not be found.
 Solution: I reset the form on the other two redirects, but not the redirect that sends the user to the product page.
 
+Problem: On mobile display the toggle departments button was changing shape when the menu was expanded.
+Cause: Something was making the text larger, so it went across two lines.
+Solution: Made the width of both boxes wider so the text doesn't go on two lines.
+
+Problem: The current sorting selector wasn't being selected sometimes on the list products page.
+Cause: The django if statement for adding the selected attribute didn't account for the sort key being selected without a direction.
+Solution: Added {sortkey}_None to the if statement.
