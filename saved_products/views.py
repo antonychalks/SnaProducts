@@ -7,7 +7,7 @@ from .models import SavedProductsList, SavedProductsItem
 
 
 def list_detail(request, list_id):
-    """ A view to show individual product details """
+    """ A view to show individual list details and products on the list """
 
     saved_products_list = get_object_or_404(SavedProductsList, pk=list_id)
     saved_products_items = saved_products_list.list_product.all()
@@ -30,9 +30,11 @@ def create_list(request):
         else:
             form = ListManagementForm(request.POST)
             if form.is_valid():
-                form.save()
+                sp_list = form.save(commit=False)
+                sp_list.user = request.user.userprofile
+                sp_list.save()
                 messages.success(request, f'List {form.instance.name} created successfully')
-                return redirect(reverse('view_list', args=[form.instance.id]))
+                return redirect(reverse('list_detail', args=[form.instance.id]))
             else:
                 messages.error(request, 'Failed to create list. Please ensure the form is valid.')
     else:
@@ -44,3 +46,12 @@ def create_list(request):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def delete_list(request, list_id):
+    """ Delete a list from the store """
+    list = get_object_or_404(SavedProductsList, pk=list_id)
+    list.delete()
+    messages.success(request, 'List deleted!')
+    return redirect(reverse('profile'))

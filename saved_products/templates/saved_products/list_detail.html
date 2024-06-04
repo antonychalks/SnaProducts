@@ -22,7 +22,10 @@
         <h2 class="m-4"><a href="{% url 'manage_products' %}" class="no-link-decoration">{{ list.name }}</a></h2>
     </div>
     <div class="container-md floating_container py-1">
-        <h4 class="m-3">Add List</h4>
+        <div class="d-flex justify-content-between">
+            <h4 class="m-3">Add List</h4>
+            <a href="{% url 'products' %}" class="btn btn-info m-2">Click to find some products to add.</a>
+        </div>
         <hr>
         <div class="row product-container p-2">
             <div class="col-12 container floating_container d-flex justify-content-around">

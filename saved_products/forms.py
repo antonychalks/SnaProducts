@@ -6,7 +6,7 @@ from .models import SavedProductsList
 class ListManagementForm(forms.ModelForm):
     class Meta:
         model = SavedProductsList
-        fields = '__all__'
+        exclude = ['user', 'price_total', 'item_on_sale']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
