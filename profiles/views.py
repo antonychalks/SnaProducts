@@ -25,10 +25,14 @@ def profile_view(request):
 
     orders = profile.orders.all()
 
+    saved_items_list = profile.saved_items_list.all()
+
     context = {
         'form': form,
         'orders': orders,
+        'profile': profile,
         'on_profile_page': True,
+        'saved_items_list': saved_items_list
     }
 
     return render(request, 'profiles/profile.html', context)

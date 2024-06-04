@@ -6,6 +6,19 @@ from .forms import ListManagementForm
 from .models import SavedProductsList, SavedProductsItem
 
 
+def list_detail(request, list_id):
+    """ A view to show individual product details """
+
+    saved_products_list = get_object_or_404(SavedProductsList, pk=list_id)
+    saved_products_items = saved_products_list.list_product.all()
+
+    context = {
+        'list': saved_products_list,
+        'items': saved_products_items
+    }
+    return render(request, 'saved_products/list_detail.html', context)
+
+
 # Create your views here.
 @login_required
 def create_list(request):
@@ -23,11 +36,11 @@ def create_list(request):
             else:
                 messages.error(request, 'Failed to create list. Please ensure the form is valid.')
     else:
-        ListManagementForm = ListManagementForm()
+        list_management_form = ListManagementForm()
 
     template = 'saved_products/create_list.html'
     context = {
-        'list_management_form': ListManagementForm,
+        'list_management_form': list_management_form,
     }
 
     return render(request, template, context)

@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-md product_detail_container">
+<div class="container-md floating_container">
     <div class="row">
         <div class="col">
             <h2 class="logo-font m-4">My Profile</h2>
@@ -72,7 +72,47 @@
             </div>
         </div>
     </div>
+</div>
+<div class="container-md floating_container mb-2">
+    <div class="row">
+        <h2> Item lists </h2>
+    </div>
+    <div class="row ">
+        {% if saved_items_list %}
+            <table class="table table-striped border-black">
+                <thead>
+                    <tr>
+                        <th scope="col">List Name</th>
+                        <th scope="col">List Description</th>
+                        <th scope="col" class="d-none d-lg-table-cell">Visibility</th>
+                        <th scope="col" class="d-none d-lg-table-cell">Created</th>
+                        <th scope="col" class="d-none d-lg-table-cell">Total Price</th>
+                        <th scope="col" class="d-none d-lg-table-cell">Items on sale</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                {% for list in saved_items_list.all %}
+                <tr>
+                    <td><a href="{% url 'list_detail' list.id %}">{{ list.name }}</a></td>
+                    <td class="d-none d-lg-table-cell overflow-x-scroll">{{ list.description }}</td>
+                    <td class="d-none d-lg-table-cell">{% if list.visibility == true %} Public {% else %} Private {% endif %}</td>
+                    <td class="d-none d-lg-table-cell">{{ list.created_at }}</td>
+                    <td class="d-none d-lg-table-cell">£{{ list.price_total }}</td>
+                    <td>{% if list.items_on_sale == true %} <i class="fa-solid fa-check"></i> {% else %}<i class="fa-solid fa-circle-xmark"></i> {%  endif %}</td>
+{#                    <td><a class="btn btn-info" href="{% url 'update_list_product' product.id %}">update</a></td>#}
+{#                    <td><a class="btn btn-danger" href="{% url 'remove_list_product' product.id %}">Delete</a></td>#}
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h5>No lists yet</h5>
+            <div class="d-flex justify-content-center">
 
+                <a class="btn btn-info w-25 " href="{%  url 'products' %}">Click to add a list</a>
+            </div>
+        {%  endif %}
+    </div>
 </div>
 {% endblock %}
 

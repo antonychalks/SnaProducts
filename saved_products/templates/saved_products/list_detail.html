@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{#{% block extra_js %}#}
+{#<script src="{% static 'js/list_detail.js' %}"></script>#}
+{#{% endblock %}#}
+
+{% block extra_title %}
+    || {{ list.name}}
+{% endblock %}
+
+{% block nav-includes %}
+{% include 'includes/site-nav.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="overlay-background d-lg-none">
+    </div>
+    <div class="container-md floating_container px-4 py-1">
+        <h2 class="m-4"><a href="{% url 'manage_products' %}" class="no-link-decoration">{{ list.name }}</a></h2>
+    </div>
+    <div class="container-md floating_container py-1">
+        <h4 class="m-3">Add List</h4>
+        <hr>
+        <div class="row product-container p-2">
+            <div class="col-12 container floating_container d-flex justify-content-around">
+                <p>{{ list.description }}</p>
+                <p class="badge">Visibility: {%  if list.visible == true %} Public {% else %} Private {% endif %}</p>
+                <p><small>Created on: {{ list.created_at }}</small></p>
+                <p> Price Total: {{ list.price_total }}</p>
+                {% if list.item_on_sale == true %}
+                    <p class="badge badge-success"> Item on sale</p>
+                {% else %}
+                    <p class="badge badge-secondary"> No items on sale </p>
+                {%  endif %}
+            </div>
+        </div>
+
+        <div class="row product-container p-2">
+            <div class="col-12 container floating_container">
+                {% if list.list_product %}
+                    <table class="table table-striped border-black">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Product Sku</th>
+                                <th scope="col" class="d-none d-lg-table-cell">Product Price</th>
+                                <th scope="col" class="d-none d-lg-table-cell">Product Rating</th>
+                                <th scope="col" class="d-none d-lg-table-cell">Category</th>
+                                <th scope="col" class="d-none d-lg-table-cell">Size</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                    {% for item in items %}
+                        <tr>
+                            <td><a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a></td>
+                            <td>{{ item.product.sku }}</td>
+                            <td class="d-none d-lg-table-cell">{{ item.saved_products_item_price }}</td>
+                            <td class="d-none d-lg-table-cell">{{ item.product.rating }}</td>
+                            <td class="d-none d-lg-table-cell">{{ item.product.get_category_name }}</td>
+                            <td class="d-none d-lg-table-cell">{{ item.product_size }}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    <h2>No products in this list</h2>
+                    <a class="btn btn-info" href="{%  url 'products' %}">Click to find products for this list</a>
+                {%  endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

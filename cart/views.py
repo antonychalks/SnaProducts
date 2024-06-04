@@ -88,7 +88,7 @@ def update_cart(request, product_id):
                 cart[product_id]['products_by_size'][size] = quantity
                 messages.success(request,
                                  f'Updated product: {product.name}, with size: {size.upper()}'
-                                 f' in your cart to a quantity of: {quantity}')
+                                 f'` in your cart to a quantity of: {quantity}')
             else:
                 del cart[product_id]['products_by_size'][size]
                 messages.success(request, f'Removed product: {product.name}, with size: {size.upper()} from your cart')

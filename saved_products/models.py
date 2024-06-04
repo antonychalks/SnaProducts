@@ -1,3 +1,4 @@
+from profiles.models import UserProfile
 from django.db import models
 
 from products.models import Product
@@ -5,11 +6,12 @@ from products.models import Product
 
 # Create your models here.
 class SavedProductsList(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='saved_items_list')
     name = models.CharField(max_length=100)
     description = models.TextField()
     visible = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    price_total = models.DecimalField(max_digits=10, decimal_places=2)
+    price_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     item_on_sale = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -17,9 +19,10 @@ class SavedProductsList(models.Model):
         Override the original save method to set the SavedProductsItem total
         and update the order total.
         """
+        super().save(*args, **kwargs)
         self.saved_products_item_total = 0
-        for product in self.list_product:
-            self.saved_products_item_total += product.saved_products_item_price
+        for product in self.list_product.all():
+            self.saved_products_item_total += product.price
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -39,8 +42,8 @@ class SavedProductsItem(models.Model):
         Override the original save method to set the saved_products_item_total
         and update the list total.
         """
-        self.saved_products_item_total = self.product.price
+        self.saved_products_item_price = self.product.price
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.product
+        return self.product.name
