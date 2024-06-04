@@ -41,7 +41,7 @@
                     </td>
 
                     <td class="py-lg-3 d-flex justify-content-around">  
-                        <form method="POST" id="update_form_{{ product.product.id }}" action"{% url 'update_cart' product.product.id %}" class="form update_form">
+                        <form method="POST" id="update_form_{{ product.product.id }}" action="{% url 'update_cart' product.product.id %}" class="form update_form">
                             {% csrf_token %}              
                             <div class="btn-group input-group cart-qty-group" role="group" aria-label="Button group to increment or decrement the selected quantity." >
                                 <button class="btn btn-dark cart-qty-change decrement-button" data-change="decrement" data-id="{{product.product.id}}" data-amount="1"> <i class="fa-solid fa-chevron-down"><span class="d-lg-inline d-none">1</span></i></button>

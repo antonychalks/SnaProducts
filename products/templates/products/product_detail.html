@@ -19,12 +19,14 @@
     </div>
 
     <div class="container-md floating_container product_detail_container">
+        {%  if request.user.is_superuser %}
         <div class="row">
             <div class="button-group w-100 d-flex justify-content-evenly p-1">
                 <a class="btn btn-info" href="{% url 'edit_product' product.id %}">Edit</a>
                 <a class="btn btn-danger" href="{% url 'delete_product' product.id %}">Delete</a>
             </div>
         </div>
+        {%  endif %}
         <div class="row product-container p-2">
             <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
                 {% if product.image %}
