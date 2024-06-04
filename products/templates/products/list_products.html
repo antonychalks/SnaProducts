@@ -112,6 +112,19 @@
                                     {% endif %}
                                 <p class="card-text"><a href="{% url 'products' %}?category={{product.category}}" class="no-link-decoration"><small class="text-muted">{{product.get_category_name }}</a> | <a href="{% url 'products' %}?category={{product.parent}}" class="no-link-decoration">{{product.parent}}</a></small></p>
                             </div>
+                            <div class="card-footer">
+                                <div class="button-group w-100 p-1">
+                                    <form class="form" action="{% url 'add_to_cart' product.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="d-flex justify-content-between">
+                                            <input id="{{product.id}}_qty" class="form-control btn" type="number" name="quantity" value="1" min="1" max="99" data-product_id="{{ product.id }}">
+                                            <input type="submit" class="btn btn-success rounded-1 text-uppercase" value="Add to Cart">
+                                            <input type="hidden" name="redirect_url" value="{% url 'products' %}">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
                             {% if request.user.is_superuser %}
                             <div class="button-group w-100 d-flex justify-content-between p-1">
                                 <a class="btn btn-info" href="{% url 'edit_product' product.id %}">Edit</a>
