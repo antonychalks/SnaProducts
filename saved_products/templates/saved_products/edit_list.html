@@ -2,12 +2,12 @@
 {% load crispy_forms_filters %}
 {% load static %}
 
-{#{% block extra_js %}#}
-{#<script src="{% static 'js/create_list.js' %}"></script>#}
-{#{% endblock %}#}
+{% block extra_js %}
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}
 
 {% block extra_title %}
-    || New List
+    || Edit List {{ List.name }}
 {% endblock %}
 
 {% block nav-includes %}
@@ -22,17 +22,18 @@
         <h2 class="m-4">Product lists</h2>
     </div>
     <div class="container-md floating_container py-1">
-        <h4 class="m-3">Add List</h4>
+        <h4 class="m-3">Edit List</h4>
         <hr>
         <div class="row product-container p-2">
             <div class="col-12 container product-img-container" id="product-img-container">
-                <form method="POST" action="{% url 'create_list' %}" class="form m-2" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'edit_list' list.id %}" class="form m-2" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ list_management_form| crispy }}
+                    {{ form | crispy }}
                     <div class="row">
                         <div class="btn-group col-8 w-100 d-flex justify-content-between">
-                            <button class="btn btn-success rounded-2 mx-1" name="return" type="submit">Create List</button>
-                            <a class="btn btn-danger rounded-2 mx-1"  href="{% url 'profile' %}">Cancel</a>
+                            <button class="btn btn-success rounded-2 mx-1" name="profile" type="submit">Update list then view profile.</button>
+                            <button class="btn btn-success rounded-2 mx-1" name="view" type="submit">Update list then view list.</button>
+                            <button class="btn btn-danger rounded-2 mx-1" name="cancel" type="submit">Cancel</button>
                         </div>
                     </div>
                 </form>

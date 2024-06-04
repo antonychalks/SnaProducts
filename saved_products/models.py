@@ -22,7 +22,7 @@ class SavedProductsList(models.Model):
         super().save(*args, **kwargs)
         self.saved_products_item_total = 0
         for product in self.list_product.all():
-            self.saved_products_item_total += product.price
+            self.saved_products_item_total += product.saved_products_item_price
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -32,7 +32,7 @@
                 <p>{{ list.description }}</p>
                 <p class="badge">Visibility: {%  if list.visible == true %} Public {% else %} Private {% endif %}</p>
                 <p><small>Created on: {{ list.created_at }}</small></p>
-                <p> Price Total: {{ list.price_total }}</p>
+                <p> Price Total: £{{ list.price_total }}</p>
                 {% if list.item_on_sale == true %}
                     <p class="badge badge-success"> Item on sale</p>
                 {% else %}
