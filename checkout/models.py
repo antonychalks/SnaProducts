@@ -8,7 +8,9 @@ from profiles.models import UserProfile
 
 import uuid
 
+
 # Create your models here.
+# noinspection SpellCheckingInspection
 class Order(models.Model):
     order_number = models.CharField(max_length=32, null=False, editable=False)
     first_name = models.CharField(max_length=50, null=False, blank=False)
@@ -30,7 +32,8 @@ class Order(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
                                      null=True, blank=True, related_name='orders')
     
-    def _generate_order_number(self):
+    @staticmethod
+    def _generate_order_number():
         """
         Generate a random, unique order number using UUID
         """
@@ -69,7 +72,7 @@ class Order(models.Model):
 class OrderLineItem(models.Model):
     order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
-    product_size = models.CharField(max_length=2, null=True, blank=True) # XS, S, M, L, XL
+    product_size = models.CharField(max_length=2, null=True, blank=True)  # XS, S, M, L, XL
     quantity = models.IntegerField(null=False, blank=False, default=0)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
 

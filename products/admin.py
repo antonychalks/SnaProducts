@@ -12,7 +12,9 @@ class ProductAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Customize the category field to display display_name instead of name
         self.fields['category'].queryset = Category.objects.filter(type=1)
-        self.fields['category'].widget.choices = [(category.pk, category.display_name) for category in self.fields['category'].queryset]
+        self.fields['category'].widget.choices = [(category.pk, category.display_name)
+                                                  for category in self.fields['category'].queryset]
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -25,6 +27,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'price', 'sku',)
     search_fields = ['name', 'category__display_name', ]  # Searching based on display_name
     list_filter = ('category', 'price', )
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

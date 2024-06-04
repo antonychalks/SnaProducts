@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.test import TestCase
 from .models import Product, Category
 
+
 # Create your tests here.
 class TestProductViews(TestCase):
     def setUp(self):
@@ -12,7 +13,8 @@ class TestProductViews(TestCase):
             email="test@test.com"
         )
         self.category = Category.objects.create(name="Miscellaneous")
-        self.product = Product(id="99", category=self.category, sku="TEST9999", name="test product", description="test description", price="99.99", rating="3")
+        self.product = Product(id="99", category=self.category, sku="TEST9999", name="test product",
+                               description="test description", price="99.99", rating="3")
         self.product.save()
         
     def test_render_list_products_page(self):

@@ -3,7 +3,9 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from products.models import Product
 
+
 def cart_contents(request):
+    """ Controls the data for the shopping cart."""
     cart_products = []
     total = 0
     product_count = 0
@@ -11,14 +13,21 @@ def cart_contents(request):
     
     for product_id, product_data in cart.items():
         if isinstance(product_data, int):
-            product = get_object_or_404(Product, pk=product_id) #gets the product by the item_id
-            total += product_data * product.price #Add the value of the products price * quantity of the product, and adds it to the total.
-            product_count += product_data #Adds the quantity to the product count
+            # Gets the product by the item_id
+            product = get_object_or_404(Product, pk=product_id)
+
+            # Add the value of the products price * quantity of the product, and adds it to the total.
+            total += product_data * product.price
+
+            # Adds the quantity to the product count
+            product_count += product_data
+
+            # Adds the product details to the cart_products list.
             cart_products.append({
                 'product_id': product_id,
                 'quantity': product_data,
                 'product': product,
-            }) #Adds the product details to the cart_products list.
+            })
         else:
             product = get_object_or_404(Product, pk=product_id)
             for size, quantity in product_data['products_by_size'].items():

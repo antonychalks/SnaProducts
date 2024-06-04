@@ -34,7 +34,8 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey('Category', limit_choices_to={'type': 1},  null=True, blank=True, on_delete=models.SET_DEFAULT, default=18)
+    category = models.ForeignKey('Category', limit_choices_to={'type': 1},  null=True, blank=True,
+                                 on_delete=models.SET_DEFAULT, default=18)
     sku = models.CharField(max_length=254, unique=True, editable=False)
     name = models.CharField(max_length=254)
     description = models.TextField()
@@ -67,7 +68,8 @@ class Product(models.Model):
             return 0
         else:
             return rounded_delivery_cost
-    
+
+    # noinspection PyUnusedLocal
     def generate_sku(self):
         """Generate a unique SKU"""
         category = self.category

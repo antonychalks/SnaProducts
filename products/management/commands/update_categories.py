@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from products.models import Category
 
+
 class Command(BaseCommand):
     help = 'Update category types based on parent relationship'
 

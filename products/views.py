@@ -9,6 +9,7 @@ from .forms import ProductManagementForm, CategoryManagementForm
 
 
 # Create your views here.
+# noinspection DuplicatedCode
 def list_products(request):
     """ A view to show all products, including sorting and search queries """
 
@@ -32,7 +33,7 @@ def list_products(request):
                 sortkey = 'category__name'
             if 'direction' in request.GET:  # Checks for a direction in the GET request
                 direction = request.GET['direction']  # Stores the direction request in a variable
-                # If the variable is desc for descending it will add a minus to the front of the sortkey varible
+                # If the variable is desc for descending it will add a minus to the front of the sortkey variable
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
             else:
@@ -98,6 +99,7 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+# noinspection DuplicatedCode
 @login_required
 def manage_products(request):
     """ A view to manage all products, including sorting and search queries """
@@ -125,7 +127,7 @@ def manage_products(request):
                 sortkey = 'category__name'
             if 'direction' in request.GET:  # Checks for a direction in the GET request
                 direction = request.GET['direction']  # Stores the direction request in a variable
-                # If the variable is desc for descending it will add a minus to the front of the sortkey varible
+                # If the variable is desc for descending it will add a minus to the front of the sortkey variable
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
@@ -176,6 +178,7 @@ def manage_products(request):
     return render(request, 'products/manage_products.html', context)
 
 
+# noinspection PyUnusedLocal
 @login_required
 def add_product(request):
     """ A view for superusers to add a new product """
@@ -215,6 +218,7 @@ def add_product(request):
     return render(request, template, context)
 
 
+# noinspection PyUnusedLocal
 @login_required
 def add_category(request):
     """ A view for superusers to add a new product """
@@ -254,6 +258,7 @@ def add_category(request):
     return render(request, template, context)
 
 
+# noinspection PyUnusedLocal
 @login_required
 def edit_product(request, product_id):
     """ A view for superusers to add a new product """
@@ -282,7 +287,6 @@ def edit_product(request, product_id):
         product_form = ProductManagementForm(instance=product)
         messages.info(request, f'You are editing {product.name}')
 
-    category_form = CategoryManagementForm()
     template = 'products/edit_product.html'
     context = {
         'form': product_form,
@@ -292,6 +296,7 @@ def edit_product(request, product_id):
     return render(request, template, context)
 
 
+# noinspection PyUnusedLocal
 @login_required
 def edit_category(request, category_id):
     """ A view for superusers to add a new product """

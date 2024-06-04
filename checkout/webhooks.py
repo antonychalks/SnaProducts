@@ -3,11 +3,12 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
-from checkout.webhook_handler import StripeWH_Handler
+from checkout.webhook_handler import stripeWH_Handler
 
 import stripe
 
 
+# noinspection PyUnusedLocal
 @require_POST
 @csrf_exempt
 def webhook(request):
@@ -19,11 +20,12 @@ def webhook(request):
     # Get the webhook data and verify its signature
     payload = request.body
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    # noinspection PyUnusedLocal
     event = None
 
     try:
         event = stripe.Webhook.construct_event(
-        payload, sig_header, wh_secret
+            payload, sig_header, wh_secret
         )
     except ValueError as e:
         # Invalid payload
@@ -35,7 +37,7 @@ def webhook(request):
         return HttpResponse(content=e, status=400)
 
     # Set up a webhook handler
-    handler = StripeWH_Handler(request)
+    handler = stripeWH_Handler(request)
 
     # Map webhook events to relevant handler functions
     event_map = {

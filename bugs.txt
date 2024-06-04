@@ -26,11 +26,11 @@ Problem: There are two burger icons on the mobile version on the product list pa
 Cause: One burger icon was in place on the home screen for the departments, but isn't necessary on the products list page. The other burger icon was still in place from legacy code.
 Solution: Set JS to hide the burger icon when on the list products page.
 
-Problem: When you click on the parent catergory, nothing is displayed.
-Cause: The product is only shown when the child category is clicked, the parent catergory isn't associated with the product.
+Problem: When you click on the parent category, nothing is displayed.
+Cause: The product is only shown when the child category is clicked, the parent category isn't associated with the product.
 Solution: Wrote code in views.py which will fetch the children of a parent category if it was selected.
 
-Problem: When the sorting in descening, the current option isn't selected in the box.
+Problem: When the sorting in descending, the current option isn't selected in the box.
 Cause: The if statements within the options doesn't include [option]_desc, only [option]_asc
 Solution: Added an or option to each if statement to include desc.
 
@@ -53,3 +53,7 @@ Solution: Made the width of both boxes wider so the text doesn't go on two lines
 Problem: The current sorting selector wasn't being selected sometimes on the list products page.
 Cause: The django if statement for adding the selected attribute didn't account for the sort key being selected without a direction.
 Solution: Added current_sorting.sort, current_sorting.direction and current_sorting.combined so DJango if statements can check for just one part of the sortkey.
+
+Problem: The cart won't update the product quantity.
+Cause:  I left out the equals when setting the action of the form.
+Solution: Put the equals in and test it now works.

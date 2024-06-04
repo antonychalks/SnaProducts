@@ -1,3 +1,4 @@
+# noinspection SpellCheckingInspection
 """
 ASGI config for snaProducts project.
 

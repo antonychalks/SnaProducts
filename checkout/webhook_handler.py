@@ -9,15 +9,18 @@ from profiles.models import UserProfile
 
 import json
 import time
+import stripe
 
 
-class StripeWH_Handler:
+# noinspection PyUnresolvedReferences
+class stripeWH_Handler:
     """Handle Stripe webhooks"""
 
     def __init__(self, request):
         self.request = request
 
-    def _send_confirmation_email(self, order):
+    @staticmethod
+    def _send_confirmation_email(order):
         """Send the user a confirmation email"""
         cust_email = order.email
         subject = render_to_string(
@@ -34,7 +37,8 @@ class StripeWH_Handler:
             [cust_email]
         )
 
-    def handle_event(self, event):
+    @staticmethod
+    def handle_event(event):
         """
         Handle a generic/unknown/unexpected webhook event
         """
@@ -42,6 +46,7 @@ class StripeWH_Handler:
             content=f'Unhandled webhook received: {event["type"]}',
             status=200)
 
+    # noinspection PyUnboundLocalVariable
     def handle_payment_intent_succeeded(self, event):
         """
         Handle the payment_intent.succeeded webhook from Stripe
@@ -156,7 +161,8 @@ class StripeWH_Handler:
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
 
-    def handle_payment_intent_payment_failed(self, event):
+    @staticmethod
+    def handle_payment_intent_payment_failed(event):
         """
         Handle the payment_intent.payment_failed webhook from Stripe
         """

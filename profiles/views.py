@@ -9,7 +9,7 @@ from .forms import UserProfileForm
 
 # Create your views here.
 @login_required
-def profile(request):
+def profile_view(request):
     """ A view that renders the profile page """
     profile = get_object_or_404(UserProfile, user=request.user)
 

@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from products.models import Product
 
+
 class Command(BaseCommand):
     help = 'Update product SKU based on generate_sku function in models.py'
 
