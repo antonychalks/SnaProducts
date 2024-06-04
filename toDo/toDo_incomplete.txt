@@ -1,0 +1,140 @@
+- Misc
+    - Add testing for python functions.
+        - Views.py across all apps
+            - Test for response codes to ensure page loads.
+            - Test any Post requests with correct inputs and incorrect.
+            - Test get requests return the correct responses.
+        - Test context.py
+            - Test for the correct results with pricing.
+            - Test for two descimal places.
+
+    -- Research why the current img isn't being shown when editing products, if not, remove widgets.py, custom_clearable_rile_input.html, and the image line in forms.
+
+-- Go through all the aria labels.
+- Annotate
+    - Cart app
+        - Python files
+        - Templates
+    - Products app
+        - Python files
+        - Templates
+    - Landing page app
+        - Python files
+        - Templates
+    - Templates dir
+        - Include files
+        - Base.html
+        - Toasts
+    - JS
+        - Doc strings for functions
+        - Actions that are taking place.
+    - CSS
+
+
+Featured products
+-- Add a featured products box on the home page
+-- Add admin functionality to add products to featured product either, on the product page, on the featured products admin page and on the products list admin page.
+
+
+Special Offers
+-- Add a boolean field to product model called deal and is_new
+-- Add an admin option to create a deal on a product based on percentage discount.
+-- Function the change deal field automatically if a deal is applied.
+-- Change the category function to search for active deal and is_new fields if that is what selected.
+-- Create a script that displays products with deals, to use on multiple pages.
+
+
+Sorting products:
+- Add different categories. -- Needs more categories to sort by
+
+
+Shopping cart:
+-- On the cart page, add a row of 4 random products to the bottom of the page, with an add to cart button. When clicked: Message saying item added to cart, adds item to cart, that product will then be replaced by another product on the bottom of the screen"
+
+
+List Products:
+-- On the list product page on phones, the images should be larger and not squashed for the products, maybe change to a side image card.
+-- The department toggle button should start under the quantity of products line, then scroll with the page when scrolled enough.
+
+
+Nav:
+-- Hovering over the main categories should drop the menu down.
+-- Implement a free delivery and half delivery tick box.
+
+
+Profile.html
+-- Show current shipping address.
+-- Add saved items list.
+
+
+Editing Products
+-- Make a product active or inactive.
+-- Buttons to make multiple products active or inactive depending on filtering options.
+-- Add deals to the products.
+-- Adding deals makes the product appear in the special offers page.
+
+
+Saved Items:
+    saved items app:
+        !-- Create new app
+        !-- Add the app to settings.py
+
+    models.py:
+        !-- Add a saved items model.
+        !-- Fields:
+            !-- Many to Many key for products model.
+            !-- List name.
+            !-- is_gift.
+            !-- Public/Private
+            !-- List price
+            !-- Notify when on sale.
+            !-- Description.
+        !-- Function that creates list price by adding all the item prices together.
+        !-- migrate
+
+    Views.py:
+        -- Create List
+            -- Displays a form page to create new list with all the fields from the model.
+        -- Delete list
+            -- Deletes the list as a whole.
+        -- Update list
+            -- Updates the details of a list (not the products)
+        -- list view:
+            -- Form to edit the list details
+            -- Displays template
+        -- Add to list view
+            -- Adds an item to a list
+        -- Remove from list view
+            -- Removes item from list
+        -- Adjust list view
+            -- Adjusts the size of the item in the list.
+
+    cart.html:
+        -- Add to list button (Displays current lists or adds new list)
+            -- Ask if the user wants to delete the product from the cart.
+        -- Shows saved lists as a list at the bottom.
+            -- Accordion to display
+
+    saved_items.html
+        -- Shows each list individually
+        -- As a table, displays each product
+            -- Same fields displayed as cart.
+            -- Quantity selector
+            -- Size selector if available
+            -- Remove from list.
+            -- Add to other list
+            -- Button to add to cart (if item is in the cart, button to remove from cart).
+        -- Delete list button.
+
+    product_detail.html:
+        -- Add to list button, same as cart.html
+
+    profile.html:
+        -- Display all lists in a table.
+            -- Button to create a new empty list.
+            -- Shows a card for each list.
+            -- Clicking the card takes you to the list page.
+            -- Displays how many items in each list, the name, description, price.
+
+    urls.py:
+        -- Create urls for creating list, deleting a list, updating a lists details, viewing list, adding to list, removing from list, updating items in the list.
