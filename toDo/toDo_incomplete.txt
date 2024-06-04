@@ -99,9 +99,9 @@ Saved Items:
             -- Deletes the list as a whole.
         -- Update list
             -- Updates the details of a list (not the products)
-        -- list view:
-            -- Form to edit the list details
-            -- Displays template
+        !-- list view:
+            !-- Form to edit the list details
+            !-- Displays template
         -- Add to list view
             -- Adds an item to a list
         -- Remove from list view
