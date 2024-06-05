@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.urls import reverse
 from django.test import TestCase
 from products.models import Product, Category
@@ -83,3 +84,118 @@ class TestCartViews(TestCase):
         self.assertIn(str(self.product.id), cart)
         self.assertIn('L', cart[str(self.product.id)]['products_by_size'])
         self.assertEqual(cart[str(self.product.id)]['products_by_size']['L'], 6)  # 2 + 4
+
+    def test_add_to_cart_with_invalid_size(self):
+        response = self.client.post(
+            reverse('add_to_cart', args=[self.product.id]),
+            data={
+                'redirect_url': '/products/',
+                'quantity': 3,
+                'product_size': 'INVALID_SIZE'  # assuming 'INVALID_SIZE' is not a valid size
+            }
+        )
+        # Considering your code doesn't handle invalid sizes,
+        # we should see a 302 status code for a successful redirect
+        self.assertEqual(response.status_code, 302)
+        # Check that the cart was updated with the invalid size anyway
+        cart = self.client.session['cart']
+        self.assertIn('INVALID_SIZE', cart[str(self.product.id)]['products_by_size'])
+
+    def test_update_cart_quantity_to_zero(self):
+        # Directly initialize the session cart
+        session = self.client.session
+        session['cart'] = {str(self.product.id): {'products_by_size': {'L': 2}}}
+
+        # Ensure 'L' is in session['cart'][str(self.product.id)]['products_by_size']
+        assert 'L' in session['cart'][str(self.product.id)]['products_by_size']
+
+        session.save()
+
+        post_data = {
+            'quantity': 0,
+            'product_size': 'L'
+        }
+        response = self.client.post(
+            reverse('update_cart', args=[self.product.id]),
+            data=post_data
+        )
+
+        # refresh session
+        session = self.client.session
+
+        self.assertNotIn(str(self.product.id), session['cart'])
+
+    def test_update_cart_with_nonexistent_product(self):
+        post_data = {
+            'quantity': 5,
+            'product_size': 'L'
+        }
+        random_product_id = 5678  # Make sure this ID doesn't exist
+        response = self.client.post(
+            reverse('update_cart', args=[random_product_id]),
+            data=post_data
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_update_cart_with_invalid_size(self):
+        self.client.post(
+            reverse('add_to_cart', args=[self.product.id]),
+            data={
+                'redirect_url': '/products/',
+                'quantity': 2,
+                'product_size': 'L'  # Legitimate size
+            }
+        )
+        response = self.client.post(
+            reverse('update_cart', args=[self.product.id]),
+            data={'quantity': 5, 'product_size': 'INVALID_SIZE'}  # assuming 'INVALID_SIZE' is not a valid size
+        )
+        self.assertEqual(response.status_code, 302)
+        # Check that the cart was updated with the invalid size anyway
+        cart = self.client.session['cart']
+        self.assertIn('INVALID_SIZE', cart[str(self.product.id)]['products_by_size'])
+
+    def test_remove_from_cart(self):
+        self.client.post(
+            reverse('add_to_cart', args=[self.product.id]),
+            data={
+                'redirect_url': '/products/',
+                'quantity': 2,
+                'product_size': 'L'
+            }
+        )
+        self.client.post(
+            reverse('remove_from_cart', args=[self.product.id]),
+            data={
+                'product_size': 'L'
+            }
+        )
+        cart = self.client.session['cart']
+        self.assertNotIn(str(self.product.id), cart)
+
+    def test_remove_from_cart_invalid_size(self):
+        self.client.post(
+            reverse('add_to_cart', args=[self.product.id]),
+            data={
+                'redirect_url': '/products/',
+                'quantity': 2,
+                'product_size': 'INVALID_SIZE'  # assuming 'INVALID_SIZE' is not a valid size
+            }
+        )
+        response = self.client.post(
+            reverse('remove_from_cart', args=[self.product.id]),
+            data={'product_size': 'INVALID_SIZE'}  # assuming 'INVALID_SIZE' is not a valid size
+        )
+        self.assertEqual(response.status_code, 200)
+        # Check that the cart doesn't contain the product anymore
+        cart = self.client.session['cart']
+        self.assertNotIn(str(self.product.id), cart)
+
+    def test_invalid_request_method(self):
+        response = self.client.get(reverse('update_cart', args=[self.product.id]))
+        self.assertEqual(response.status_code, 400)  # Bad Request
+
+    def test_invalid_remove_request_method(self):
+        response = self.client.get(reverse('remove_from_cart', args=[self.product.id]))
+        self.assertEqual(response.status_code, 400)  # Bad Request
+

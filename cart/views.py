@@ -74,7 +74,6 @@ def update_cart(request, product_id):
     """ A view to update a product in the site cart. """
 
     if request.method == 'POST':
-        print(request)
         product = get_object_or_404(Product, pk=product_id)
         quantity = int(request.POST.get('quantity'))
         cart = request.session.get('cart', {})
@@ -82,7 +81,7 @@ def update_cart(request, product_id):
         if 'product_size' in request.POST:
             size = request.POST['product_size']
 
-        if not quantity or quantity < 0:
+        if quantity is None or quantity < 0:
             messages.error(request,
                            f'{quantity} is not valid. Quantity must be set to 0 for {product.name} '
                            f'to be removed from your cart, or quantity must be higher than 1.')
@@ -90,17 +89,24 @@ def update_cart(request, product_id):
 
         if size:
             if quantity > 0:
+                if product_id not in cart:
+                    cart[product_id] = {'products_by_size': {}}
+                if 'products_by_size' not in cart[product_id]:
+                    cart[product_id]['products_by_size'] = {}
+
                 cart[product_id]['products_by_size'][size] = quantity
                 request.session['item_added_to_cart'] = True
                 messages.success(request,
                                  f'Updated product: {product.name}, with size: {size.upper()}'
                                  f'` in your cart to a quantity of: {quantity}')
             else:
-                del cart[product_id]['products_by_size'][size]
+                if product_id in cart and 'products_by_size' in cart[product_id] and size in cart[product_id][
+                        'products_by_size']:
+                    del cart[product_id]['products_by_size'][size]
                 request.session['item_added_to_cart'] = True
                 messages.success(request, f'Removed product: {product.name}, with size: {size.upper()} from your cart')
                 messages.warning(request, f"Don't forget there is still a {size.upper()} {product.name} in your cart.")
-                if not cart[product_id]['items_by_size']:
+                if not cart[product_id]['products_by_size']:
                     cart.pop(product_id)
                     messages.success(request, f'Removed product: {product.name} from your cart')
         else:
@@ -111,9 +117,11 @@ def update_cart(request, product_id):
             else:
                 request.session['item_added_to_cart'] = True
                 cart.pop(product_id)
+
                 messages.success(request, f'Removed product: {product.name} from your cart')
 
         request.session['cart'] = cart
+        request.session.modified = True
         return redirect(reverse('view_cart'))
 
     return HttpResponseBadRequest("Invalid request method")
