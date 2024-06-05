@@ -55,7 +55,7 @@
                                 <th scope="col" class="d-none d-lg-table-cell">Product Rating</th>
                                 <th scope="col" class="d-none d-lg-table-cell">Category</th>
                                 <th scope="col" class="d-none d-lg-table-cell">Size</th>
-                                <th scope="col">Edit</th>
+                                <th scope="col">Add to current cart</th>
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
@@ -67,10 +67,46 @@
                             <td class="d-none d-lg-table-cell">{{ item.product.rating }}</td>
                             <td class="d-none d-lg-table-cell">{{ item.product.get_category_name }}</td>
                             <td class="d-none d-lg-table-cell">{{ item.product_size }}</td>
+                            <td><button class="btn btn-info btn-modal" id="{{ item.product.id }}" data-bs-toggle="modal" data-bs-target="#addToCartModal-{{ item.product.id }}"><small>Add to cart</small></button></td>
                             <td><button class="remove-button btn btn-danger" id="remove_{{ item.product.id }}" data-csrf_token="{{ csrf_token }}"><small>Remove</small></button></td>
                         </tr>
                     {% endfor %}
                     </table>
+                    {% for item in items %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="addToCartModal-{{ item.product.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add to cart</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="d-flex justify-content">
+                                  <h2 class="mx-2">{{ item.product.name }}</h2>
+                                  <h4>£{{ item.product.price }}</h4>
+                              </div>
+
+                            <form class="form" action="{% url 'add_to_cart' item.product.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="d-flex justify-content">
+                                    <input type="hidden" name="redirect_url" value="{% url 'list_detail' list.id %}">
+                                    <div class="btn-group input-group qty-group" role="group" aria-label="Button group to increment, or decrement the selected quantity.">
+                                        <button class="btn btn-dark" data-change="decrement"> <i class="fa-solid fa-chevron-down"> 1</i></button>
+                                        <input id="{{product.id}}_qty" class="form-control btn" type="number" name="quantity" value="1" min="1" max="99" data-product_id="{{ product.id }}">
+                                        <button class="btn btn-dark" data-change="increment"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
+                                    </div>
+                                    <input type="submit" class="btn btn-success rounded-1 text-uppercase m-2" value="Add to Cart">
+                                </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
                 {% else %}
                     <h2>No products in this list</h2>
                     <a class="btn btn-info" href="{%  url 'products' %}">Click to find products for this list</a>

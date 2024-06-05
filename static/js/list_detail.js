@@ -11,4 +11,5 @@ $(document).ready(function () {
                 location.reload(); // once it's done, the webpage is reloaded.
             });
     });
+
 });

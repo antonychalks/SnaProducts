@@ -108,6 +108,7 @@ def add_to_list(request, product_id):
             list=selected_list,
             product=product
         )
+        selected_list.save()
 
         if created:
             messages.success(request, 'Product added to list successfully')
@@ -127,8 +128,10 @@ def remove_from_list(request, product_id):
         product = get_object_or_404(Product, pk=product_id)
         if request.method == 'POST':
             # Get the SavedProductsItem instance with the product
-            saveditem = SavedProductsItem.objects.filter(product=product)
+            saveditem = SavedProductsItem.objects.get(product=product)
+            associated_list = saveditem.list
             saveditem.delete()
+            associated_list.save()
             messages.success(request, f'Removed product{product.name} from your list')
             return HttpResponse(status=200)
         else:
