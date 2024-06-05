@@ -193,7 +193,7 @@ small{
 }
 
 .img_zoom_activator{
-    bottom: 150px;
+    top: 350px;
     left: unset;
     right: 15px;  
     z-index: 10;
