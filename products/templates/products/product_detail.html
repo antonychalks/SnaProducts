@@ -27,7 +27,7 @@
             </div>
         </div>
         {%  endif %}
-        g<div class="row product-container p-2">
+        <div class="row product-container p-2">
             <div class="col-12 col-md-6 container product-img-container" id="product-img-container">
                 {% if product.image %}
                 <a href="{{ product.image.url}}" target="_blank">
@@ -99,6 +99,19 @@
                         <input type="submit" class="btn btn-success rounded-1 text-uppercase" value="Buy now">
                     </div>
                 </form>
+            <hr class="p-1">
+                <div>
+                    <form class="form d-flex justify-content-between" action="{% url 'add_to_list' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <select class="form-control rounded-0 w-50 d-inline" name="list_selector" id='{{ list.id }}'>
+                            {% for list in lists %}
+                            <option value="{{ list.id }}" >{{ list.name }}</option>
+                            {%  endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-info">Add to list</button>
+                        <input type="hidden" name="redirect_url" value="{% url 'product_detail' product.id %}">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
