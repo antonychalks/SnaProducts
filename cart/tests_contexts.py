@@ -46,6 +46,18 @@ class TestCartContent(TestCase):
             str(2 * self.product_2.price)))
         self.assertEqual(context['grand_total'], context['total'] + context['delivery'])
 
+    def test_multiple_quantities_of_same_product(self):
+        # Add the same product multiple times to the cart
+        session = self.client.session
+        session['cart'] = {str(self.product.id): 3}
+        session.save()
+
+        context = cart_contents(self.client)
+        self.assertEqual(len(context['cart_products']), 1)
+        self.assertEqual(context['product_count'], 3)
+        self.assertEqual(context['total'], 3 * Decimal(str(self.product.price)))
+        self.assertEqual(context['grand_total'], context['total'] + context['delivery'])
+
     def add_sample_product_to_cart(self):
         # Define a function that adds a product to the cart for testing purposes
         session = self.client.session
