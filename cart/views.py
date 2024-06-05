@@ -36,14 +36,17 @@ def add_to_cart(request, product_id):
                 # If the product with the same size is in the cart.
                 if size in cart[product_id]['products_by_size'].keys():
                     # If it is then it will increase the amount of items in the cart by the quantity
+                    request.session['item_added_to_cart'] = True
                     cart[product_id]['products_by_size'][size] += quantity
                     messages.success(request, f'Quantity updated for {size.upper()} {product.name} in your cart')
                 else:
                     # If the product with the size isn't in the cart, it will create a new entry.
+                    request.session['item_added_to_cart'] = True
                     cart[product_id]['products_by_size'][size] = quantity
                     messages.success(request, f'Added item: {product.name}, with new size: {size.upper()} to your cart')
             else:
                 # If the product isn't already in the cart, it will be added now.
+                request.session['item_added_to_cart'] = True
                 cart[product_id] = {'products_by_size': {size: quantity}}
                 messages.success(request, f'Added new item: {product.name} in {size.upper()} to your cart')
         # If the product doesn't have a size, the cart will be checked for the product.  
@@ -51,10 +54,12 @@ def add_to_cart(request, product_id):
             # If the product has no size, it'll be checked if it is in the cart.
             if product_id in list(cart.keys()):
                 # If it is in the cart, increase the quantity
+                request.session['item_added_to_cart'] = True
                 cart[product_id] += quantity
                 messages.success(request, f'Quantity updated for {product.name} in your cart')
             else:
                 # If the cart already has the item_id, the quantity will increase by the selected quantity.
+                request.session['item_added_to_cart'] = True
                 cart[product_id] = quantity
                 messages.success(request, f'Added new item: {product.name} to your cart')
 
@@ -86,11 +91,13 @@ def update_cart(request, product_id):
         if size:
             if quantity > 0:
                 cart[product_id]['products_by_size'][size] = quantity
+                request.session['item_added_to_cart'] = True
                 messages.success(request,
                                  f'Updated product: {product.name}, with size: {size.upper()}'
                                  f'` in your cart to a quantity of: {quantity}')
             else:
                 del cart[product_id]['products_by_size'][size]
+                request.session['item_added_to_cart'] = True
                 messages.success(request, f'Removed product: {product.name}, with size: {size.upper()} from your cart')
                 messages.warning(request, f"Don't forget there is still a {size.upper()} {product.name} in your cart.")
                 if not cart[product_id]['items_by_size']:
@@ -98,9 +105,11 @@ def update_cart(request, product_id):
                     messages.success(request, f'Removed product: {product.name} from your cart')
         else:
             if quantity > 0:
+                request.session['item_added_to_cart'] = True
                 cart[product_id] = quantity
                 messages.success(request, f'Updated product: {product.name} in your cart to a quantity of: {quantity}')
             else:
+                request.session['item_added_to_cart'] = True
                 cart.pop(product_id)
                 messages.success(request, f'Removed product: {product.name} from your cart')
 

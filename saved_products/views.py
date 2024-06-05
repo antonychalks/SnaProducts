@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -16,7 +16,8 @@ def list_detail(request, list_id):
 
     context = {
         'list': saved_products_list,
-        'items': saved_products_items
+        'items': saved_products_items,
+        'on_list_page': True,
     }
     return render(request, 'saved_products/list_detail.html', context)
 
@@ -102,10 +103,36 @@ def add_to_list(request, product_id):
         if not redirect_url:
             return HttpResponseBadRequest("Missing redirect_url")
 
-        new_item = SavedProductsItem(list=selected_list, product=product)
-        new_item.save()
-        messages.success(request, 'Product added to list successfully')
+        # Check if product already exists in the list
+        new_item, created = SavedProductsItem.objects.get_or_create(
+            list=selected_list,
+            product=product
+        )
+
+        if created:
+            messages.success(request, 'Product added to list successfully')
+            request.session['item_added_to_cart'] = False
+        else:
+            messages.info(request, 'Product already exists in the list')
+            request.session['item_added_to_cart'] = False
 
         return redirect(redirect_url)
 
     return HttpResponseBadRequest("Invalid request method")
+
+
+def remove_from_list(request, product_id):
+    """ A view to delete a product from the saved list. """
+    try:
+        product = get_object_or_404(Product, pk=product_id)
+        if request.method == 'POST':
+            # Get the SavedProductsItem instance with the product
+            saveditem = SavedProductsItem.objects.filter(product=product)
+            saveditem.delete()
+            messages.success(request, f'Removed product{product.name} from your list')
+            return HttpResponse(status=200)
+        else:
+            return HttpResponseBadRequest("Invalid request method")
+    except Exception as e:
+        messages.error(request, f'Failed to remove product: {product.name} from your list. Error: {e}')
+        return HttpResponse(status=500)

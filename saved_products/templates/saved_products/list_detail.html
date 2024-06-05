@@ -2,9 +2,9 @@
 {% load crispy_forms_filters %}
 {% load static %}
 
-{#{% block extra_js %}#}
-{#<script src="{% static 'js/list_detail.js' %}"></script>#}
-{#{% endblock %}#}
+{% block extra_js %}
+<script src="{% static 'js/list_detail.js' %}"></script>
+{% endblock %}
 
 {% block extra_title %}
     || {{ list.name}}
@@ -67,6 +67,7 @@
                             <td class="d-none d-lg-table-cell">{{ item.product.rating }}</td>
                             <td class="d-none d-lg-table-cell">{{ item.product.get_category_name }}</td>
                             <td class="d-none d-lg-table-cell">{{ item.product_size }}</td>
+                            <td><button class="remove-button btn btn-danger" id="remove_{{ item.product.id }}" data-csrf_token="{{ csrf_token }}"><small>Remove</small></button></td>
                         </tr>
                     {% endfor %}
                     </table>
