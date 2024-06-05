@@ -95,8 +95,8 @@ Saved Items:
     Views.py:
         !-- Create List
             !-- Displays a form page to create new list with all the fields from the model.
-        -- Delete list
-            -- Deletes the list as a whole.
+        !-- Delete list
+            !-- Deletes the list as a whole.
         -- Update list
             -- Updates the details of a list (not the products)
         !-- list view:
