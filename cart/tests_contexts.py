@@ -9,7 +9,7 @@ from products.models import Product, Category
 
 
 # Create your tests here.
-class TestCartContent(TestCase):
+class TestCartContexts(TestCase):
     def setUp(self):
         # Create Product
         self.category = Category.objects.create(name="Test Category")
