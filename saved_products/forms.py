@@ -13,3 +13,9 @@ class ListManagementForm(forms.ModelForm):
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black rounded-0'
+
+
+class ListProductManagementForm(forms.ModelForm):
+    class Meta:
+        model = SavedProductsList
+        exclude = ['user', 'price_total', 'item_on_sale']

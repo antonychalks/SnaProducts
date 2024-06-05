@@ -1,7 +1,9 @@
 from django.contrib import messages
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
+from products.models import Product
 from .forms import ListManagementForm
 from .models import SavedProductsList, SavedProductsItem
 
@@ -86,3 +88,24 @@ def edit_list(request, list_id):
     }
 
     return render(request, template, context)
+
+
+def add_to_list(request, product_id):
+    """ A view to add a product to a list. """
+
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        redirect_url = request.POST.get('redirect_url')
+        selected_list_id = request.POST.get('list_selector')
+        selected_list = SavedProductsList.objects.get(id=selected_list_id)
+
+        if not redirect_url:
+            return HttpResponseBadRequest("Missing redirect_url")
+
+        new_item = SavedProductsItem(list=selected_list, product=product)
+        new_item.save()
+        messages.success(request, 'Product added to list successfully')
+
+        return redirect(redirect_url)
+
+    return HttpResponseBadRequest("Invalid request method")

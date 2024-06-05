@@ -123,6 +123,19 @@
                                         </div>
                                     </form>
                                 </div>
+                                <hr>
+                                <div>
+                                    <form class="form d-flex justify-content-between" action="{% url 'add_to_list' product.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <select class="form-control rounded-0 w-50 d-inline" name="list_selector" id='{{ list.id }}'>
+                                            {% for list in lists %}
+                                            <option value="{{ list.id }}" >{{ list.name }}</option>
+                                            {%  endfor %}
+                                        </select>
+                                        <button type="submit" class="btn btn-info">Add to list</button>
+                                        <input type="hidden" name="redirect_url" value="{% url 'products' %}">
+                                    </form>
+                                </div>
                             </div>
 
                             {% if request.user.is_superuser %}

@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Product, Category
+from saved_products.models import SavedProductsList
 from .forms import ProductManagementForm, CategoryManagementForm
 
 
@@ -20,6 +21,7 @@ def list_products(request):
     direction = None
     display_sorting = {}
     display_category = None
+    lists = SavedProductsList.objects.all()
 
     if request.GET:
         if 'sort' in request.GET:  # Checks for sort in the request.GET so that this code gets run
@@ -83,6 +85,7 @@ def list_products(request):
         'current_sorting': sort_option,
         'display_sorting': display_sorting,
         'display_category': display_category,
+        'lists': lists
     }
 
     return render(request, 'products/list_products.html', context)
