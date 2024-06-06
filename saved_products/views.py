@@ -113,7 +113,6 @@ def edit_list(request, list_id):
 @login_required
 def add_to_list(request, product_id):
     """ A view to add a product to a list. """
-
     if request.method == 'POST':
         product = get_object_or_404(Product, id=product_id)
         redirect_url = request.POST.get('redirect_url')
@@ -123,19 +122,23 @@ def add_to_list(request, product_id):
         if not redirect_url:
             return HttpResponseBadRequest("Missing redirect_url")
 
-        # Check if product already exists in the list
-        new_item, created = SavedProductsItem.objects.get_or_create(
-            list=selected_list,
-            product=product
-        )
-        selected_list.save()
+        if selected_list.user.id == request.user.userprofile.id:
+            # Check if product already exists in the list
+            new_item, created = SavedProductsItem.objects.get_or_create(
+                list=selected_list,
+                product=product
+            )
+            selected_list.save()
 
-        if created:
-            messages.success(request, 'Product added to list successfully')
-            request.session['item_added_to_cart'] = False
+            if created:
+                messages.success(request, 'Product added to list successfully')
+                request.session['item_added_to_cart'] = False
+            else:
+                messages.info(request, 'Product already exists in the list')
+                request.session['item_added_to_cart'] = False
         else:
-            messages.info(request, 'Product already exists in the list')
-            request.session['item_added_to_cart'] = False
+            messages.error(request, 'You are not authorized to add this product to this list')
+            return redirect(reverse('products'))
 
         return redirect(redirect_url)
 
@@ -150,10 +153,14 @@ def remove_from_list(request, product_id):
             # Get the SavedProductsItem instance with the product
             saveditem = SavedProductsItem.objects.get(product=product)
             associated_list = saveditem.list
-            saveditem.delete()
-            associated_list.save()
-            messages.success(request, f'Removed product{product.name} from your list')
-            return HttpResponse(status=200)
+            if associated_list.user.id == request.user.userprofile.id:
+                saveditem.delete()
+                associated_list.save()
+                messages.success(request, f'Removed product{product.name} from your list')
+                return HttpResponse(status=200)
+            else:
+                messages.error(request, 'You are not authorized to remove this product from this list')
+                return redirect(reverse('list', args=[associated_list.user.id]))
         else:
             return HttpResponseBadRequest("Invalid request method")
     except Exception as e:
