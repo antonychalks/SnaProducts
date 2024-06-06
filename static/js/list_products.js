@@ -67,13 +67,22 @@ $('#sort-selector').change(function(){
     var selector = $(this)
     var currentUrl = new URL(window.location);
     var selectedVal = selector.val();
+    console.log(currentUrl.searchParams.get('direction'))
 
     if(selectedVal != "reset"){
         var sort = selectedVal;
         currentUrl.searchParams.set("sort", sort);
+        if (currentUrl.searchParams.get('direction') == null ){
+            const direction = "asc"
+            currentUrl.searchParams.set("direction", direction);
+        } else {
+            const direction = currentUrl.searchParams.get('direction')
+            currentUrl.searchParams.set("direction", direction);
+        }
         window.location.replace(currentUrl);
     } else {
         currentUrl.searchParams.delete("sort");
+        currentUrl.searchParams.delete("direction");
         window.location.replace(currentUrl);
     }
 })
