@@ -8,15 +8,20 @@ from .forms import ListManagementForm
 from .models import SavedProductsList, SavedProductsItem
 
 
-@login_required
 def list_detail(request, list_id):
     """ A view to show individual list details and products on the list """
     saved_products_list = get_object_or_404(SavedProductsList, pk=list_id)
     saved_products_items = saved_products_list.list_product.all()
+    if request.user.is_authenticated:
+        user = request.user.userprofile.id
+    else:
+        user = None
 
     context = {
         'list': saved_products_list,
         'items': saved_products_items,
+        'creator': saved_products_list.user,
+        'user': user,
         'on_list_page': True,
     }
     if saved_products_list.visible:
@@ -70,24 +75,28 @@ def edit_list(request, list_id):
     """ A view for users to edit a list """
     list = get_object_or_404(SavedProductsList, pk=list_id)
 
-    if request.method == 'POST':
-        if "cancel" in request.POST:
-            form = ListManagementForm()
-            return redirect(reverse('list', args=[form.instance.id]))
-        else:
-            form = ListManagementForm(request.POST, instance=list)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Product updated successfully')
-                if "view" in request.POST:
-                    return redirect(reverse('list_detail', args=[form.instance.id]))
-                elif "profile" in request.POST:
-                    return redirect(reverse('profile'))
+    if list.user.id == request.user.userprofile.id:
+        if request.method == 'POST':
+            if "cancel" in request.POST:
+                form = ListManagementForm()
+                return redirect(reverse('list', args=[form.instance.id]))
             else:
-                messages.error(request, 'Failed to edit product. Please ensure the form is valid.')
+                form = ListManagementForm(request.POST, instance=list)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, 'Product updated successfully')
+                    if "view" in request.POST:
+                        return redirect(reverse('list_detail', args=[form.instance.id]))
+                    elif "profile" in request.POST:
+                        return redirect(reverse('profile'))
+                else:
+                    messages.error(request, 'Failed to edit product. Please ensure the form is valid.')
+        else:
+            form = ListManagementForm(instance=list)
+            messages.info(request, f'You are editing {list.name}')
     else:
-        form = ListManagementForm(instance=list)
-        messages.info(request, f'You are editing {list.name}')
+        messages.error(request, 'You are not authorized to edit this list.')
+        return redirect(reverse('list', args=[list.user.id]))
 
     template = 'saved_products/edit_list.html'
     context = {

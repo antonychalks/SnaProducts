@@ -23,12 +23,16 @@
         <h4 class="m-4"> Price Total: £{{ list.price_total }}</h4>
     </div>
     <div class="container-md floating_container py-1">
+        {%  if user == creator.id %}
         <div class="d-flex justify-content-between">
             <a href="{% url 'edit_list' list.id %}" class="btn btn-info m-2">Edit List</a>
             <a href="{% url 'products' %}" class="btn btn-success m-2">Click to find some products to add.</a>
             <a href="{% url 'delete_list' list.id %}" class="btn btn-danger m-2">Delete List</a>
         </div>
         <hr>
+        {% else %}
+            <h4>List Owner: {{ creator }}</h4>
+        {% endif %}
         <div class="row product-container p-2">
             <div class="col-12 container floating_container d-flex justify-content-between">
                 <p>{{ list.description }}</p>
