@@ -46,20 +46,21 @@
           </a>
         </div>
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 d-none d-lg-block">
-        <form method="GET" action="{% url 'products' %}">
-          <div class="input-group w=100">
-              <label>
-                  <input class="form-control border border-black rounded-0" type="text" name="search" placeholder="Search our site">
-              </label>
-              <div class="input-group-append">
-              <button class="form-control btn btn-black border border-black rounded-0" type="submit">
-                <span class="icon">
-                  <i class="fas da-search"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </form>
+            <form method="GET" action="{% url 'products' %}">
+              <div class="input-group w=100">
+                  <label class="w-75">
+                      <input class="form-control border border-black rounded-0 search-bar" type="text" name="search" placeholder="Search our site">
+                  </label>
+                  <div class="input-group-append search-bar">
+                    <button class="form-control btn btn-info border border-black rounded-0 search-bar" type="submit">
+                      <span class="icon">
+                        <i class="fas da-search"></i>
+                      </span>
+                    </button>
+                  </div>
+              </div>
+
+            </form>
         </div>
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 d-none d-lg-block">
           <ul class="list-inline list-unstyled text-center text-lg-right my-0">

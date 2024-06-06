@@ -24,6 +24,14 @@ body{
     margin-left: 10px;
 }
 
+.search-bar{
+    height: 40px;
+}
+
+input.search-bar{
+    width: 100%;
+}
+
 /* from Bulma */
 .icon {
     align-items: center;
