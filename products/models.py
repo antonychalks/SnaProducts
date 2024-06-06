@@ -35,7 +35,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey('Category', limit_choices_to={'type': 1},  null=True, blank=True,
-                                 on_delete=models.SET_DEFAULT, default=18)
+                                 on_delete=models.SET_NULL, default=18)
     sku = models.CharField(max_length=254, unique=True, editable=False)
     name = models.CharField(max_length=254)
     description = models.TextField()
@@ -56,7 +56,10 @@ class Product(models.Model):
             return self.category.parent
     
     def get_category_name(self):
-        return self.category.display_name
+        if self.category is not None:
+            return self.category.display_name
+        else:
+            return "No Category"
 
     def delivery(self):
         percentage = Decimal(settings.STANDARD_DELIVERY_PERCENTAGE) / Decimal(100)

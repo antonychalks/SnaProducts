@@ -192,7 +192,7 @@ def add_product(request):
     """ A view for superusers to add a new product """
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only shop admins can do that.')
-        return redirect(reverse('home'))
+        return redirect(reverse('products'))
 
     if request.method == 'POST':
         if "cancel" in request.POST:
@@ -226,7 +226,6 @@ def add_product(request):
     return render(request, template, context)
 
 
-# noinspection PyUnusedLocal
 @login_required
 def add_category(request):
     """ A view for superusers to add a new product """
