@@ -423,6 +423,10 @@ tr{
     .profile_form select{
         width: 75%;
     }
+
+    .enlarge-product-img{
+        height: unset;
+    }
 }
 
 @media screen and (max-width: 768px) {

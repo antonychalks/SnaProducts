@@ -171,11 +171,11 @@
                         </div>
                     {% endif %}
                 </a>
-                {% comment %} Image overlay {% endcomment %}
-                <div id="enlarge-img-{{product.id}}"class="d-none enlarge-img">
+                <!-- Image overlay -->
+                <div id="enlarge-img-{{product.id}}" class="d-none enlarge-img">
                     {% if product.image %}
                     <a href="{{ product.image.url}}" target="_blank">
-                        <img class="enlarge-product-img" width="100%" src="{{ product.image.url}}" alt="{{ product.name }}">
+                        <img class="enlarge-product-img" width="100%" height="auto" src="{{ product.image.url}}" alt="{{ product.name }}">
                     </a>
                     {% else %}
                     <a href="{{ product.image.url}}" target="_blank">
