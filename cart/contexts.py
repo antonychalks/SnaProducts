@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal, ROUND_DOWN
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from products.models import Product
@@ -43,10 +43,12 @@ def cart_contents(request):
     if total < settings.MIN_FREE_DELIVERY:
         if total < settings.MIN_HALF_DELIVERY:
             delivery = total * Decimal((settings.STANDARD_DELIVERY_PERCENTAGE/100))
+            delivery = delivery.quantize(Decimal('0.00'), rounding=ROUND_DOWN)
             free_delivery_delta = settings.MIN_FREE_DELIVERY - total
             half_delivery_delta = settings.MIN_HALF_DELIVERY - total
         else:
             delivery = (total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE/100)/2)
+            delivery = delivery.quantize(Decimal('0.00'), rounding=ROUND_DOWN)
             free_delivery_delta = settings.MIN_FREE_DELIVERY - total
             half_delivery_delta = settings.MIN_HALF_DELIVERY - total
     else:
