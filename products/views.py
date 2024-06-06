@@ -21,7 +21,12 @@ def list_products(request):
     direction = None
     display_sorting = {}
     display_category = None
-    lists = SavedProductsList.objects.all()
+    if request.user.is_authenticated:
+        user = request.user.userprofile.id
+        lists = SavedProductsList.objects.filter(user=user)
+    else:
+        lists = None
+
 
     if request.GET:
         if 'sort' in request.GET:  # Checks for sort in the request.GET so that this code gets run
