@@ -165,8 +165,6 @@ def manage_products(request):
             #  '|' creates or statement i.e: name = query or description = query.
             products = products.filter(queries)
 
-        print(categories)
-
     sort_option = f'{sort}_{direction}'
     all_categories = Category.objects.all()
 

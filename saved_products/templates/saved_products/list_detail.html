@@ -18,28 +18,27 @@
 {% block content %}
     <div class="overlay-background d-lg-none">
     </div>
-    <div class="container-md floating_container px-4 py-1">
+    <div class="container-md floating_container d-flex justify-content-around px-4 py-1">
         <h2 class="m-4"><a href="{% url 'manage_products' %}" class="no-link-decoration">{{ list.name }}</a></h2>
+        <h4 class="m-4"> Price Total: £{{ list.price_total }}</h4>
     </div>
     <div class="container-md floating_container py-1">
         <div class="d-flex justify-content-between">
-            <h4 class="m-3">Add List</h4>
-            <a href="{% url 'delete_list' list.id %}" class="btn btn-danger m-2">Delete List</a>
             <a href="{% url 'edit_list' list.id %}" class="btn btn-info m-2">Edit List</a>
             <a href="{% url 'products' %}" class="btn btn-success m-2">Click to find some products to add.</a>
+            <a href="{% url 'delete_list' list.id %}" class="btn btn-danger m-2">Delete List</a>
         </div>
         <hr>
         <div class="row product-container p-2">
-            <div class="col-12 container floating_container d-flex justify-content-around">
+            <div class="col-12 container floating_container d-flex justify-content-between">
                 <p>{{ list.description }}</p>
-                <p class="badge">Visibility: {%  if list.visible == true %} Public {% else %} Private {% endif %}</p>
                 <p><small>Created on: {{ list.created_at }}</small></p>
-                <p> Price Total: £{{ list.price_total }}</p>
                 {% if list.item_on_sale == true %}
-                    <p class="badge badge-success"> Item on sale</p>
+                    <p class="badge text-bg-success"> Item on sale</p>
                 {% else %}
-                    <p class="badge badge-secondary"> No items on sale </p>
+                    <p class="badge text-bg-secondary"> No items on sale </p>
                 {%  endif %}
+                <p class="badge text-bg-secondary">{%  if list.visible == True %} Public {% else %} Private {% endif %}</p>
             </div>
         </div>
 

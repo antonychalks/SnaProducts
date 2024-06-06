@@ -8,9 +8,9 @@ from .forms import ListManagementForm
 from .models import SavedProductsList, SavedProductsItem
 
 
+@login_required
 def list_detail(request, list_id):
     """ A view to show individual list details and products on the list """
-
     saved_products_list = get_object_or_404(SavedProductsList, pk=list_id)
     saved_products_items = saved_products_list.list_product.all()
 
@@ -19,10 +19,16 @@ def list_detail(request, list_id):
         'items': saved_products_items,
         'on_list_page': True,
     }
-    return render(request, 'saved_products/list_detail.html', context)
+    if saved_products_list.visible:
+        return render(request, 'saved_products/list_detail.html', context)
+    else:
+        if saved_products_list.user.id == request.user.userprofile.id:
+            return render(request, 'saved_products/list_detail.html', context)
+        else:
+            messages.error(request, 'This list is private.')
+            return redirect('products')
 
 
-# Create your views here.
 @login_required
 def create_list(request):
     """ A view for logged-in users to create a new list of saved products. """
@@ -63,6 +69,7 @@ def delete_list(request, list_id):
 def edit_list(request, list_id):
     """ A view for users to edit a list """
     list = get_object_or_404(SavedProductsList, pk=list_id)
+
     if request.method == 'POST':
         if "cancel" in request.POST:
             form = ListManagementForm()
@@ -90,7 +97,7 @@ def edit_list(request, list_id):
 
     return render(request, template, context)
 
-
+@login_required
 def add_to_list(request, product_id):
     """ A view to add a product to a list. """
 
@@ -121,7 +128,7 @@ def add_to_list(request, product_id):
 
     return HttpResponseBadRequest("Invalid request method")
 
-
+@login_required
 def remove_from_list(request, product_id):
     """ A view to delete a product from the saved list. """
     try:
