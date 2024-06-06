@@ -128,12 +128,12 @@
                                     <form class="form d-flex justify-content-between" action="{% url 'add_to_list' product.id %}" method="POST">
                                         {% csrf_token %}
                                         <select class="form-control rounded-0 w-50 d-inline" name="list_selector" id='{{ list.id }}'>
-                                            {%  if lists != None %}
+                                            {%  if lists %}
                                                 {% for list in lists %}
                                                 <option value="{{ list.id }}" >{{ list.name }}</option>
                                                 {%  endfor %}
                                             {%  else %}
-                                                <option value="None" disabled>No lists available</option>
+                                                <option value="None" disabled >Go to your profile to create a list.</option>
                                             {% endif %}
                                         </select>
                                         <button type="submit" {%  if lists == None %} disabled class="btn btn-secondary" {% else %} class="btn btn-info" {%  endif %}>Add to list</button>

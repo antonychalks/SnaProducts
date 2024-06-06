@@ -25,7 +25,7 @@
     <div class="row d-flex justify-content-between">
         <div class="col-12 col-lg-5 my-4 ms-4">
             <h5 class="text-muted">Default Delivery Information</h5>
-            <form class="mt-3" action="{% url 'profile' %}" method="POST" id="profile-update-form">
+            <form class="mt-3 w-100 profile_form" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button class="btn btn-success rounded-2 text-uppercase float-right">Update Information</button>
@@ -64,7 +64,7 @@
                                         {% endfor %}
                                     </ul>
                                 </td>
-                                <td>${{ order.grand_total }}</td>
+                                <td>£{{ order.grand_total }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

@@ -28,6 +28,10 @@ body{
     height: 40px;
 }
 
+input.search-bar{
+    width: 100%;
+}
+
 /* from Bulma */
 .icon {
     align-items: center;
@@ -354,6 +358,12 @@ tr{
     overflow-y: auto;
 }
 
+/* -------------------------------- Profile */
+.profile_form input,
+.profile_form select{
+    width: 100%;
+}
+
 /* -------------------------------- General styling classes */
 .no-link-decoration{
     text-decoration: none;
@@ -407,6 +417,11 @@ tr{
 
     body {
         height: calc(100vh - 116px);
+    }
+
+    .profile_form input,
+    .profile_form select{
+        width: 75%;
     }
 }
 

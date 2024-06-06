@@ -33,17 +33,22 @@
         {% else %}
             <h4>List Owner: {{ creator }}</h4>
         {% endif %}
-        <div class="row product-container p-2">
-            <div class="col-12 container floating_container d-flex justify-content-between">
-                <p>{{ list.description }}</p>
-                <p><small>Created on: {{ list.created_at }}</small></p>
+        <div class="row container">
+            <div class="d-flex justify-content-end">
                 {% if list.item_on_sale == true %}
-                    <p class="badge text-bg-success"> Item on sale</p>
+                    <p class="badge text-bg-success m-1"> Item on sale</p>
                 {% else %}
-                    <p class="badge text-bg-secondary"> No items on sale </p>
+                    <p class="badge text-bg-secondary m-1"> No items on sale </p>
                 {%  endif %}
-                <p class="badge text-bg-secondary">{%  if list.visible == True %} Public {% else %} Private {% endif %}</p>
+                <p class="badge text-bg-secondary m-1">{%  if list.visible == True %} Public {% else %} Private {% endif %}</p>
             </div>
+        </div>
+        <div class="row product-container p-2 d-flex justify-content-between">
+            <div class="col-12 container d-flex justify-content-between">
+                <p class="text-center px-2">{{ list.description }}</p>
+                <p class="text-center px-2"><small>Created on: {{ list.created_at }}</small></p>
+            </div>
+
         </div>
 
         <div class="row product-container p-2">

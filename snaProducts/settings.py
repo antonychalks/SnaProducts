@@ -32,6 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'snaproducts-5c3a2d36af92.herokuapp.com',
     '127.0.0.1',
+    '8000-antonychalk-snaproducts-1e7rw6hxs8v.ws-eu114.gitpod.io',
 ]
 
 # Application definition
@@ -234,5 +235,5 @@ else:
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_PORT = 587
     EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
     DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
