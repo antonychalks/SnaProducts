@@ -10,36 +10,62 @@ from .models import UserProfile
 class TestProfileViews(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username="Test user", email="<EMAIL>", password="<PASSWORD>")
-        self.user.save()
 
-        self.UserProfile = UserProfile.objects.create(user=self.user, default_phone_number="07747474743",
-                                                      default_first_line_address="first_line_address",
-                                                      default_second_line_address="second_line_address",
-                                                      default_town_or_city="town_or_city",
-                                                      default_postcode="post_code",
-                                                      default_county="county", default_country="country")
-        self.UserProfile.save()
+    def create_user_and_profile(self):
+        self.user = User.objects.create_user(username="TestUser",
+                                             email="<EMAIL>",
+                                             password="<PASSWORD>")
 
     def test_profile_view_GET(self):
-        self.client.login(username='Test', password='password')
+        self.create_user_and_profile()
+
+        self.client.login(username='TestUser', password='<PASSWORD>')
 
         response = self.client.get(reverse('profile'))
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+
+    def test_profile_view_POST_form_valid(self):
+        self.create_user_and_profile()
+
+        self.client.login(username='TestUser', password='<PASSWORD>')
+
+        response = self.client.post(reverse('profile'), data={
+            'default_phone_number': '123456789',
+            'default_first_line_address': 'Test Address 1',
+            'default_second_line_address': 'Test Address 2',
+            'default_town_or_city': 'Test City',
+            'default_county': 'Test County',
+            'default_postcode': 'Test Postcode',
+            'default_country': 'Test Country',
+        })
+
+        self.assertEqual(response.status_code, 200)
 
     def test_order_history_GET(self):
+        self.create_user_and_profile()
+
         # Create a test order
-        order = Order.objects.create(full_name='Test', phone_number='123456789',
+        order = Order.objects.create(first_name='Test', last_name="Test",
+                                     phone_number='123456789',
                                      country='Test Country',
-                                     post_code='Test Postcode',
+                                     postcode='Test Postcode',
                                      town_or_city='Test City',
-                                     street_address1='Test Address')
+                                     first_line_address='Test Address',
+                                     second_line_address='Test Address',
+                                     county='Test County',)
+
+        self.client.login(username='TestUser', password='<PASSWORD>')
+
+        response = self.client.get(reverse('order_history', args=[order.order_number]))
+
+        self.assertEqual(response.status_code, 200)
+
 
         self.client.login(username='Test', password='password')
 
-        response = self.client.get(reverse('order_history', args=[order.id]))
+        response = self.client.get(reverse('order_history', args=[order.order_number]))
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
 
