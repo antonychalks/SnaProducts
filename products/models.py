@@ -103,3 +103,4 @@ class Product(models.Model):
 
         return sku_prefix + sku_middle + sku_suffix
 
+
