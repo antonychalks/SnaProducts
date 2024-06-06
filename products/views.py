@@ -40,7 +40,7 @@ def list_products(request):
                 sortkey = 'category__name'
             if 'direction' in request.GET:  # Checks for a direction in the GET request
                 direction = request.GET['direction']  # Stores the direction request in a variable
-                # If the variable is desc for descending it will add a minus to the front of the sortkey variable
+                # If the variable is desc for descending, it will add a minus to the front of the sortkey variable
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
             else:
