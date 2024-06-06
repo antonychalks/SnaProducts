@@ -66,9 +66,13 @@ def create_list(request):
 def delete_list(request, list_id):
     """ Delete a list from the store """
     list = get_object_or_404(SavedProductsList, pk=list_id)
-    list.delete()
-    messages.success(request, 'List deleted!')
-    return redirect(reverse('profile'))
+    if list.user.id != request.user.userprofile.id:
+        messages.error(request, 'You are not authorized to delete this list.')
+        return redirect(reverse('list_detail', args=[list.id]))
+    else:
+        list.delete()
+        messages.success(request, 'List deleted!')
+        return redirect(reverse('profile'))
 
 @login_required
 def edit_list(request, list_id):
