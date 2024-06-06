@@ -96,12 +96,12 @@
                     </thead>
                     {% for list in saved_items_list.all %}
                     <tr>
-                        <td><a href="{% url 'list_detail' list.id %}">{{ list.name }}</a></td>
-                        <td class="d-none d-lg-table-cell overflow-x-scroll">{{ list.description }}</td>
+                        <td class="text-center"><a href="{% url 'list_detail' list.id %}">{{ list.name }}</a></td>
+                        <td class="overflow-x-scroll text-center">{{ list.description }}</td>
                         <td class="d-none d-lg-table-cell">{% if list.visibility == true %} Public {% else %} Private {% endif %}</td>
                         <td class="d-none d-lg-table-cell">{{ list.created_at }}</td>
                         <td class="d-none d-lg-table-cell">£{{ list.price_total }}</td>
-                        <td>{% if list.items_on_sale == true %} <i class="fa-solid fa-check"></i> {{ list.items_on_sale }}{% else %}<i class="fa-solid fa-circle-xmark"></i> {%  endif %}</td>
+                        <td class="d-none d-lg-table-cell">{% if list.items_on_sale == true %} <i class="fa-solid fa-check"></i> {{ list.items_on_sale }}{% else %}<i class="fa-solid fa-circle-xmark"></i> {%  endif %}</td>
                         <td><a class="btn btn-info" href="{% url 'edit_list' list.id %}">update</a></td>
                         <td><a class="btn btn-danger" href="{% url 'delete_list' list.id %}">Delete</a></td>
                     </tr>

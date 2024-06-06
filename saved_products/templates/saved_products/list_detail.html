@@ -76,7 +76,7 @@
                             <td class="d-none d-lg-table-cell">{{ item.product.get_category_name }}</td>
                             <td class="d-none d-lg-table-cell">{{ item.product_size }}</td>
                             <td><button class="btn btn-info btn-modal" id="{{ item.product.id }}" data-bs-toggle="modal" data-bs-target="#addToCartModal-{{ item.product.id }}"><small>Add to cart</small></button></td>
-                            <td><button class="remove-button btn btn-danger" id="remove_{{ item.product.id }}" data-csrf_token="{{ csrf_token }}"><small>Remove</small></button></td>
+                            <td><button class="btn btn-danger" id="remove_{{ item.product.id }}" data-csrf_token="{{ csrf_token }}"><small>Remove</small></button></td>
                         </tr>
                     {% endfor %}
                     </table>
@@ -100,9 +100,9 @@
                                 <div class="d-flex justify-content">
                                     <input type="hidden" name="redirect_url" value="{% url 'list_detail' list.id %}">
                                     <div class="btn-group input-group qty-group" role="group" aria-label="Button group to increment, or decrement the selected quantity.">
-                                        <button class="btn btn-dark" data-change="decrement"> <i class="fa-solid fa-chevron-down"> 1</i></button>
-                                        <input id="{{product.id}}_qty" class="form-control btn" type="number" name="quantity" value="1" min="1" max="99" data-product_id="{{ product.id }}">
-                                        <button class="btn btn-dark" data-change="increment"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
+                                        <button class="btn btn-dark btn-decrement" data-change="decrement" type="button"> <i class="fa-solid fa-chevron-down"> 1</i></button>
+                                        <input id="{{product.id}}_qty" class="form-control btn qty-input" type="number" name="quantity" value="1" min="1" max="99" data-product_id="{{ product.id }}">
+                                        <button class="btn btn-dark btn-increment" data-change="increment" type="button"> <i class="fa-solid fa-chevron-up"> 1</i> </button>
                                     </div>
                                     <input type="submit" class="btn btn-success rounded-1 text-uppercase m-2" value="Add to Cart">
                                 </div>
