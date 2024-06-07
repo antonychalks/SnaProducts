@@ -1,5 +1,5 @@
 
-# Game Zone | SEO and Marketing
+# SnA Products | SEO and Marketing
 
 Return to [README](README.md)
 - - -
