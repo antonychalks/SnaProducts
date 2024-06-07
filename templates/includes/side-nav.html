@@ -88,20 +88,5 @@
             </div>
         </li>
 
-        <li class="nav-item dropdown accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
-                    Special Offers
-                </button>
-            </h2>
-            <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <a href="{% url 'products' %}?category=new_arrivals" class="dropdown-item">New Arrivals</a>
-                    <a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a>
-                    <a href="{% url 'products' %}?category=clearance" class="dropdown-item">Clearance</a>
-                    <a href="{% url 'products' %}?category=specials" class="dropdown-item"><strong>All Specials</strong></a>       
-                </div>
-            </div>
-        </li>
     </ul>
 </nav>
