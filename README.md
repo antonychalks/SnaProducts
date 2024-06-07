@@ -110,3 +110,7 @@ I would like to implement deals and discounts in the future which will allow sto
 - The app can be reached by the [link](https://snaproducts-5c3a2d36af92.herokuapp.com/).
 
 - The repository can be found [GitHub](https://github.com/antonychalks/SnaProducts).
+
+## Credits
+- All credits are displayed in [credits.txt](documentation/credits.txt).
+- As well as this a lot of functionality was inspired by the Boutique_Ado code along project created by [Code_Institute](https://codeinstitute.net/).
