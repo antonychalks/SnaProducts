@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase, Client
 
+from products.models import Product, Category
 from profiles.models import UserProfile
 from saved_products.forms import ListManagementForm
-from saved_products.models import SavedProductsList
+from saved_products.models import SavedProductsList, SavedProductsItem
 
 
 class TestListManagementForm(TestCase):
@@ -53,4 +54,12 @@ class TestListManagementForm(TestCase):
             self.assertEqual(saved_list.name, 'Test List Name')
             self.assertEqual(saved_list.description, 'Test description for the list.')
             self.assertEqual(saved_list.visible, True)
+
+    def tearDown(self):
+        SavedProductsList.objects.all().delete()
+        SavedProductsItem.objects.all().delete()
+        User.objects.all().delete()
+        UserProfile.objects.all().delete()
+        Product.objects.all().delete()
+        Category.objects.all().delete()
 
