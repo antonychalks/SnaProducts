@@ -285,11 +285,13 @@ def edit_product(request, product_id):
                 product_form = ProductManagementForm()
                 messages.success(request, 'Product updated successfully')
                 if "view" in request.POST:
-                    return redirect(reverse('product_detail', args=[product_form.instance.id]))
+                    return redirect(reverse('product_detail',
+                                            args=[product_id]))
                 elif "manage" in request.POST:
                     return redirect(reverse('manage_products'))
             else:
-                messages.error(request, 'Failed to edit product. Please ensure the form is valid.')
+                messages.error(request, 'Failed to edit product. '
+                                        'Please ensure the form is valid.')
     else:
         product_form = ProductManagementForm(instance=product)
         messages.info(request, f'You are editing {product.name}')

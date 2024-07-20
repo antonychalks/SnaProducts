@@ -57,3 +57,7 @@ Solution: Added current_sorting.sort, current_sorting.direction and current_sort
 Problem: The cart won't update the product quantity.
 Cause:  I left out the equals when setting the action of the form.
 Solution: Put the equals in and test it now works.
+
+Problem: An error is thrown when trying to update a product and redirect to the products page.
+Cause: The correct product ID was not being passed to the redirect url.
+Solution: Used the product ID that was passed to the function rather than trying to get the id from the instance.
