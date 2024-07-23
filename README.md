@@ -188,9 +188,12 @@ The website was manually tested by myself, and a group composed of my family and
 
 ### Automated testing
 When automating testing, I used a Python standard library module: unittest.
+
 This was done by creating a test file for each file that was being tested within each app. For example, in the products app, a test case was created to test the views and forms used within the app.
+
 Within each file there is a test case, which runs all the test within the case. Each test case has a set up function, which creates a test instance of any model the test might need. This prevents the database actually being manipulated whilst running tests.
 
+Throughout this project I ran the tests multiple times as I went, fixing all the errors and failures whenever they present themselves. This helped to ensure nothing was missed in the functionality of the website.
 #### Testing views
 When creating a views test, I would first check the correct status code was returned which shows the page is being loaded correctly.
 
@@ -206,10 +209,11 @@ After this I went created tests to ensure only the correct products were being s
 All form validations are thoroughly tested to verify correct error messages are displayed for invalid user inputs. In case of third-party integrations like payment processors, they are mocked to simulate and test different scenarios.
 
 #### Running Tests
-
-You can run the test suite with the following command in your terminal: 
+You can run the test suite with the following command in your terminal:
 _python3 manage.py test_
 
+The last time tests were run, there were no errors or fails.
+![test results](documentation/tests_ran.jpg)
 ## Deployment
 
 
