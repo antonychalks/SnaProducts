@@ -40,10 +40,10 @@ This online homeware store is aimed at any potential customers who are looking t
 ### Applications
 In this section, I am going to list each application in this project, and describe its purpose and how it works.
 
-#### Landing page
+1. #### Landing page
 This application is created for the sole purpose of rendering the initial landing page for the user. It renders the landing page template which gives each user the option to browse the various categories, log in, sign up or sign up to the newsletter with the pop-up.
 
-#### Cart
+2. #### Cart
 This application is used to manage the cart. The cart application implements the functionality to view the cart, add items to the cart, remove them from the cart and update the quantity of the cart.
 
 The items in the cart are added, updated and deleted by allowing the user to submit POST requests which will be sent to the cart_contents context that is saved in the user's session. This allows users to keep track of what items are in their cart, what quantity and size.
@@ -52,7 +52,7 @@ Viewing the cart also allows the users to find out what items are saved, as well
 
 From here, the user can either keep shopping or check out their cart if they are finished shopping.
 
-####  Checkout
+3. ####  Checkout
 The Checkout apps purpose is to compile, process and complete the purchase using the items in the cart.
 
 Firstly, the website gathers the information in the cart to find out what items have been requested, along with any item sizes.
@@ -65,7 +65,7 @@ After this, the user can check out. This will send all the shipping details and 
 
 Using the Django admin page, any super users are able to add, edit or delete any orders, as well as any line items within the order.
 
-#### products
+4. #### Products
 The purpose of the products app is to manage all the products and categories that are available on the site, and display the products to the user, with filters and sorting options.
 
 Firstly, a list of the products created by the products model is rendered onto the screen when the user goes to the product page. To find a specific product, the user can use the search bar, which will search each product for the user inputted keyword. 
@@ -82,14 +82,14 @@ On both the manage products page and the list products page (when signed in as a
 
 Superusers can also add, edit and delete categories from the site, as well as adding new products, all done on the manage products page.
 
-#### Profiles
+5. #### Profiles
 The profiles app creates the ability for each user to save shipping and contact details to enable them to checkout faster.
 
 Whilst users don't have to be signed in to use this website, if they are, they have the availabilty to save their contact details to the website. This means that next time they make a purchase, the checkout system will go a lot quicker as they won't have to re-enter their shipping details. This reduces friction on the site and creates and user-friendly experience.
 
 Superusers can add, edit and delete user profiles from the Django admin page, as well as validating accounts.
 
-#### Saved Products
+6. #### Saved Products
 The saved products app allows the user to save lists for another time.
 
 Users can save multiple products to multiple lists, enabling them to save products for later if they don't want to purchase them yet.
@@ -162,6 +162,7 @@ I would like to implement deals and discounts in the future which will allow sto
     + [SQLite](https://www.sqlite.org/): was used as a development database.
     + [ElephantSQL](https://www.elephantsql.com/): the database used to store all the data.
 
+---
 
 ## Testing
 
@@ -214,15 +215,102 @@ _python3 manage.py test_
 
 The last time tests were run, there were no errors or fails.
 ![test results](documentation/tests_ran.jpg)
+
 ## Deployment
 
+This website has been deployed using Heroku.
 
-- The app was deployed to [Heroku](https://www.heroku.com/).
-- The database was deployed to [ElephantSQL](https://www.elephantsql.com/).
+Instructions to deploy using Heroku:
 
-- The app can be reached by the [link](https://snaproducts-5c3a2d36af92.herokuapp.com/).
+1. While in Heroku, navigate to dashboard and then click on the new button in the top right corner choosing: create new app.
 
-- The repository can be found [GitHub](https://github.com/antonychalks/SnaProducts).
+2. Input a name for your app (this name will need to be unique) and choose the correct region for where you are located. Click create app.
+
+3. Your app has been created, now click on the settings tab.
+
+4. Click reveal config vars to add any keys the application will need. For this project I added:
+- All the key value pairs from my env.py file.
+
+5. Click add buildpack to install any interdependecies needed. For this project I installed 'python'.
+
+6. Click on deploy tab. Select deploy method, in this case Git Hub. Confirm connection to git hub by searching for the correct repository and then connecting to it.
+
+7. To manually deploy project click 'Deploy Branch'. Once built a message will appear saying: Your app was successfully deployed. Click the view button to view the deployed page making a note of it's url.
+
+8. You can also set up automatic deployment.
+
+9. If you find your css is not showing correctly on the deployed site running the following command while in your workspace may help:
+./manage.py collectstatic
+
+10 - Don't forget to turn Debug back to False before final deployment.
+
+## Cloning this repository
+
+In order to work on this repository you will first need to clone it.
+
+**Instructions to clone the repository**:
+
+1. While in the GitHub repository, click on the green code button.
+
+2. Copy the link.
+
+3. In your IDE or local coding environment use the link to open the repository. 
+
+For example: in VScode 
+- clicking on 'Clone Git Repository...' will bring up a box in which to paste the link. 
+- once vscode has the link, you will then be asked where you would like the repo saving.
+- You should now be set up ready to work on the repository.
+
+For example: in CodeAnywhere
+- Click on 'Add new workspace'
+- You will then be given the option to 'Create from your project repository' and a box in which to paste the link
+- CodeAnywhere will now open a new workspace containing the repository.
+- You should now be set up ready to work on the repository.
+
+4. Import all dependencies. I use the command: pip3 install -r requirements.txt.
+
+5. Create an env.py file in the main directory.
+
+6. Enter key data, such as: DATABASE_URL, SECRET_KEY, CLOUDINARY_URL
+
+7. Check that env.py is named in the .gitignore file.
+
+8. In settings.py change Debug to True while developing. You make also want to change to Django's inbuilt sqlite database.
+
+9. Add the following code to settings.py:
+
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+10. Check it's all working by running the program. I used the command:
+python3 manage.py runserver
+
+## Forking a branch
+
+In order to protect the main branch while you work on something new, essential when working as part of a team or when you want to experiment with a new feature, you will need to fork a branch. 
+
+**Instructions to fork the repository**:
+
+1. While in the GitHub repository, click on the branch symbol and text indicating the number of branches.
+
+2. This will load details on current branches. Click on the green 'New branch' button.
+
+3. Enter a name for the new branch and then click the green 'create new branch' button.
+
+4. Your new branch should now have appeared on the screen.
+
+5. Clicking on the new branch and then following the steps for cloning will allow you to open up and work on this branch.
+
+**Instructions to fork directly from an issue**:
+
+1. Click to view an issue, either from the issues list or from the project board. From the project board you will need to click once to bring up the issue and then again on the title to go into it fully.
+
+2. Partway down the right hand side (on desktop) you should see the heading 'Development' and under this a link to 'create a branch for this issue or link a pull request'.
+
+3. Click on the link to create a forked branch that is tied to the issue.
 
 ## Credits
 - All credits are displayed in [credits.txt](documentation/credits.txt).
