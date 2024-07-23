@@ -163,7 +163,52 @@ I would like to implement deals and discounts in the future which will allow sto
     + [ElephantSQL](https://www.elephantsql.com/): the database used to store all the data.
 
 
+## Testing
 
+### Manual testing
+The website was manually tested by myself, and a group composed of my family and friends for the following categories.
+
+1. **Browser compatibility**: Manually test the website on multiple browsers (Chrome, Firefox, Safari, Edge etc.) to ensure compatibility.
+
+2. **Responsiveness**: Check the website's responsiveness on different device resolutions. Ensure elements resize and reposition correctly when the browser is resized.
+
+3. **Forms**: Test all forms by filling out the inputs and submitting them. Check validation for each input, including tests for incorrect input.
+
+4. **Navigation**: Ensure that all navigation links direct to the correct page. Manually click on each link and button to confirm.
+
+5. **Performance**: Manually measure load times and latency.
+
+6. **Search Functionality**: Assure that website's search returns adequate and correct results.
+
+7. **User Authentication**: Validate the login and sign-up functionalities to work properly, including error messages for incorrect replies.
+
+8. **Error Messages**: Check if appropriate error messages are displayed for different scenarios.
+
+9. **Data Integrity**: If data manipulation operations are performed, ensure the database is accurately updated.
+
+### Automated testing
+When automating testing, I used a Python standard library module: unittest.
+This was done by creating a test file for each file that was being tested within each app. For example, in the products app, a test case was created to test the views and forms used within the app.
+Within each file there is a test case, which runs all the test within the case. Each test case has a set up function, which creates a test instance of any model the test might need. This prevents the database actually being manipulated whilst running tests.
+
+#### Testing views
+When creating a views test, I would first check the correct status code was returned which shows the page is being loaded correctly.
+
+After this I will look at each view, and what the aim of the view was.
+
+For example, on the list products view, the aim was to display all the products, them be able to filter, sort and search through the products.
+
+To test this example, I first tested the page would render, then I created a test for each sort option, by checking the first result is the expected result. I.E. When setting the sort to price, I tested the first product on the list had the lowest price.
+After this I went created tests to ensure only the correct products were being shown when using the filter, as well as ensuring the search results returned the correct products.
+
+#### Testing Forms
+
+All form validations are thoroughly tested to verify correct error messages are displayed for invalid user inputs. In case of third-party integrations like payment processors, they are mocked to simulate and test different scenarios.
+
+#### Running Tests
+
+You can run the test suite with the following command in your terminal: 
+_python3 manage.py test_
 
 ## Deployment
 
@@ -177,4 +222,4 @@ I would like to implement deals and discounts in the future which will allow sto
 
 ## Credits
 - All credits are displayed in [credits.txt](documentation/credits.txt).
-- As well as this a lot of functionality was inspired by the Boutique_Ado code along project created by [Code_Institute](https://codeinstitute.net/).
+- As well as this, a lot of functionality was inspired by the Boutique_Ado code along project created by [Code_Institute](https://codeinstitute.net/).
