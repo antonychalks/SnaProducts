@@ -36,9 +36,73 @@ This online homeware store is aimed at any potential customers who are looking t
 |---------------------------------------------------------------|-------------|
 | [#1](https://github.com/antonychalks/SnaProducts/issues/1)   | As a super user I can add, edit and delete products on the website so that the products can stay up to date with the companies needs.|
 | [#5](https://github.com/antonychalks/SnaProducts/issues/5)   | As a super user I can add, edit and delete categories on the website so that the categories can stay up to date with the companies needs.|
+---
+### Applications
+In this section, I am going to list each application in this project, and describe its purpose and how it works.
 
+#### Landing page
+This application is created for the sole purpose of rendering the initial landing page for the user. It renders the landing page template which gives each user the option to browse the various categories, log in, sign up or sign up to the newsletter with the pop-up.
 
+#### Cart
+This application is used to manage the cart. The cart application implements the functionality to view the cart, add items to the cart, remove them from the cart and update the quantity of the cart.
 
+The items in the cart are added, updated and deleted by allowing the user to submit POST requests which will be sent to the cart_contents context that is saved in the user's session. This allows users to keep track of what items are in their cart, what quantity and size.
+
+Viewing the cart also allows the users to find out what items are saved, as well as the quantity and size of each product. Other valuable information is also displayed to the user such as the delivery cost and how much is left for a discounted delivery, or if the user has already passed the minimum delivey threshold, they will be able to see this here.
+
+From here, the user can either keep shopping or check out their cart if they are finished shopping.
+
+####  Checkout
+The Checkout apps purpose is to compile, process and complete the purchase using the items in the cart.
+
+Firstly, the website gathers the information in the cart to find out what items have been requested, along with any item sizes.
+
+These items are then compiled into an order. The website will ask the user to input their shipping details, such as their name, contact details and address. 
+
+The user must also input their card details, so they can be checked by the stripe authorization system.
+
+After this, the user can check out. This will send all the shipping details and billing details to stripe to confirm the payment. Once the payment is confirmed stripe will send back confirmation to the websites backend, and the user will be directed to the checkout success page, as well as being sent a confirmation email.
+
+Using the Django admin page, any super users are able to add, edit or delete any orders, as well as any line items within the order.
+
+#### products
+The purpose of the products app is to manage all the products and categories that are available on the site, and display the products to the user, with filters and sorting options.
+
+Firstly, a list of the products created by the products model is rendered onto the screen when the user goes to the product page. To find a specific product, the user can use the search bar, which will search each product for the user inputted keyword. 
+
+Another option the user has is to filter by category, which allows the user to find a range of stuff, organized into different rooms in the house, along with sub categories for each room.
+
+The user can also sort all of the products on the page by price, rating, name and category in ascending or descending order.
+
+When a user clicks the product, they will be shown to a product detail page, which shows the user all the details the website has on each product, with the option to add each product to the their basket after selecting the desired quantity.
+
+Superusers also have the availability to go to the manage products page, which displays a list of all the products, which the superuser can search, sort and filter through.
+
+On both the manage products page and the list products page (when signed in as a super user), there are buttons to update or delete each product.
+
+Superusers can also add, edit and delete categories from the site, as well as adding new products, all done on the manage products page.
+
+#### Profiles
+The profiles app creates the ability for each user to save shipping and contact details to enable them to checkout faster.
+
+Whilst users don't have to be signed in to use this website, if they are, they have the availabilty to save their contact details to the website. This means that next time they make a purchase, the checkout system will go a lot quicker as they won't have to re-enter their shipping details. This reduces friction on the site and creates and user-friendly experience.
+
+Superusers can add, edit and delete user profiles from the Django admin page, as well as validating accounts.
+
+#### Saved Products
+The saved products app allows the user to save lists for another time.
+
+Users can save multiple products to multiple lists, enabling them to save products for later if they don't want to purchase them yet.
+
+Each list will display the current price of the item, as well as the quantity of the product and all the products details.
+
+Products can be added to lists from the product list page or the product detail page.
+
+Lists can be made public or private which allows users to create a birthday or Christmas list to share with others.
+
+Lists can be edited, deleted or new ones added from the list page, as well as new lists created.
+
+---
 ## Business Model
 
 SnA Products operates on a B2C business model, catering to people of all ages and backgrounds. The focus lies on individual transactions, ensuring a seamless experience from browsing to checkout.
