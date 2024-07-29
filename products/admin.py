@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Product, Category
+from .models import Product, Category, Review
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -39,3 +39,14 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('parent', 'name', 'display_name', 'type',)
     search_fields = ['name', 'display_name', ]
     list_filter = ('parent', 'type', )
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    """
+    Lists fields for display in admin, fields for search,
+    field filters, fields to prepopulate and rich-text editor.
+    """
+    list_display = ('product', 'rating', 'review', 'verified',)
+    search_fields = ['product', 'rating', ]
+    list_filter = ('verified',)

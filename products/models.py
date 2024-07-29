@@ -1,7 +1,12 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.conf import settings
 from decimal import Decimal, ROUND_HALF_UP
 from cloudinary.models import CloudinaryField
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.db.models import Avg
+from django.contrib.auth.models import User
 
 CATEGORY_TYPE = ((0, "Parent"), (1, "Child"))
 
@@ -106,4 +111,38 @@ class Product(models.Model):
 
         return sku_prefix + sku_middle + sku_suffix
 
+    def average_rating(self):
+        """
+        Calculate and return the average rating of related Reviews.
+
+        If no reviews exist, this method returns None.
+        """
+        reviews = self.Reviews.all()
+        if reviews.exists():
+            return round(reviews.aggregate(Avg('rating'))['rating__avg'], 2)
+        else:
+            return None
+
+    @receiver([post_save, post_delete], sender='products.Review')
+    def update_product_rating(sender, instance, **kwargs):
+        product = instance.product
+        reviews = product.Reviews.all()
+        if reviews.exists():
+            product.rating = round(reviews.aggregate(Avg('rating'))['rating__avg'], 2)
+        else:
+            product.rating = None
+        product.save()
+
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name="Reviews", blank=True, null=True)
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="Reviews", default=0)
+    rating = models.IntegerField(null=True, blank=True, validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1)
+        ])
+    review = models.TextField(blank=True, null=True)
+    verified = models.BooleanField(default=False)
 
