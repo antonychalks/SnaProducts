@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
 
-from .models import Product, Category
+from .models import Product, Category, Review
 from saved_products.models import SavedProductsList
-from .forms import ProductManagementForm, CategoryManagementForm
+from .forms import ProductManagementForm, CategoryManagementForm, ProductReviewForm
 
 
 # Create your views here.
@@ -101,10 +101,14 @@ def product_detail(request, product_id):
 
     products = get_object_or_404(Product, pk=product_id)
     lists = SavedProductsList.objects.all()
+    reviews = Review.objects.filter(product=products)
+    review_form = ProductReviewForm
 
     context = {
         'product': products,
-        'lists': lists
+        'lists': lists,
+        'reviews': reviews,
+        'form': review_form,
     }
     return render(request, 'products/product_detail.html', context)
 
@@ -254,6 +258,37 @@ def add_category(request):
                     return redirect(reverse('add_product'))
             else:
                 messages.error(request, 'Failed to add category. Please ensure the form is valid.')
+    else:
+        form = CategoryManagementForm()
+
+    template = 'products/add.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
+
+@login_required
+def add_review(request):
+    """ A view for users to add a new review to a product """
+
+    if request.method == 'POST':
+        form = ProductReviewForm(request.POST, request.FILES)
+        user = request.user
+        if form.is_valid():
+            form.save(commit=False)
+            form.product = request.product
+            form.author = user
+            # Iterate through the users orders to check the product has been ordered
+            form.save()
+            form = CategoryManagementForm()
+            messages.success(request, 'Category added successfully')
+            if "manage" in request.POST:
+                return redirect(reverse('manage_products'))
+            elif "return" in request.POST:
+                return redirect(reverse('add_product'))
+        else:
+            messages.error(request, 'Failed to add category. Please ensure the form is valid.')
     else:
         form = CategoryManagementForm()
 

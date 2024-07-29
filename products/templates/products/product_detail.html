@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_filters %}
 
 {% block extra_js %}
 <script src="{% static 'js/product_detail.js' %}"></script>
@@ -47,11 +48,28 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-around">
-                    <p> Tags </p>
-                    {% if product.rating %}
-                    <p><small class="text-muted">{{product.rating}}</small></p>
+                    {% if product.rating >= 4.75 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                    {% elif product.rating >= 4.25 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></p> {% comment %} 4.5 stars {% endcomment %}
+                    {% elif product.rating >= 3.75 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 4 stars {% endcomment %}
+                    {% elif product.rating >= 3.25 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i></p> {% comment %} 3.5 stars {% endcomment %}
+                    {% elif product.rating >= 2.75 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 3 starts {% endcomment %}
+                    {% elif product.rating >= 2.25 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 2.5 stars {% endcomment %}
+                    {% elif product.rating >= 1.75 %}
+                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 2 stars {% endcomment %}
+                    {% elif product.rating >= 1.25 %}
+                        <p><i class="fa-regular fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 1.5 stars {% endcomment %}
+                    {% elif product.rating >= 0.75 %}
+                        <p><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 1 star {% endcomment %}
+                    {% elif product.rating >= 0.25 %}
+                        <p><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 0.5 stars {% endcomment %}
                     {% else %}
-                    <p><small class="text-muted">No rating yet.</small></p>
+                        <p class="card-text"><small class="text-muted">No rating yet.</small></p>
                     {% endif %}
                 </div>
                 <hr>
@@ -119,6 +137,67 @@
             <div class="col-12 p-4">
                 <h2> Product Description </h2>
                 <p>{{product.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-md floating_container product_description_container">
+        <div class="row">
+            <div class="col-12 p-4">
+                <h2> Add Review </h2>
+                <form method="POST" action="{% comment %}{% url 'add_review' %}{% endcomment %}" class="form m-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-md floating_container product_description_container">
+        <div class="row">
+            <div class="col-12 p-4">
+                <h2> Product Reviews </h2>
+                {% for review in reviews %}
+                <div class="card mb-1">
+                    <div class="card-header d-flex justify-content-between">
+                        <strong>{{ review.author }}</strong>
+
+                        {% if review.rating >= 4.75 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                        {% elif review.rating >= 4.25 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></p> {% comment %} 4.5 stars {% endcomment %}
+                        {% elif review.rating >= 3.75 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 4 stars {% endcomment %}
+                        {% elif review.rating >= 3.25 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i></p> {% comment %} 3.5 stars {% endcomment %}
+                        {% elif review.rating >= 2.75 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 3 starts {% endcomment %}
+                        {% elif review.rating >= 2.25 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 2.5 stars {% endcomment %}
+                        {% elif review.rating >= 1.75 %}
+                            <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 2 stars {% endcomment %}
+                        {% elif review.rating >= 1.25 %}
+                            <p><i class="fa-regular fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 1.5 stars {% endcomment %}
+                        {% elif review.rating >= 0.75 %}
+                            <p><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 1 star {% endcomment %}
+                        {% elif review.rating >= 0.25 %}
+                            <p><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 0.5 stars {% endcomment %}
+                        {% else %}
+                            <p class="card-text"><small class="text-muted">No rating yet.</small></p>
+                        {% endif %}
+
+                        {% if review.verified %}
+                        <p class="badge bg-success">Verified Purchase</p>
+                        {%  else %}
+                        <p class="badge bg-secondary">Can't Verify purchase</p>
+                        {%  endif %}
+                    </div>
+                    <div class="card-body">
+                        <p>{{ review.review }}</p>
+                    </div>
+
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -104,9 +104,31 @@
                                         <img class="card-img" height="auto" width="100%" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                                     {% endif %}
                                 <i class="fa-solid fa-magnifying-glass zoom-overlay img_zoom_activator " data-product_id="{{product.id}}"></i>
+
+{# Empty star: <i class="fa-regular fa-star"></i> #}
+{# Half star: <i class="fa-solid fa-star-half"></i> #}
+{# Full star: <i class="fa-regular fa-star"></i> #}
                                 <h5 class="card-text">£{{product.price}}</h5>
-                                    {% if product.rating %}
-                                        <p class="card-text"><small class="text-muted">{{product.rating}}</small></p>
+                                    {% if product.rating >= 4.75 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                                    {% elif product.rating >= 4.25 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></p> {% comment %} 4.5 stars {% endcomment %}
+                                    {% elif product.rating >= 3.75 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 4 stars {% endcomment %}
+                                    {% elif product.rating >= 3.25 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i></p> {% comment %} 3.5 stars {% endcomment %}
+                                    {% elif product.rating >= 2.75 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 3 starts {% endcomment %}
+                                    {% elif product.rating >= 2.25 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 2.5 stars {% endcomment %}
+                                    {% elif product.rating >= 1.75 %}
+                                        <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 2 stars {% endcomment %}
+                                    {% elif product.rating >= 1.25 %}
+                                        <p><i class="fa-regular fa-star"></i><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 1.5 stars {% endcomment %}
+                                    {% elif product.rating >= 0.75 %}
+                                        <p><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 1 star {% endcomment %}
+                                    {% elif product.rating >= 0.25 %}
+                                        <p><i class="fa-solid fa-star-half"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></p> {% comment %} 0.5 stars {% endcomment %}
                                     {% else %}
                                         <p class="card-text"><small class="text-muted">No rating yet.</small></p>
                                     {% endif %}
