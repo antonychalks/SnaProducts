@@ -144,25 +144,25 @@
     <div class="container-md floating_container product_description_container">
         <div class="row">
             <div class="col-12 p-4">
-                <h2> Add Review </h2>
-                <form method="POST" action="{% url 'add_review' product.id %}" class="form m-2" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form | crispy }}
-                <button type="submit" class="btn btn-success">Send Review</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-md floating_container product_description_container">
-        <div class="row">
-            <div class="col-12 p-4">
-                <h2> Product Reviews </h2>
+                <div class="accordion-item">
+                    <div class="accordion-header row">
+                        <h2 class="col-6"> Product Reviews </h2>
+                        <h2 class="col-6 d-grid"><button class="badge bg-success justify-self-end" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Add Review</button></h2>
+                    </div>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <form method="POST" action="{% url 'add_review' product.id %}" class="form m-2" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <button type="submit" class="btn btn-success">Send Review</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 {% for review in reviews %}
                 <div class="card mb-1">
                     <div class="card-header d-flex justify-content-between">
-                        <strong>{{ review.author }}</strong>
-
+                        <h3>{{ review.title }}</h3>
                         {% if review.rating >= 4.75 %}
                             <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
                         {% elif review.rating >= 4.25 %}
@@ -186,15 +186,20 @@
                         {% else %}
                             <p class="card-text"><small class="text-muted">No rating yet.</small></p>
                         {% endif %}
-
-                        {% if review.verified %}
-                        <p class="badge bg-success">Verified Purchase</p>
-                        {%  else %}
-                        <p class="badge bg-secondary">Can't Verify purchase</p>
-                        {%  endif %}
                     </div>
                     <div class="card-body">
                         <p>{{ review.review }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <strong>{{ review.author }}</strong>
+                        {% if review.author == user %}
+                            <span class="badge bg-success">Your Review!</span>
+                        {% endif %}
+                        {% if review.verified %}
+                        <span class="badge bg-success">Verified Purchase</span>
+                        {%  else %}
+                        <span class="badge bg-secondary">Can't Verify purchase</span>
+                        {%  endif %}
                     </div>
 
                 </div>

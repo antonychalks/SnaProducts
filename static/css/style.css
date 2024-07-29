@@ -261,6 +261,11 @@ small{
     max-height: 100px;
 }
 
+.justify-self-end{
+    display: flex;
+    justify-self: end;
+}
+
 /* -------------------------------- Cart */
 .cart-qty-group, .cart-qty-change, .cart-qty-input{
     max-height: 40px;
