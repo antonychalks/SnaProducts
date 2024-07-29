@@ -190,19 +190,81 @@
                     <div class="card-body">
                         <p>{{ review.review }}</p>
                     </div>
-                    <div class="card-footer">
-                        <strong>{{ review.author }}</strong>
+                    <div class="card-footer row">
+                        <div class="col-6">
+                           <strong>{{ review.author }}</strong>
+                            {% if review.author == user %}
+                                <span class="badge bg-success">Your Review!</span>
+                            {% endif %}
+                            {% if review.verified %}
+                                <span class="badge bg-success">Verified Purchase</span>
+                            {%  else %}
+                                <span class="badge bg-secondary">Can't Verify purchase</span>
+                            {%  endif %}
+                        </div>
                         {% if review.author == user %}
-                            <span class="badge bg-success">Your Review!</span>
-                        {% endif %}
-                        {% if review.verified %}
-                        <span class="badge bg-success">Verified Purchase</span>
-                        {%  else %}
-                        <span class="badge bg-secondary">Can't Verify purchase</span>
+                        <div class="col-6 d-flex justify-content-end">
+                            <button type="button" class="badge bg-info m-1" data-bs-toggle="modal" data-bs-target="#editModal{{ review.id }}">Edit</button>
+                            <button type="button" class="badge bg-danger m-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ review.id }}">Delete</button>
+                        </div>
                         {%  endif %}
                     </div>
-
                 </div>
+                    {% if review.author == user %}
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editModal{{ review.id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Review</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="{%  url 'edit_review' review.id %}" class="form m-2" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div id="div_id_title" class="mb-3">
+                                            <label for="id_title" class="form-label requiredField">
+                                                Title <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="text" name="title" value="{{ review.title }}" maxlength="50" class="border-black rounded-0 review-input textinput form-control" required="" id="id_title">
+                                        </div>
+                                        <div id="div_id_rating" class="mb-3">
+                                            <label for="id_rating" class="form-label requiredField">
+                                                Rating<span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="number" name="rating" value="{{ review.rating }}" class="border-black rounded-0 review-input numberinput form-control" required="" id="id_rating"> </div>
+                                        <div id="div_id_review" class="mb-3">
+                                            <label for="id_review" class="form-label">
+                                                Review
+                                            </label>
+                                            <textarea name="review" cols="40" rows="10" class="border-black rounded-0 review-input textarea form-control" id="id_review">{{ review.review }}</textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Save Review</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Delete modal -->
+                    <div class="modal fade" id="deleteModal{{ review.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Review?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            These changes are not reversible.
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <a type="button" href="{% url 'delete_review' review.id %}" class="btn btn-danger">Delete Review</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {%  endif %}
                 {% endfor %}
             </div>
         </div>

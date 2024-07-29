@@ -28,7 +28,6 @@ def list_products(request):
     else:
         lists = None
 
-
     if request.GET:
         if 'sort' in request.GET:  # Checks for sort in the request.GET so that this code gets run
             sortkey = request.GET['sort']  # Stores the request in a variable
@@ -269,6 +268,7 @@ def add_category(request):
 
     return render(request, template, context)
 
+
 @login_required
 def add_review(request, product_id):
     """ A view for users to add a new review to a product """
@@ -391,6 +391,29 @@ def edit_category(request, category_id):
 
 
 @login_required
+def edit_review(request, review_id):
+    """ A view for users to edit a review """
+
+    review = get_object_or_404(Review, pk=review_id)
+    product = review.product
+    if request.method == 'POST':
+        if review.author == request.user:
+            form = ProductReviewForm(request.POST, request.FILES, instance=review)
+            if form.is_valid():
+                form.save()
+                form = ProductReviewForm()
+                messages.success(request, 'Review updated successfully')
+                return redirect(reverse('product_detail',
+                                        args=[product.id]))
+            else:
+                messages.error(request, 'Failed to edit product. '
+                                        'Please ensure the form is valid.')
+        else:
+            messages.error(request, 'You are not the author of this review.')
+    else:  # Handle GET request here
+        return redirect(reverse('products'))
+
+@login_required
 def delete_product(request, product_id):
     """ Delete a product from the store """
     if not request.user.is_superuser:
@@ -414,3 +437,17 @@ def delete_category(request, category_id):
     category.delete()
     messages.success(request, 'Category deleted!')
     return redirect(reverse('manage_products'))
+
+
+@login_required
+def delete_review(request, review_id):
+    """ Delete a review"""
+    review = get_object_or_404(Review, pk=review_id)
+    product = review.product
+    if review.author == request.user:
+        review.delete()
+        messages.success(request, 'Review deleted!')
+    else:
+        messages.error(request, 'You are not the author of this review.')
+    return redirect(reverse('product_detail',
+                            args=[product.id]))
