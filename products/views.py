@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
 
+from profiles.models import UserProfile
 from .models import Product, Category, Review
 from saved_products.models import SavedProductsList
 from .forms import ProductManagementForm, CategoryManagementForm, ProductReviewForm
@@ -269,33 +270,38 @@ def add_category(request):
     return render(request, template, context)
 
 @login_required
-def add_review(request):
+def add_review(request, product_id):
     """ A view for users to add a new review to a product """
+    product = get_object_or_404(Product, pk=product_id)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
         form = ProductReviewForm(request.POST, request.FILES)
         user = request.user
         if form.is_valid():
-            form.save(commit=False)
-            form.product = request.product
-            form.author = user
-            # Iterate through the users orders to check the product has been ordered
-            form.save()
+            review_instance = form.save(commit=False)
+            review_instance.product = product
+            review_instance.author = user
+            review_instance.verified = False
+            for order in user_profile.orders.all():
+                for lineitem in order.lineitems.all():
+                    if lineitem.product == product:
+                        review_instance.verified = True
+                        break
+            review_instance.save()
             form = CategoryManagementForm()
-            messages.success(request, 'Category added successfully')
-            if "manage" in request.POST:
-                return redirect(reverse('manage_products'))
-            elif "return" in request.POST:
-                return redirect(reverse('add_product'))
+            messages.success(request, 'Review added successfully')
+            return redirect(reverse('product_detail', args=[product_id]))
         else:
-            messages.error(request, 'Failed to add category. Please ensure the form is valid.')
+            messages.error(request, 'Failed to add review. Please ensure the form is valid.')
     else:
-        form = CategoryManagementForm()
+        form = ProductReviewForm()
 
-    template = 'products/add.html'
     context = {
         'form': form,
     }
+
+    template = 'products/product_detail.html'
 
     return render(request, template, context)
 

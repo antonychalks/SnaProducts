@@ -137,9 +137,10 @@ class Product(models.Model):
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
                                 related_name="Reviews", blank=True, null=True)
+    title = models.CharField(max_length=50, default="Review")
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="Reviews", default=0)
-    rating = models.IntegerField(null=True, blank=True, validators=[
+    rating = models.IntegerField(default=1, validators=[
             MaxValueValidator(5),
             MinValueValidator(1)
         ])

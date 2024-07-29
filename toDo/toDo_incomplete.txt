@@ -1,3 +1,10 @@
+- Complete add review functionality.
+- Complete crud functionality for reviews. (Edit and delete).
+- Update the rating for review to be a star selector.
+- Add URLs for reviews.
+- Product management page not suitable for mobile.
+- Product man
+
 - Misc
     - Add testing for python functions.
         - Views.py across all apps
