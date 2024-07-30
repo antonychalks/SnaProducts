@@ -10,11 +10,9 @@ import uuid
 
 
 # Create your models here.
-# noinspection SpellCheckingInspection
 class Order(models.Model):
     order_number = models.CharField(max_length=32, null=False, editable=False)
-    first_name = models.CharField(max_length=50, null=False, blank=False)
-    last_name = models.CharField(max_length=50, null=False, blank=False)
+    full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
     country = CountryField(blank_label="(select country)")
@@ -82,9 +80,9 @@ class OrderLineItem(models.Model):
         and update the order total.
         """
         if self.product.discounted_price is not None:
-            self.lineitem_total = self.product.price * self.quantity
-        else:
             self.lineitem_total = self.product.discounted_price * self.quantity
+        else:
+            self.lineitem_total = self.product.price * self.quantity
         super().save(*args, **kwargs)
 
     def __str__(self):

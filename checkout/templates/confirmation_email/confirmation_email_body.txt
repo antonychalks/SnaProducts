@@ -1,4 +1,4 @@
-Hello ((order.first_name )),
+Hello ((order.full_name )),
 
 Thanks for your order!
 

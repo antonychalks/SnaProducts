@@ -52,8 +52,7 @@ class TestViews(TestCase):
 
         self.order = Order.objects.create(
             user_profile=self.profile,
-            first_name='First Name',
-            last_name='Last Name',
+            full_name='First Name',
             email='test@user.com',
             phone_number='1234567890',
             country='Country Name',

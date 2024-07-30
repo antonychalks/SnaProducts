@@ -24,10 +24,10 @@ class stripeWH_Handler:
         """Send the user a confirmation email"""
         cust_email = order.email
         subject = render_to_string(
-            'checkout/confirmation_email/confirmation_email_subject.txt',
+            'confirmation_email/confirmation_email_subject.txt',
             {'order': order})
         body = render_to_string(
-            'checkout/confirmation_email/confirmation_email_body.txt',
+            'confirmation_email/confirmation_email_body.txt',
             {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
 
         send_mail(
@@ -63,8 +63,6 @@ class stripeWH_Handler:
 
         billing_details = stripe_charge.billing_details  # updated
         shipping_details = intent.shipping
-        shipping_details_first_name = shipping_details.name.split(" ")[0]
-        shipping_details_last_name = shipping_details.name.split(" ")[1]
         grand_total = round(stripe_charge.amount / 100, 2)  # updated
 
         # Clean data in the shipping details
@@ -92,8 +90,7 @@ class stripeWH_Handler:
         while attempt <= 5:
             try:
                 order = Order.objects.get(
-                    first_name__iexact=shipping_details_first_name,
-                    last_name__iexact=shipping_details_last_name,
+                    full_name__iexact=shipping_details.name,
                     email__iexact=billing_details.email,
                     phone_number__iexact=shipping_details.phone,
                     country__iexact=shipping_details.address.country,
@@ -120,8 +117,7 @@ class stripeWH_Handler:
             order = None
             try:
                 order = Order.objects.create(
-                    first_name__iexact=shipping_details_first_name,
-                    last_name__iexact=shipping_details_last_name,
+                    full_name=shipping_details.name,
                     user_profile=profile,
                     email=billing_details.email,
                     phone_number=shipping_details.phone,

@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'snaproducts-5c3a2d36af92.herokuapp.com',
     '127.0.0.1',
-    '8000-antonychalk-snaproducts-1e7rw6hxs8v.ws-eu114.gitpod.io',
+    '8000-antonychalk-snaproducts-zwdxig5i8my.ws-eu115.gitpod.io',
 ]
 
 # Application definition

@@ -7,7 +7,7 @@ from .forms import OrderForm
 class TestOrderForm(TestCase):
     def test_form_initialization(self):
         form = OrderForm()
-        self.assertTrue(form.fields['first_name'].widget.attrs['autofocus'])
+        self.assertTrue(form.fields['full_name'].widget.attrs['autofocus'])
         for field in form.fields:
             if field != 'country':
                 self.assertTrue('stripe-style-input' in form.fields[field].widget.attrs['class'])
@@ -17,8 +17,7 @@ class TestOrderForm(TestCase):
         form = OrderForm({})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors, {
-            'first_name': ['This field is required.'],
-            'last_name': ['This field is required.'],
+            'full_name': ['This field is required.'],
             'email': ['This field is required.'],
             'phone_number': ['This field is required.'],
             'first_line_address': ['This field is required.'],
@@ -29,8 +28,7 @@ class TestOrderForm(TestCase):
 
     def test_email_validation(self):
         form = OrderForm({
-            'first_name': 'Test',
-            'last_name': 'User',
+            'full_name': 'Test',
             'email': 'not a valid email',
             'phone_number': '1234567890',
             'first_line_address': '123 Test St',
@@ -45,8 +43,8 @@ class TestOrderForm(TestCase):
 
     def test_order_form_valid_with_all_required_fields(self):
         form = OrderForm({
-            'first_name': 'First',
-            'last_name': 'Last',
+            'full_name': 'First',
+
             'email': 'testuser@example.com',
             'phone_number': '+123456789',
             'first_line_address': '123 Test St',
