@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/side-nav.js' %}"></script>
+{% endblock %}
+
+{% block extra_title %}
+    || stock
+{% endblock %}
+
+{% block content %}
+    <div class="overlay-background">
+    </div>
+    <div class="container-md px-4 py-1 d-flex justify-content-between">
+        <h2 class="m-4"><a href="{% url 'manage_products' %}" class="no-link-decoration">Product Management</a></h2>
+        <h2 class="m-4"><a href="{%  url 'stock' %}" class="no-link-decoration"> Stock Management</a></h2>
+    </div>
+    <div class="container container-fluid">
+        <div class="row overlay-button">
+            <div class="btn-group" role="group" aria-label="Button group to move up one row, to the top of the page, or down one row">
+                <button class="btn btn-secondary top-button edge-button scroll-up"><i class="fa-solid fa-arrow-up"></i></button>
+                <button class="btn btn-secondary top-button" id="to-top"> Back to top </button>
+                <button class="btn btn-secondary top-button edge-button scroll-down"><i class="fa-solid fa-arrow-down"></i></button>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-12 col-md-6 order-md-first">
+                <p class="text-muted mt-3 text-center text-md-left">
+                    {{ stock|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                </p>
+            </div>
+        </div>
+        {% if current_categories or current_sorting or search_term %}
+        <div class="row sort_filter justify-content-evenly justify-content-lg-start">
+            {% if search_term %}
+                <span class="badge category-badge text-bg-secondary filter">
+                    {{ search_term }}<i class="fa-regular fa-circle-xmark btn-remove-search"></i>
+                </span>     
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <form method="GET" class="p-0 px-lg-3gi" action="{% url 'stock' %}">
+              <div class="input-group">
+                <input class="form-control border border-black rounded-0" type="text" name="manage_search" placeholder="Search for a product">
+                <div class="input-group-append d-flex justify-content-between">
+                  <button class="form-control btn border border-black rounded-0" type="submit">
+                    <span class="icon">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                  </button>
+                <a class="btn btn-success rounded-0" href="{% url 'add_stock' %}"><i class="fa-solid fa-plus"></i></a>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <table class="table table-striped border-black">
+            <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Sku</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Product Price</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Size</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Quantity Available</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Quantity Requested</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Deals</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Date Created</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            {% for stock in stock %}
+            <tr>
+                <td>{{ stock.product.name }}</td>
+                <td>{{ stock.product.sku }}</td>
+                <td class="d-none d-lg-table-cell">{{ stock.product.price }}</td>
+                <td class="d-none d-lg-table-cell">{% if stock.product.has_sizes %}{{ stock.size }}{% else %}N/A{% endif %}</td>
+                <td class="d-none d-lg-table-cell">{{ stock.quantity_available }}</td>
+                <td class="d-none d-lg-table-cell">{{ stock.quantity_requested }}</td>
+                <td class="d-none d-lg-table-cell">{{ stock.deal }}</td>
+                <td class="d-none d-lg-table-cell">{{ stock.date_created }}</td>
+                <td><a class="btn btn-info" href="{% url 'edit_stock' stock.id %}">Edit</a></td>
+                <td><a class="btn btn-danger" href="{% url 'delete_stock' stock.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock content %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script src="{% static 'js/manage_products.js' %}"></script>
+
+{% endblock postloadjs %}

@@ -23,8 +23,9 @@
 {% block content %}
     <div class="overlay-background">
     </div>
-    <div class="container-md px-4 py-1">
+    <div class="container-md px-4 py-1 d-flex justify-content-between">
         <h2 class="m-4"><a href="{% url 'manage_products' %}" class="no-link-decoration">Product Management</a></h2>
+        <a class="btn btn-info" href="{%  url 'stock' %}"> Stock Management</a>
     </div>
     <div class="container container-fluid">
         <div class="row overlay-button">
@@ -132,9 +133,6 @@
             {% endfor %}
         </table>
     </div>
-
-
-
 
 {% endblock content %}
 

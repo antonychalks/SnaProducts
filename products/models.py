@@ -7,8 +7,14 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.db.models import Avg
 from django.contrib.auth.models import User
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from django.db import models
+from django.utils import timezone
 
 CATEGORY_TYPE = ((0, "Parent"), (1, "Child"))
+DEALS = ((0, 0), (1, 5), (2, 10), (3, 20), (4, 25))
+SIZES = ((0, 'N/A'), (1, 'XS'), (2, 'S'), (3, 'M'), (4, 'L'), (5, 'XL'))
 
 
 # Create your models here.
@@ -147,3 +153,18 @@ class Review(models.Model):
     review = models.TextField(blank=True, null=True)
     verified = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.title
+
+
+class Stock(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name="Stock", blank=True, null=True)
+    size = models.IntegerField(default=0, choices=SIZES)
+    deal = models.IntegerField(default=0, choices=DEALS)
+    date_created = models.DateTimeField(auto_now_add=True)
+    quantity_available = models.IntegerField(default=0)
+    quantity_requested = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.product.name

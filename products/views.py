@@ -5,9 +5,9 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from profiles.models import UserProfile
-from .models import Product, Category, Review
+from .models import Product, Category, Review, Stock
 from saved_products.models import SavedProductsList
-from .forms import ProductManagementForm, CategoryManagementForm, ProductReviewForm
+from .forms import ProductManagementForm, CategoryManagementForm, ProductReviewForm, StockManagementForm
 
 
 # Create your views here.
@@ -190,6 +190,29 @@ def manage_products(request):
     return render(request, 'products/manage_products.html', context)
 
 
+def stock(request):
+    """ A view to show a list of stock for all products"""
+    query = None
+    stock = Stock.objects.all()
+
+    if request.GET:
+        if 'manage_search' in request.GET:
+            query = request.GET['manage_search']
+            if not query:
+                messages.error(request, "You need to enter the product you are searching for.")
+                return redirect(reverse('products'))
+
+            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            stock = stock.filter(queries)
+
+    template = 'products/stock.html'
+    context = {
+        'stock': stock,
+        'search_term': query,
+    }
+
+    return render(request, template, context)
+
 # noinspection PyUnusedLocal
 @login_required
 def add_product(request):
@@ -306,7 +329,41 @@ def add_review(request, product_id):
     return render(request, template, context)
 
 
-# noinspection PyUnusedLocal
+@login_required
+def add_stock(request):
+    """ A view for superusers to add stock for a product """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('products'))
+
+    if request.method == 'POST':
+        if "cancel" in request.POST:
+            stock_form = StockManagementForm()
+            return redirect(reverse('stock'))
+        else:
+            stock_form = StockManagementForm(request.POST, request.FILES)
+            if stock_form.is_valid():
+                stock_form.save()
+                messages.success(request, 'Product added successfully')
+                if "manage" in request.POST:
+                    product_form = ProductManagementForm()
+                    return redirect(reverse('stock'))
+                elif "return" in request.POST:
+                    product_form = ProductManagementForm()
+                    return redirect(reverse('add_stock'))
+            else:
+                messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        stock_form = StockManagementForm()
+
+    template = 'products/add_stock.html'
+    context = {
+        'stock_form': stock_form,
+    }
+
+    return render(request, template, context)
+
+
 @login_required
 def edit_product(request, product_id):
     """ A view for superusers to add a new product """
@@ -413,6 +470,43 @@ def edit_review(request, review_id):
     else:  # Handle GET request here
         return redirect(reverse('products'))
 
+
+@login_required
+def edit_stock(request, stock_id):
+    """ A view for superusers to add a new product """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
+    stock = get_object_or_404(Stock, pk=stock_id)
+    if request.method == 'POST':
+        if "cancel" in request.POST:
+            stock_form = StockManagementForm()
+            return redirect(reverse('stock'))
+        else:
+            stock_form = StockManagementForm(request.POST, request.FILES, instance=stock)
+            if stock_form.is_valid():
+                stock_form.save()
+                stock_form = StockManagementForm()
+                messages.success(request, 'Product updated successfully')
+                if "manage" in request.POST:
+                    return redirect(reverse('stock'))
+            else:
+                messages.error(request, 'Failed to edit product. '
+                                        'Please ensure the form is valid.')
+    else:
+        stock_form = StockManagementForm(instance=stock)
+        messages.info(request, f'You are editing {stock.product.name}')
+
+    template = 'products/edit_stock.html'
+    context = {
+        'form': stock_form,
+        'stock': stock,
+    }
+
+    return render(request, template, context)
+
+
 @login_required
 def delete_product(request, product_id):
     """ Delete a product from the store """
@@ -451,3 +545,16 @@ def delete_review(request, review_id):
         messages.error(request, 'You are not the author of this review.')
     return redirect(reverse('product_detail',
                             args=[product.id]))
+
+
+@login_required
+def delete_stock(request, stock_id):
+    """ Delete stock from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only shop admins can do that.')
+        return redirect(reverse('home'))
+
+    stock = get_object_or_404(Stock, pk=stock_id)
+    stock.delete()
+    messages.success(request, 'Stock deleted!')
+    return redirect(reverse('stock'))

@@ -14,4 +14,8 @@ urlpatterns = [
     path('add_review/<int:product_id>/', views.add_review, name='add_review'),
     path('edit_review/<int:review_id>/', views.edit_review, name='edit_review'),
     path('delete_review/<int:review_id>/', views.delete_review, name='delete_review'),
+    path('stock/', views.stock, name='stock'),
+    path('add_stock/', views.add_stock, name='add_stock'),
+    path('edit_stock/<int:stock_id>/', views.edit_stock, name='edit_stock'),
+    path('delete_stock/<int:stock_id>/', views.delete_stock, name='delete_stock'),
 ]
