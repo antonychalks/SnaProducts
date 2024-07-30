@@ -83,7 +83,7 @@
                 <td class="d-none d-lg-table-cell">{% if stock.product.has_sizes %}{{ stock.size }}{% else %}N/A{% endif %}</td>
                 <td class="d-none d-lg-table-cell">{{ stock.quantity_available }}</td>
                 <td class="d-none d-lg-table-cell">{{ stock.quantity_requested }}</td>
-                <td class="d-none d-lg-table-cell">{{ stock.deal }}</td>
+                <td class="d-none d-lg-table-cell">{{ stock.get_deal_display }}%</td>
                 <td class="d-none d-lg-table-cell">{{ stock.date_created }}</td>
                 <td><a class="btn btn-info" href="{% url 'edit_stock' stock.id %}">Edit</a></td>
                 <td><a class="btn btn-danger" href="{% url 'delete_stock' stock.id %}">Delete</a></td>

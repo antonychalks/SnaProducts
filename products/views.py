@@ -28,6 +28,9 @@ def list_products(request):
     else:
         lists = None
 
+    for product in products:
+        product.stock_available = any(stock.quantity_available > 0 for stock in product.Stock.all())
+
     if request.GET:
         if 'sort' in request.GET:  # Checks for sort in the request.GET so that this code gets run
             sortkey = request.GET['sort']  # Stores the request in a variable
@@ -75,7 +78,7 @@ def list_products(request):
             #  '|' creates or statement i.e: name = query or description = query.
             products = products.filter(queries)
 
-        print(categories)
+
 
     sort_option = {
         'sort': sort,
@@ -204,6 +207,7 @@ def stock(request):
 
             queries = Q(name__icontains=query) | Q(description__icontains=query)
             stock = stock.filter(queries)
+
 
     template = 'products/stock.html'
     context = {
