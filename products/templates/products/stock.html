@@ -77,7 +77,7 @@
             </thead>
             {% for stock in stock %}
             <tr>
-                <td>{{ stock.product.name }}</td>
+                <td><a href="{% url 'product_detail' stock.product.id %}" class="no-link-decoration"> {{ stock.product.name }} </a></td>
                 <td>{{ stock.product.sku }}</td>
                 <td class="d-none d-lg-table-cell">{{ stock.product.price }}</td>
                 <td class="d-none d-lg-table-cell">{% if stock.product.has_sizes %}{{ stock.size }}{% else %}N/A{% endif %}</td>

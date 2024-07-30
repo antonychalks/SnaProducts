@@ -4,6 +4,7 @@
 - Add URLs for reviews.
 - Product management page not suitable for mobile.
 - Product man
+- Discounted price not displayed in cart correctly or calculated correctly.
 
 - Misc
     - Add testing for python functions.

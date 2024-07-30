@@ -105,7 +105,7 @@
                                     {% endif %}
                                 <i class="fa-solid fa-magnifying-glass zoom-overlay img_zoom_activator " data-product_id="{{product.id}}"></i>
 
-                                <h5 class="card-text">£{% if product.discounted_price > 0 %}<span id="product_price"><s>{{product.price}}</s> £{{ product.discounted_price }}{% else %}{{product.price}}{% endif %}</span></h5>
+                                <h5 class="card-text">{% if product.discounted_price > 0 %}<span id="product_price"><del class="fs-6">£{{product.price}}</del> <span class="fs-2">£{{ product.discounted_price }}</span> <small class="fs-6">{{ product.deal }}% off!</small></span>{% else %}<span class="fs-2">£{{product.price}}{% endif %}</span></h5>
                                 {% if product.rating >= 4.75 %}
                                     <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
                                 {% elif product.rating >= 4.25 %}

@@ -140,6 +140,16 @@ class Product(models.Model):
             product.rating = None
         product.save()
 
+    def deal(self):
+        deal = 0
+        for stock in self.Stock.all():
+            for deal in DEALS:
+                if deal[0] == stock.deal:
+                    deal = deal[1]
+                    break
+
+        return deal
+
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
@@ -173,10 +183,12 @@ class Stock(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         # Calculate discounted price and update related product
-        if self.deal > 0:
-            discount = self.product.price * (Decimal(self.deal) / 100)
-            self.product.discounted_price = round(self.product.price - discount, 2)
-        else:
-            self.product.discounted_price = self.product.price
+        discount_value = 0
+        for deal in DEALS:
+            if deal[0] == self.deal:
+                discount_value = deal[1]
+                break
 
+        discount = self.product.price * (Decimal(discount_value) / 100)
+        self.product.discounted_price = round(self.product.price - discount, 2)
         self.product.save()
