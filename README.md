@@ -147,11 +147,6 @@ I want to implement PayPal payment system in the future as many customers prefer
 
 I will be implementing a featured products feature, which will display on various pages, showing users a range of products available on different parts of the site. 
 
-
-#### Deals and discounts
-
-I would like to implement deals and discounts in the future which will allow store admins to apply discounts to products of their choosing, as well as deals when buying sets of products.
-
 ---
 
 ## Technologies used
