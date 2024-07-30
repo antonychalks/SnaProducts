@@ -1,7 +1,7 @@
 
 # SnA Products | SEO and Marketing
 
-Return to [README](README.md)
+Return to [README](../README.md)
 - - -
 
 ## Table of Contents
@@ -66,8 +66,8 @@ Welcome to SnA Products, where people from any age or background can come to fin
 * Facebook Page ![Facebook](/documentation/web_marketing/SnA_facebook.PNG)
 
 
-* Email Marketing: Send newsletters and promotional emails to subscribers to inform them about new product releases, discounts, special offers and events.
-
+* Email Marketing: Send newsletters and promotional emails to subscribers to inform them about new product releases, discounts, special offers and events. This has been powered by mailchimp.
+![Newsletter Sign-up](web_marketing/webMarketing.jpg)
 ## SEO
 ### 1 - Brainstorming general topics:
 The first step in the process of search engine optimisation is to compile a list of general topics related to SnA Products store. I started by listing the four main categories of products that are available on this website. After that I added homeware as this is the type of product that SnA Products sell. 
@@ -291,7 +291,7 @@ When implementing these changes for SEO, I made sure to keep in mind that the co
 I used an [online generator](https://www.xml-sitemaps.com/) to create a sitemap for the search engines to use. 
 
 ### 7- Robots.txt
-I used an [online_generator](www.seoptimer.com) to create [robots.txt](documentation/robots.txt). Robots.txt is used to tell search engines where not to look on the site, as these places aren't good at describing the site and what it's for. Having this file also boosts the search engines score on the site, as it marks the site as high quality.
+I used an [online_generator](www.seoptimer.com) to create [robots.txt](robots.txt). Robots.txt is used to tell search engines where not to look on the site, as these places aren't good at describing the site and what it's for. Having this file also boosts the search engines score on the site, as it marks the site as high quality.
 
 ### 8- DNS Certificate
 In the future with a larger budget, a custom domain name would be purchased, which would provide a DNS Certificate and allow the sitemap to be registered.

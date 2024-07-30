@@ -17,6 +17,20 @@ The website was created to be user-friendly with an obvious flow. The user is pr
 
 This online homeware store is aimed at any potential customers who are looking to furnish their home, as well as upgrade products they already have.
 
+### Planning
+#### Models
+When planning the models I created an ERD for each model. This helped to visualise what was going on in the database, and how it can be manipulated for each task.
+
+I made sure to note what type each field was going to be and how they linked with other models.
+
+![ERD For Models](documentation/modelERD.jpg)
+
+#### Wireframes
+Before creating any template, I first made sure to plan what the page was going to look like on mobile, and computer. I did this by creating a wireframe of each page. While the wireframes don't match the website exactly, it gave me a good idea of where to start.
+When planning each page, I researched big department online stores to get a good idea of what works well, also noting what are the things I didn't like as a user, and how I could improve them.
+My aim was to make the website as easy to use as possible, as people of all ages and backgrounds might like to use the store.
+
+[Link to Wireframes](documentation/wireframes.md)
 ### User Stories
 
 #### Shopper
@@ -120,13 +134,10 @@ SnA Products serves as a platform for the SnA Products business to interact with
 
 ## SEO and Marketing
 
-Please see  [SEO and Marketing](SEO_MARKETING.md) for an extensive overview of the marketing research for this project.
+Please see  [SEO and Marketing](documentation/SEO_MARKETING.md) for an extensive overview of the marketing research for this project.
 
 ---
 ## Future Development
-
-#### Allowing users to rate products
-In the future I would like to create a rating system that allows users that have bought a product to leave a rating. This allows customers to see what products will suit their needs, as well as informing the store management where to focus their investments.
 
 
 #### Payment system

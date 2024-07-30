@@ -46,7 +46,7 @@ class TestProfileViews(TestCase):
         self.create_user_and_profile()
 
         # Create a test order
-        order = Order.objects.create(full_name='Test', last_name="Test",
+        order = Order.objects.create(full_name='Test',
                                      phone_number='123456789',
                                      country='Test Country',
                                      postcode='Test Postcode',
