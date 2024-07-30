@@ -98,7 +98,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-around">
-                        <h4 class="price">£<span id="product_price">{{product.price}}</span>
+                        <h4 class="price">£{% if product.discounted_price > 0 %}<span id="product_price"><s>{{product.price}}</s> £{{ product.discounted_price }}{% else %}{{product.price}}{% endif %}</span>
                             {% if product.price > min_free_delivery %}
                                 <small class="delivery text-muted">Free delivery!</small>
                             {% elif product.price > min_half_delivery %}

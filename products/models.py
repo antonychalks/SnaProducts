@@ -54,6 +54,7 @@ class Product(models.Model):
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     image = CloudinaryField('image', default='placeholder')
     has_sizes = models.BooleanField(null=True, blank=True, default=False)
+    discounted_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     
     def __str__(self):
         return self.name
@@ -168,3 +169,14 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.product.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Calculate discounted price and update related product
+        if self.deal > 0:
+            discount = self.product.price * (Decimal(self.deal) / 100)
+            self.product.discounted_price = round(self.product.price - discount, 2)
+        else:
+            self.product.discounted_price = self.product.price
+
+        self.product.save()
