@@ -107,6 +107,8 @@ def product_detail(request, product_id):
     reviews = Review.objects.filter(product=products)
     review_form = ProductReviewForm
 
+    products.stock_available = any(stock.quantity_available > 0 for stock in products.Stock.all())
+
     context = {
         'product': products,
         'lists': lists,

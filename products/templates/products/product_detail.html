@@ -71,6 +71,13 @@
                     {% else %}
                         <p class="card-text"><small class="text-muted">No rating yet.</small></p>
                     {% endif %}
+                    <p class="card-text">
+                        {% if product.stock_available %}
+                            <span class="badge bg-success">In Stock!</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Not in stock.</span>
+                        {% endif %}
+                    </p>
                 </div>
                 <hr>
                 <form class="form" action="{% url 'add_to_cart' product.id %}" method="POST">
