@@ -1,4 +1,4 @@
-Hello ((order.full_name )),
+Hello {{  order.full_name }},
 
 Thanks for your order!
 
@@ -27,4 +27,4 @@ If you would like to edit these details in the future, or view your previous ord
 
 Thank you your order!
 
-Sincerely SnA Products!
+Sincerely, SnA Products!
