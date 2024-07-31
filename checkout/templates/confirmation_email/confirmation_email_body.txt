@@ -23,7 +23,7 @@ We have your contact number saved as {{order.phone_number}}.
 
 If any of these details are incorrect, or you have any questions, please feel free to contact us at {{contact_email}}.
 
-If you would like to edit these details in the future, or view your previous orders please go to {% url 'profile' %}.
+If you would like to edit these details in the future, or view your previous orders please go to https://snaproducts-5c3a2d36af92.herokuapp.com/profile/.
 
 Thank you your order!
 
